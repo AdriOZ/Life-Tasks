@@ -50,6 +50,11 @@ class LTDocument extends LTResponse {
 		}
 	}
 
+	# Creates a new document and uploads it into the folder.
+	private function _insert () {
+		# TODO
+	}
+
 	# Deletes a document
 	private function _delete () {
 		if ( !isset( $this->_where[ 'id_document' ] )

@@ -44,9 +44,25 @@ class LTDocument extends LTResponse {
 	}
 
 	# Generates the path of the file
-	private function _generatePath ( $id_file ) {
-		# Get the note.
-		# Get the notebook.
+	private function _generatePath ( $id_document, $extension ) {
+		$id_note = Database::query( "SELECT note FROM documents WHERE
+			id_document=".$id_document );
+		$id_notebook = Database::query( "SELECT notebook FROM notes WHERE
+			id_note=".$id_note[ 0 ][ 'note' ] );
+
+		# Creating the path with the format:
+		# php/'id_user'/'id_notebook'_'id_note'_'id_document'.'extension'
+		# 
+		# A common example:
+		# php/1/10_5_20.pdf
+		return Consts::FOLDER_INDEX    				# General path 
+				.$this->_uid.'/'					# User folder
+				.$id_notebook[ 0 ][ 'notebook' ]	# Notebook id
+				.'_'								# Separator
+				.$id_note[ 0 ][ 'note' ]			# Note id
+				.'_'								# Separator
+				.$id_document						# Document id
+				.'.'.$extension;					# Extesion of the document
 	}
 
 	# Returns the extension from a filename.

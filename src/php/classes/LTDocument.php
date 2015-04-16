@@ -35,7 +35,29 @@ class LTDocument extends LTResponse {
 
 	# Deletes a document
 	private function _delete () {
-		# TODO
+		if ( !isset( $this->_where[ 'id_document' ] )
+			|| !$this->_belongsToUser( $this->_where[ 'id_document' ] ) ) {
+			$this->_setError();
+		} else {
+			# Deleting the document from the folder->get the url
+			$path = Database::query( "SELECT url FROM documents WHERE
+				id_document=".$this->_where[ 'id_document' ] );
+			$name = explode( '/' , $path[ 0 ][ 'url' ] );
+
+			# initial url = php/docs/id_user/document
+			# $name[ 0 ] = php
+			# $name[ 1 ] = docs
+			# $name[ 2 ] = id_user
+			# $name[ 3 ] = document
+			if ( unlink( $name[ 2 ].'/'.$name[ 3 ] ) ) {
+				# Deleting from the database
+				Database::where( 'id_document', $this->_where[ 'id_document' ] );
+				Database::delete();
+				$this->_setError();
+			} else {
+				$this->_setError();
+			}
+		}
 	}
 
 	# Returns the percentage of usage of the user folder.

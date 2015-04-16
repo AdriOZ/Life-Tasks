@@ -33,6 +33,12 @@ class LTDocument extends LTResponse {
 		return $this->_generateResponse();
 	}
 
+	# Returns the percentage of usage of the user folder.
+	private function _usedStorage () {
+		$percentage = ( $this->_storageSize() / Consts::MAX_FOLDER_SIZE ) * 100;
+		$this->_setResult( 'usage', $percentage );
+	}
+
 	# Returns the current size of the user folder.
 	private function _storageSize () {
 		return filesize( Consts::FOLDER.$this->_uid );

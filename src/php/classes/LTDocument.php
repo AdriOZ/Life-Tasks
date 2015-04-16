@@ -34,7 +34,20 @@ class LTDocument extends LTResponse {
 	# Returns the data of the documents of the indicated
 	# note.
 	private function _query () {
-		# TODO
+		if ( !isset( $this->_where[ 'id_note' ] )
+			|| !$this->_noteBelongsToUser( $this->_where[ 'id_note' ] ) ) {
+			$this->_setError();
+		} else {
+			$query = "SELECT id_document,name,url FROM documents WHERE note
+			=".$this->_where[ 'id_note' ];
+
+			try {
+				$this->_setResult( 'documents', Database::query( $query ) );
+				$this->_setSuccess();
+			} catch ( Exception $e ) {
+				$this->_setError();
+			}
+		}
 	}
 
 	# Deletes a document

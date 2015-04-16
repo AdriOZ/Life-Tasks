@@ -81,4 +81,15 @@ class LTDocument extends LTResponse {
 		$parts = explode( '.' , $filename );
 		return end( $parts );
 	}
+
+	# Returns true if the document belongs to the user.
+	private function _belongsToUser ( $id_document ) {
+		$res = Database::query(
+			"SELECT id_document FROM documents WHERE id_document=".$id_document
+			." AND note IN (SELECT id_note FROM notes WHERE notebook
+			IN (SELECT id_notebook FROM notebooks WHERE owner=".$this->_uid."))"
+		);
+
+		return count( $res ) > 0;
+	}
 }

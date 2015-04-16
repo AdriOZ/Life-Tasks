@@ -31,6 +31,12 @@ class LTDocument extends LTResponse {
 		return $this->_generateResponse();
 	}
 
+	# Returns the data of the documents of the indicated
+	# note.
+	private function _query () {
+		# TODO
+	}
+
 	# Deletes a document
 	private function _delete () {
 		if ( !isset( $this->_where[ 'id_document' ] )

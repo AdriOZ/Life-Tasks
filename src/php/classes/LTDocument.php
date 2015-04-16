@@ -53,7 +53,9 @@ class LTDocument extends LTResponse {
 				# Deleting from the database
 				Database::where( 'id_document', $this->_where[ 'id_document' ] );
 				Database::delete();
-				$this->_setError();
+
+				# Updating the percentage of usage
+				$this->_usedStorage();
 			} else {
 				$this->_setError();
 			}
@@ -64,6 +66,7 @@ class LTDocument extends LTResponse {
 	private function _usedStorage () {
 		$percentage = ( $this->_storageSize() / Consts::MAX_FOLDER_SIZE ) * 100;
 		$this->_setResult( 'usage', $percentage );
+		$this->_setSuccess();
 	}
 
 	# Returns the current size of the user folder.

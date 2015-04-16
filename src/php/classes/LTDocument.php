@@ -16,8 +16,6 @@ class LTDocument extends LTResponse {
 					break;
 				case Consts::INSERT: # TODO
 					break;
-				case Consts::UPDATE: # TODO
-					break;
 				case Consts::DELETE: # TODO
 					break;
 				case Consts::USED_STORAGE: # TODO

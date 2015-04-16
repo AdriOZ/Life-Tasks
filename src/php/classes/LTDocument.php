@@ -33,6 +33,11 @@ class LTDocument extends LTResponse {
 		return $this->_generateResponse();
 	}
 
+	# Deletes a document
+	private function _delete () {
+		# TODO
+	}
+
 	# Returns the percentage of usage of the user folder.
 	private function _usedStorage () {
 		$percentage = ( $this->_storageSize() / Consts::MAX_FOLDER_SIZE ) * 100;

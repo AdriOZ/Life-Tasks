@@ -188,4 +188,10 @@ class LTDocument extends LTResponse {
 
 		return count( $res ) > 0;
 	}
+
+	# Sets the status of the response telling the client that there
+	# is no storage to upload the file.
+	private function _setFileSizeError () {
+		$this->_result[ 'status' ] = Consts::NO_STORAGE;
+	}
 }

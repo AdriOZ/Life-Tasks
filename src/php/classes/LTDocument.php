@@ -61,11 +61,11 @@ class LTDocument extends LTResponse {
 
 			# Checks the size
 			if ( !$this->_canUploadFile( filesize( $origin ) ) ) {
-				$this->_setFileSizeError( /* TODO */ );
+				$this->_setFileSizeError();
 			} else {
 				# First insert into the database
 				$insert = array(
-					'name' => $this->_getFileName( $origin /* TODO */ ),
+					'name' => $this->_getFileName( $origin ),
 					'url' => 'tmp',		# Temporal name that will be changed
 					'note' => $this->_where[ 'id_note' ]
 				);

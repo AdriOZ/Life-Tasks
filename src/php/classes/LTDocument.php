@@ -194,4 +194,9 @@ class LTDocument extends LTResponse {
 	private function _setFileSizeError () {
 		$this->_result[ 'status' ] = Consts::NO_STORAGE;
 	}
+
+	# Returns the name of the file without the path.
+	private function _getFileName ( $path ) {
+		return end( explode( '/' ,  $path ) );
+	}
 }

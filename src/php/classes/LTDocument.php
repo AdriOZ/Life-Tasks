@@ -52,7 +52,45 @@ class LTDocument extends LTResponse {
 
 	# Creates a new document and uploads it into the folder.
 	private function _insert () {
-		# TODO
+		if ( !isset( $_FILES[ 'document' ] )
+			|| !isset( $this->_where[ 'id_note' ] )
+			|| !$this->_noteBelongsToUser( $this->_where[ 'id_note' ] ) ) {
+			$this->_setError();
+		} else {
+			$origin = $_FILES[ 'document' ][ 'tmp_name' ];
+
+			# Checks the size
+			if ( !$this->_canUploadFile( filesize( $origin ) ) ) {
+				$this->_setFileSizeError( /* TODO */ );
+			} else {
+				# First insert into the database
+				$insert = array(
+					'name' => $this->_getFileName( $origin /* TODO */ ),
+					'url' => 'tmp',		# Temporal name that will be changed
+					'note' => $this->_where[ 'id_note' ]
+				);
+
+				try {
+					Database::insert( 'documents', $insert );
+
+					# Get the id in order to generate a correct path
+					$res = Database::query(
+						"SELECT max(id_document) FROM documents WHERE note=".
+						$this->_where[ 'id_note' ]
+					);
+
+					# Real path
+					$realPath = $this->_generatePath(
+						$res[ 0 ][ 'max(id_document)' ],
+						$this->_getExtension( $origin )
+					);
+
+					/* TODO */
+				} catch ( Exception $e ) {
+					$this->_setError();
+				}
+			}
+		}
 	}
 
 	# Deletes a document

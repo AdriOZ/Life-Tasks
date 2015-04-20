@@ -12,13 +12,13 @@ class LTDocument extends LTResponse {
 
 			# Perform the action
 			switch ( $this->_action ) {
-				case Consts::QUERY: # TODO
+				case Consts::QUERY: $this->_query();
 					break;
-				case Consts::INSERT: # TODO
+				case Consts::INSERT: $this->_insert();
 					break;
-				case Consts::DELETE: # TODO
+				case Consts::DELETE: $this->_delete();
 					break;
-				case Consts::USED_STORAGE: # TODO
+				case Consts::USED_STORAGE: $this->_usedStorage();
 					break;
 				default: $this->_setError();
 					break;
@@ -109,7 +109,7 @@ class LTDocument extends LTResponse {
 						# Response
 						$this->_setSuccess();
 						$this->_setResult( 'id_document',
-							$res[ 0 ][ 'max(id_document)'  );
+							$res[ 0 ][ 'max(id_document)']  );
 					} else {
 						$this->_setError();
 					}

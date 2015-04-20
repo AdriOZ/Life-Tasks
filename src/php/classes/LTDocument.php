@@ -85,7 +85,34 @@ class LTDocument extends LTResponse {
 						$this->_getExtension( $origin )
 					);
 
-					/* TODO */
+					# Get the path to move the document
+					$partialPath = explode( '/' , $realPath );
+
+					# initial url = php/docs/id_user/document
+					# $partialPath[ 0 ] = php
+					# $partialPath[ 1 ] = docs
+					# $partialPath[ 2 ] = id_user
+					# $partialPath[ 3 ] = document
+					$partialPath = Consts::FOLDER
+									.$partialPath[ 2 ]
+									.'/'.
+									$partialPath[ 3 ];
+
+					# Move the document
+					if ( move_uploaded_file( $origin , $partialPath) ) {
+						# Updating content in the database
+						$update = array(
+							'url' => $realPath
+						);
+						Database::update( 'documents', $update );
+
+						# Response
+						$this->_setSuccess();
+						$this->_setResult( 'id_document',
+							$res[ 0 ][ 'max(id_document)'  );
+					} else {
+						$this->_setError();
+					}
 				} catch ( Exception $e ) {
 					$this->_setError();
 				}

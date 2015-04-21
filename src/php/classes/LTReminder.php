@@ -72,4 +72,19 @@ class LTReminder extends LTResponse {
 			$second
 		);
 	}
+
+	# Checks if the request has the values needed to create
+	# a datetime.
+	private function _checkDateTime () {
+		return isset( $this->_where[ 'year' ] )
+				&& isset( $this->_where[ 'month' ] )
+				&& isset( $this->_where[ 'day' ] )
+				&& isset( $this->_where[ 'hour' ] )
+				&& isset( $this->_where[ 'minute' ] )
+				&& $this->_isValidYear( $this->_where[ 'year' ] )
+				&& $this->_isValidMonth( $this->_where[ 'month' ] )
+				&& $this->_isValidDay( $this->_where[ 'day' ] )
+				&& $this->_isValidHour( $this->_where[ 'hour' ] )
+				&& $this->_isValidMinute( $this->_where[ 'minute' ] );
+	}
 }

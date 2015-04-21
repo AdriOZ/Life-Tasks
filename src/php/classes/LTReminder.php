@@ -51,4 +51,9 @@ class LTReminder extends LTResponse {
 	private function _isValidHour ( $hour ) {
 		return $hour >= 0 && $hour <= 23;
 	}
+
+	# Checks if the minute is valid.
+	private function _isValidMinute ( $minute ) {
+		return $minute >= 0 && $minute <= 59;
+	}
 }

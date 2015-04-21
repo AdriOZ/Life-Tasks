@@ -49,7 +49,7 @@ class LTReminder extends LTResponse {
 	# Deletes a reminder.
 	private function _delete () {
 		if ( !isset( $this->_where[ 'id_reminder' ] )
-			&& !$this->_reminderBelongsToUser( $this->_where[ 'id_reminder' ] ) ) {
+			|| !$this->_reminderBelongsToUser( $this->_where[ 'id_reminder' ] ) ) {
 			$this->_setError();
 		} else {
 			Database::where( 'id_reminder', $this->_where[ 'id_reminder' ] );

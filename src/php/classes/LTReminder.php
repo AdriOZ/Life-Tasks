@@ -48,7 +48,19 @@ class LTReminder extends LTResponse {
 
 	# Deletes a reminder.
 	private function _delete () {
-		# TODO
+		if ( !isset( $this->_where[ 'id_reminder' ] )
+			&& !$this->_reminderBelongsToUser( $this->_where[ 'id_reminder' ] ) ) {
+			$this->_setError();
+		} else {
+			Database::where( 'id_reminder', $this->_where[ 'id_reminder' ] );
+
+			try {
+				Database::delete();
+				$this->_setSuccess();
+			} catch ( Exception $e ) {
+				$this->_setError();
+			}
+		}
 	}
 
 	# Checks if the year is correct.

@@ -91,7 +91,41 @@ class LTReminder extends LTResponse {
 
 	# Updates the content of a reminder.
 	private function _update () {
-		# TODO
+		if ( !isset( $this->_where[ 'id_reminder' ] )
+			|| !$this->_reminderBelongsToUser( $this->_where[ 'id_reminder' ] ) ) {
+			$this->_setError();
+		} else {
+			$update = array();
+
+			# New datetime
+			if ( $this->_checkDateTime() ) {
+				$update[ 'd_reminder' ] = $this->_createDateTime(
+					$this->_where[ 'year' ],
+					$this->_where[ 'month' ],
+					$this->_where[ 'day' ],
+					$this->_where[ 'hour' ],
+					$this->_where[ 'minute' ]
+				);
+			}
+
+			# Sended
+			if ( isset( $this->_where[ 'sended' ] ) ) {
+				$update[ 'sended' ] = true;
+			}
+
+			if ( count( $update ) ) {
+				Database::where( 'id_reminder', $this->_where[ 'id_reminder' ] );
+
+				try {
+					Database::update( 'reminders', $update );
+					$this->_setSuccess();
+				} catch ( Exception $e ) {
+					$this->_setError();
+				}
+			} else {
+				$this->_setError();		# Nothing to update
+			}
+		}
 	}
 
 	# Deletes a reminder.

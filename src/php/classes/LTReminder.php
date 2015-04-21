@@ -31,6 +31,26 @@ class LTReminder extends LTResponse {
 		return $this->_generateResponse();
 	}
 
+	# Returns the results of searching reminders.
+	private function _query () {
+		# TODO
+	}
+
+	# Creates a new reminder.
+	private function _insert () {
+		# TODO
+	}
+
+	# Updates the content of a reminder.
+	private function _update () {
+		# TODO
+	}
+
+	# Deletes a reminder.
+	private function _delete () {
+		# TODO
+	}
+
 	# Checks if the year is correct.
 	private function _isValidYear ( $year ) {
 		$check = intval( date( 'Y' ) );

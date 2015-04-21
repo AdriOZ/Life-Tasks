@@ -56,4 +56,10 @@ class LTReminder extends LTResponse {
 	private function _isValidMinute ( $minute ) {
 		return $minute >= 0 && $minute <= 59;
 	}
+
+	# Add zeros to the value in order to create a valid
+	# datetime string with integers.
+	private function _addZeros ( $value ) {
+		return sprintf( "%'.02d", $value );
+	}
 }

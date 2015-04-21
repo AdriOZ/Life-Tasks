@@ -41,4 +41,9 @@ class LTReminder extends LTResponse {
 	private function _isValidMonth ( $month ) {
 		return $month >= 1 && $month <= 12;
 	}
+
+	# Checks if the day is correct.
+	private function _isValidDay ( $day ) {
+		return $day >= 1 && $day <= 31;
+	}
 }

@@ -30,4 +30,10 @@ class LTReminder extends LTResponse {
 		# Printing results
 		return $this->_generateResponse();
 	}
+
+	# Checks if the year is correct.
+	private function _isValidYear ( $year ) {
+		$check = intval( date( 'Y' ) );
+		return intval( $year ) >= $check;
+	}
 }

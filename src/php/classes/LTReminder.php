@@ -62,4 +62,20 @@ class LTReminder extends LTResponse {
 	private function _addZeros ( $value ) {
 		return sprintf( "%'.02d", $value );
 	}
+
+	# Returns a datetime that can be inserted into the database.
+	# YYYY-MM-DD HH:MM:SS
+	# Seconds are 00 by default
+	private function _createDateTime ( $year, $month, $day, $hour, $minute,
+		$second = '00' ) {
+		return sprintf(
+			"%'.04d-%'.02d-%'.02d %'.02d:%'.02d:%'.02d",
+			$year,
+			$month,
+			$day,
+			$hour,
+			$minute,
+			$second
+		);
+	}
 }

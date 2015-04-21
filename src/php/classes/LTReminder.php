@@ -33,7 +33,7 @@ class LTReminder extends LTResponse {
 
 	# Returns the results of searching reminders.
 	private function _query () {
-		if ( !isset( $this->_where[ 'id_note' ] ) 
+		if ( !isset( $this->_where[ 'id_note' ] )
 			|| !$this->_noteBelongsToUser( $this->_where[ 'id_note' ] ) ) {
 			$this->_setError();
 		} else {
@@ -51,7 +51,42 @@ class LTReminder extends LTResponse {
 
 	# Creates a new reminder.
 	private function _insert () {
-		# TODO
+		if ( !isset( $this->_where[ 'id_note' ] )
+			|| !$this->_noteBelongsToUser( $this->_where[ 'id_note' ] )
+			|| !$this->_checkDateTime() ) {
+			$this->_setError();
+		} else {
+			$insert = array(
+				'note' => $this->_where[ 'id_note' ],
+				'd_reminder' => $this->_createDateTime(
+					$this->_where[ 'year' ],
+					$this->_where[ 'month' ],
+					$this->_where[ 'day' ],
+					$this->_where[ 'hour' ],
+					$this->_where[ 'minute' ]
+				)
+			);
+
+			# Insert
+			try {
+				Database::insert( 'reminders', $insert );
+
+				# Get the last id
+				$res = Database::query(
+					"SELECT max(id_reminder) FROM reminders WHERE note="
+					.$this->_where[ 'id_note' ]
+				);
+
+				# Return result
+				$this->_setResult( 'id_reminder',
+					$res[ 0 ][ 'max(id_reminder)' ] );
+
+				# Success
+				$this->_setSuccess();
+			} catch ( Exception $e ) {
+				$this->_setError();
+			}
+		}
 	}
 
 	# Updates the content of a reminder.

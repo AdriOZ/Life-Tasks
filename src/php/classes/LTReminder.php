@@ -36,4 +36,9 @@ class LTReminder extends LTResponse {
 		$check = intval( date( 'Y' ) );
 		return intval( $year ) >= $check;
 	}
+
+	# Checks if the month is correct.
+	private function _isValidMonth ( $month ) {
+		return $month >= 1 && $month <= 12;
+	}
 }

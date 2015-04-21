@@ -33,7 +33,20 @@ class LTReminder extends LTResponse {
 
 	# Returns the results of searching reminders.
 	private function _query () {
-		# TODO
+		if ( !isset( $this->_where[ 'id_note' ] ) 
+			|| !$this->_noteBelongsToUser( $this->_where[ 'id_note' ] ) ) {
+			$this->_setError();
+		} else {
+			$query = "SELECT id_reminder,d_reminder,sended FROM reminders
+			WHERE note=".$this->_where[ 'id_note' ];
+
+			try {
+				$this->_setResult( 'reminders', Database::query( $query ) );
+				$this->_setSuccess();
+			} catch ( Exception $e ) {
+				$this->_setError();
+			}
+		}
 	}
 
 	# Creates a new reminder.

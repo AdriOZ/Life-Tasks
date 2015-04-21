@@ -57,12 +57,6 @@ class LTReminder extends LTResponse {
 		return $minute >= 0 && $minute <= 59;
 	}
 
-	# Add zeros to the value in order to create a valid
-	# datetime string with integers.
-	private function _addZeros ( $value ) {
-		return sprintf( "%'.02d", $value );
-	}
-
 	# Returns a datetime that can be inserted into the database.
 	# YYYY-MM-DD HH:MM:SS
 	# Seconds are 00 by default

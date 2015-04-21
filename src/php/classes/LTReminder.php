@@ -97,4 +97,14 @@ class LTReminder extends LTResponse {
 		);
 		return count( $res ) > 0;
 	}
+
+	# Checks if the reminder belongs to the user.
+	private function _reminderBelongsToUser ( $id_reminder ) {
+		$res = Database::query(
+			"SELECT id_reminder FROM reminders WHERE id_reminder=".$id_reminder
+			." AND note IN (SELECT id_note FROM notes WHERE notebook IN (SELECT
+			id_notebook FROM notebooks WHERE owner=".$this->_uid."))"
+		);
+		return count( $res ) > 0;
+	}
 }

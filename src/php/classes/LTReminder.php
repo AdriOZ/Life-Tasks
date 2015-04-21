@@ -87,4 +87,14 @@ class LTReminder extends LTResponse {
 				&& $this->_isValidHour( $this->_where[ 'hour' ] )
 				&& $this->_isValidMinute( $this->_where[ 'minute' ] );
 	}
+
+	# Checks if the note belongs to the user.
+	private function _noteBelongsToUser ( $id_note ) {
+		$res = Database::query(
+			"SELECT id_note FROM notes WHERE id_note=".$id_note." AND
+			notebook IN (SELECT id_notebook FROM notebooks WHERE owner="
+			.$this->_uid.")"
+		);
+		return count( $res ) > 0;
+	}
 }

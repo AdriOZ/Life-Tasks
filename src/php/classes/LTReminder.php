@@ -46,4 +46,9 @@ class LTReminder extends LTResponse {
 	private function _isValidDay ( $day ) {
 		return $day >= 1 && $day <= 31;
 	}
+
+	# Checks if the hour is correct.
+	private function _isValidHour ( $hour ) {
+		return $hour >= 0 && $hour <= 23;
+	}
 }

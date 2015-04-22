@@ -11,7 +11,9 @@ class LTAccess {
 		# Create object
 		$action = $_REQUEST[ 'action' ];
 		$table = $_REQUEST[ 'table' ];
-		$where = $_REQUEST[ 'where' ];
+		$where = isset( $_REQUEST[ 'where' ] )
+				? $_REQUEST[ 'where' ]
+				:array();
 
 		if ( $table == Consts::USERS )
 			$object = new LTUser( $action, $where );
@@ -65,8 +67,8 @@ class LTAccess {
 			throw new Exception( 'Error in requested table' );
 		}
 
-		if ( !isset( $_REQUEST[ 'where' ] )
-			|| !self::_checkWhere( $_REQUEST[ 'where' ] ) ) {
+		if ( isset( $_REQUEST[ 'where' ] )
+			&& !self::_checkWhere( $_REQUEST[ 'where' ] ) ) {
 			throw new Exception( 'Error in requested data' );
 		}
 	}

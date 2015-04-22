@@ -12,13 +12,13 @@ class LTReminder extends LTResponse {
 
 			# Perform the action
 			switch ( $this->_action ) {
-				case Consts::QUERY: # TODO
+				case Consts::QUERY: $this->_query();
 					break;
-				case Consts::INSERT: # TODO
+				case Consts::INSERT: $this->_insert();
 					break;
-				case Consts::UPDATE: # TODO
+				case Consts::UPDATE: $this->_update();
 					break;
-				case Consts::DELETE: # TODO
+				case Consts::DELETE: $this->_delete();
 					break;
 				default: $this->_setError();
 					break;

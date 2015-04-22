@@ -84,8 +84,8 @@ class LTUser extends LTResponse {
 		} else {
 			try {
 				$res = Database::query( "SELECT id_user FROM users WHERE email='".
-					$this->_where[ 'email' ]."' AND password=".
-					sha1( $this->_where[ 'pass' ] ) );
+					$this->_where[ 'email' ]."' AND password='".
+					sha1( $this->_where[ 'pass' ] )."'" );
 
 				if ( count( $res ) ) {
 					$_SESSION[ 'uid' ] = $res[ 0 ][ 'id_user' ];

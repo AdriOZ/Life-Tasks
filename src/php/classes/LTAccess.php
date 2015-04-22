@@ -6,7 +6,7 @@ class LTAccess {
 	 * @return LTResponse Object that performs the action.
 	 */
 	public static function getObject () {
-		$this->_checkRequest();	# Throws exception and stop execution.
+		self::_checkRequest();	# Throws exception and stop execution.
 
 		# Create object
 		$action = $_REQUEST[ 'action' ];
@@ -39,34 +39,34 @@ class LTAccess {
 	}
 
 	# Checks if the requested action is correct
-	private function _checkAction ( $action ) {
+	public static function _checkAction ( $action ) {
 		return $action >= Consts::LOGIN && $action <= Consts::DELETE;
 	}
 
 	# Checks if the requested table is correct
-	private function _checkTable ( $table ) {
+	public static function _checkTable ( $table ) {
 		return $table >= Consts::USERS && $table <= Consts::REMINDERS;
 	}
 
 	# Checks if the requested data is correct
-	private function _checkWhere ( $where ) {
+	public static function _checkWhere ( $where ) {
 		return is_array( $where );
 	}
 
 	# Checks the full request. Throws exception if error
-	private function _checkRequest () {
+	public static function _checkRequest () {
 		if ( !isset( $_REQUEST[ 'action' ] )
-			|| !$this->_checkAction( $_REQUEST[ 'action' ] ) ) {
+			|| !self::_checkAction( $_REQUEST[ 'action' ] ) ) {
 			throw new Exception( 'Error in requested action' );
 		}
 
 		if ( !isset( $_REQUEST[ 'table' ] )
-			|| !$this->_checkTable( $_REQUEST[ 'table' ] ) ) {
+			|| !self::_checkTable( $_REQUEST[ 'table' ] ) ) {
 			throw new Exception( 'Error in requested table' );
 		}
 
 		if ( !isset( $_REQUEST[ 'where' ] )
-			|| !$this->_checkWhere( $_REQUEST[ 'where' ] ) ) {
+			|| !self::_checkWhere( $_REQUEST[ 'where' ] ) ) {
 			throw new Exception( 'Error in requested data' );
 		}
 	}

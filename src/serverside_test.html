@@ -5,6 +5,63 @@
 		<title>Server Side Test</title>
 	</head>
 	<body>
+		<!-- Insert user -->
+		<form action="php/access.php" method="post">
+			Name:
+			<input type="text" name="where[email]" />
+			<br/>
+			<br/>
+			Password:
+			<input type="text" name="where[pass]"/>
+			<br/>
+			<br/>
+			<input type="text" name="action" value="4" hidden="hidden"/>
+			<input type="text" name="table" value="0" hidden="hidden"/>
+			<input type="submit" value="Register"/>
+		</form>
+
+		<!-- Login -->
+		<form action="php/access.php" method="post">
+			Name:
+			<input type="text" name="where[email]"/>
+			<br/>
+			<br/>
+			Password:
+			<input type="text" name="where[pass]"/>
+			<br/>
+			<br/>
+			<input type="text" name="action" value="0" hidden="hidden"/>
+			<input type="text" name="table" value="0" hidden="hidden"/>
+			<input type="submit" value="Login"/>
+		</form>
 		
+		<!-- Logout -->
+		<form action="php/access.php" method="post">
+			<input type="text" name="action" value="1" hidden="hidden"/>
+			<input type="text" name="table" value="0" hidden="hidden"/>
+			<input type="submit" value="Logout"/>
+		</form>
+
+		<!-- Update -->
+		<form action="php/access.php" method="post">
+			Name:
+			<input type="text" name="where[email]"/>
+			<br/>
+			<br/>
+			Password:
+			<input type="text" name="where[pass]"/>
+			<br/>
+			<br/>
+			<input type="text" name="action" value="5" hidden="hidden"/>
+			<input type="text" name="table" value="0" hidden="hidden"/>
+			<input type="submit" value="Update"/>
+		</form>
+
+		<!-- Delete -->
+		<form action="php/access.php" method="post">
+			<input type="text" name="action" value="6" hidden="hidden"/>
+			<input type="text" name="table" value="0" hidden="hidden"/>
+			<input type="submit" value="Delete"/>
+		</form>
 	</body>
 </html>

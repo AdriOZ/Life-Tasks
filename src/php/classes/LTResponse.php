@@ -66,6 +66,6 @@ abstract class LTResponse {
 
 	# Prints the result to the client side.
 	protected function _generateResponse () {
-		return  htmlentities( json_encode( $this->_result ) );
+		return  json_encode( $this->_result );
 	}
 }

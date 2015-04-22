@@ -35,7 +35,7 @@ class LTAccess {
 			'status' => Consts::ERROR,
 			'message' => $message
 		);
-		return htmlentities( json_encode( $errorMessage ) );
+		return json_encode( $errorMessage );
 	}
 
 	# Checks if the requested action is correct

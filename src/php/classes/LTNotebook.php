@@ -53,6 +53,7 @@ class LTNotebook extends LTResponse {
 	# Creates a new Notebook.
 	private function _insert () {
 		if ( !isset( $this->_where[ 'name' ] )
+			|| !strlen( $this->_where[ 'name' ] )
 			|| $this->_notebookExists( $this->_where[ 'name' ] ) ) {
 			$this->_setError();
 		} else {

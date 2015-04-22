@@ -69,5 +69,46 @@
 		<hr/>
 		Notebooks
 		<hr/>
+		<!-- Insert -->
+		<form action="php/access.php" method="post">
+			Name: 
+			<input type="text" name="where[name]" />
+			<br/><br/>
+			<input type="text" name="action" value="4" hidden="hidden"/>
+			<input type="text" name="table" value="1" hidden="hidden"/>
+			<input type="submit" value="Insert"/>
+		</form>
+		<!-- Query -->
+		<form action="php/access.php" method="post">
+			ID: 
+			<input type="text" name="where[id_notebook]" />
+			<br/><br/>
+			Name: 
+			<input type="text" name="where[name]" />
+			<br/><br/>
+			<input type="text" name="action" value="3" hidden="hidden"/>
+			<input type="text" name="table" value="1" hidden="hidden"/>
+			<input type="submit" value="Query"/>
+		</form>
+		<!-- Update -->
+		<form action="php/access.php" method="post">
+			Name: 
+			<input type="text" name="where[name]" />
+			<br/><br/>
+			ID: 
+			<input type="text" name="where[id_notebook]" />
+			<br/><br/>
+			<input type="text" name="action" value="5" hidden="hidden"/>
+			<input type="text" name="table" value="1" hidden="hidden"/>
+			<input type="submit" value="Update"/>
+		</form>
+		<!-- Delete -->
+		<form action="php/access.php" method="post">
+			ID: 
+			<input type="text" name="where[id_notebook]" />
+			<input type="text" name="action" value="6" hidden="hidden"/>
+			<input type="text" name="table" value="1" hidden="hidden"/>
+			<input type="submit" value="Delete"/>
+		</form>
 	</body>
 </html>

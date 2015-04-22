@@ -122,7 +122,7 @@ class LTUser extends LTResponse {
 
 		if ( isset( $this->_where[ 'pass' ] )
 			&& $this->_checkPassword( $this->_where[ 'pass' ] ) ) {
-			$update[ 'password' ] = $this->_where[ 'pass' ];
+			$update[ 'password' ] = sha1( $this->_where[ 'pass' ] );
 		}
 
 		if ( count( $update ) ) {

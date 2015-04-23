@@ -206,7 +206,7 @@ class LTNote extends LTResponse {
 	# Drops the note.
 	private function _purge ( $id_note ) {
 		Database::where( 'id_note', $id_note );
-		Database::delete();
+		Database::delete( 'notes' );
 		$this->_deleteDocuments();
 		$this->_setSuccess();
 	}

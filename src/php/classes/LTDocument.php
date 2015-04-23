@@ -139,7 +139,7 @@ class LTDocument extends LTResponse {
 			if ( unlink( $name[ 2 ].'/'.$name[ 3 ] ) ) {
 				# Deleting from the database
 				Database::where( 'id_document', $this->_where[ 'id_document' ] );
-				Database::delete();
+				Database::delete( 'documents' );
 
 				# Updating the percentage of usage
 				$this->_usedStorage();

@@ -158,7 +158,15 @@ class LTDocument extends LTResponse {
 
 	# Returns the current size of the user folder.
 	private function _storageSize () {
-		return filesize( Consts::FOLDER.$this->_uid );
+		$size = 0;
+		$files = glob( Consts::FOLDER.$this->_uid.'/*' );
+
+		# Sum
+		foreach ( $files as $file ) {
+			$size += filesize( $file );
+		}
+
+		return $size;
 	}
 
 	# Returns true if the new file can be uploaded.

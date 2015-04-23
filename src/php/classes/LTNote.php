@@ -109,7 +109,8 @@ class LTNote extends LTResponse {
 			$update = array();
 
 			# Title
-			if ( isset( $this->_where[ 'title' ] ) ) {
+			if ( isset( $this->_where[ 'title' ] )
+				&& strlen( $this->_where[ 'title' ] ) ) {
 				$update[ 'title' ] = $this->_where[ 'title' ];
 			}
 

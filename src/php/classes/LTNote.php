@@ -70,8 +70,8 @@ class LTNote extends LTResponse {
 	private function _insert () {
 		if ( !isset( $this->_where[ 'title' ] )
 			|| !isset( $this->_where[ 'content' ] )
-			|| !isset( $this->_where[ 'id_notebook' ]
-			|| !strlen( $this->_where[ 'title' ] ) )
+			|| !isset( $this->_where[ 'id_notebook' ] )
+			|| !strlen( $this->_where[ 'title' ] )
 			|| !$this->_notebookBelongsToUser( $this->_where[ 'id_notebook' ] ) ) {
 			$this->_setError();
 		} else {

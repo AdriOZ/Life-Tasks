@@ -145,22 +145,6 @@ class LTReminder extends LTResponse {
 		}
 	}
 
-	# Checks if the year is correct.
-	private function _isValidYear ( $year ) {
-		$check = intval( date( 'Y' ) );
-		return intval( $year ) >= $check;
-	}
-
-	# Checks if the month is correct.
-	private function _isValidMonth ( $month ) {
-		return $month >= 1 && $month <= 12;
-	}
-
-	# Checks if the day is correct.
-	private function _isValidDay ( $day ) {
-		return $day >= 1 && $day <= 31;
-	}
-
 	# Checks if the hour is correct.
 	private function _isValidHour ( $hour ) {
 		return $hour >= 0 && $hour <= 23;
@@ -195,9 +179,8 @@ class LTReminder extends LTResponse {
 				&& isset( $this->_where[ 'day' ] )
 				&& isset( $this->_where[ 'hour' ] )
 				&& isset( $this->_where[ 'minute' ] )
-				&& $this->_isValidYear( $this->_where[ 'year' ] )
-				&& $this->_isValidMonth( $this->_where[ 'month' ] )
-				&& $this->_isValidDay( $this->_where[ 'day' ] )
+				&& checkdate( $this->_where[ 'month' ], $this->_where[ 'day' ],
+					$this->_where[ 'year' ] )
 				&& $this->_isValidHour( $this->_where[ 'hour' ] )
 				&& $this->_isValidMinute( $this->_where[ 'minute' ] );
 	}

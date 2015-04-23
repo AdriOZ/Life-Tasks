@@ -136,7 +136,7 @@ class LTDocument extends LTResponse {
 			# $name[ 1 ] = docs
 			# $name[ 2 ] = id_user
 			# $name[ 3 ] = document
-			if ( unlink( $name[ 2 ].'/'.$name[ 3 ] ) ) {
+			if ( unlink( Consts::FOLDER.$this->_uid.'/'.$name[ 3 ] ) ) {
 				# Deleting from the database
 				Database::where( 'id_document', $this->_where[ 'id_document' ] );
 				Database::delete( 'documents' );

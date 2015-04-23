@@ -65,7 +65,7 @@ class LTDocument extends LTResponse {
 			} else {
 				# First insert into the database
 				$insert = array(
-					'name' => $this->_getFileName( $origin ),
+					'name' => $_FILES[ 'document' ][ 'name' ],
 					'url' => 'tmp',		# Temporal name that will be changed
 					'note' => $this->_where[ 'id_note' ]
 				);
@@ -82,7 +82,7 @@ class LTDocument extends LTResponse {
 					# Real path
 					$realPath = $this->_generatePath(
 						$res[ 0 ][ 'max(id_document)' ],
-						$this->_getExtension( $origin )
+						$this->_getExtension( $_FILES[ 'document' ][ 'name' ] )
 					);
 
 					# Get the path to move the document
@@ -136,10 +136,10 @@ class LTDocument extends LTResponse {
 			# $name[ 1 ] = docs
 			# $name[ 2 ] = id_user
 			# $name[ 3 ] = document
-			if ( unlink( $name[ 2 ].'/'.$name[ 3 ] ) ) {
+			if ( unlink( Consts::FOLDER.$this->_uid.'/'.$name[ 3 ] ) ) {
 				# Deleting from the database
 				Database::where( 'id_document', $this->_where[ 'id_document' ] );
-				Database::delete();
+				Database::delete( 'documents' );
 
 				# Updating the percentage of usage
 				$this->_usedStorage();
@@ -158,12 +158,20 @@ class LTDocument extends LTResponse {
 
 	# Returns the current size of the user folder.
 	private function _storageSize () {
-		return filesize( Consts::FOLDER.$this->_uid );
+		$size = 0;
+		$files = glob( Consts::FOLDER.$this->_uid.'/*' );
+
+		# Sum
+		foreach ( $files as $file ) {
+			$size += filesize( $file );
+		}
+
+		return $size;
 	}
 
 	# Returns true if the new file can be uploaded.
 	private function _canUploadFile ( $size ) {
-		return filesize( Consts::FOLDER.$this->_uid ) + $size < Consts::MAX_FOLDER_SIZE;
+		return $this->_storageSize() + $size < Consts::MAX_FOLDER_SIZE;
 	}
 
 	# Generates the path of the file

@@ -144,13 +144,15 @@ class LTNote extends LTResponse {
 	private function _delete () {
 		if ( !isset( $this->_where[ 'id_note' ] )
 			|| !isset( $this->_where[ 'id_notebook' ] )
-			|| !$this->_noteBelongsToUser( $this->_where[ 'id_note' ], $this->_where[ 'id_notebook' ] ) ) {
+			|| !$this->_noteBelongsToUser( $this->_where[ 'id_note' ],
+				$this->_where[ 'id_notebook' ] ) ) {
 			$this->_setError();
 		} else {
 			if ( $this->_isActive( $this->_where[ 'id_note' ] ) ) {
 				$this->_deactivateNote( $this->_where[ 'id_note' ] );
 			} else {
-				$this->_purge( $this->_where[ 'id_note' ] );
+				$this->_purge( $this->_where[ 'id_note' ],
+					$this->_where[ 'id_notebook' ] );
 			}
 		}
 	}
@@ -174,7 +176,7 @@ class LTNote extends LTResponse {
 	}
 
 	# Deletes all documents of the note.
-	private function _deleteDocuments ( $id_notebook, $id_note) {
+	private function _deleteDocuments ( $id_note, $id_notebook ) {
 		$path = Consts::FOLDER.$this->_uid;
 
 		# Deleting files contained in the note.
@@ -204,10 +206,10 @@ class LTNote extends LTResponse {
 	}
 
 	# Drops the note.
-	private function _purge ( $id_note ) {
+	private function _purge ( $id_note, $id_notebook ) {
 		Database::where( 'id_note', $id_note );
 		Database::delete( 'notes' );
-		$this->_deleteDocuments();
+		$this->_deleteDocuments( $id_note, $id_notebook );
 		$this->_setSuccess();
 	}
 }

@@ -80,6 +80,7 @@ class LTNotebook extends LTResponse {
 	private function _update () {
 		if ( !isset( $this->_where[ 'id_notebook' ] )
 			|| !isset( $this->_where[ 'name' ] )
+			|| !strlen( $this->_where[ 'name' ] )
 			|| !$this->_belongsToUser( $this->_where[ 'id_notebook' ] )
 			|| $this->_notebookExists( $this->_where[ 'name' ] ) ) {
 			$this->_setError();

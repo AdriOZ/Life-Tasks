@@ -39,7 +39,7 @@ class LTNotebook extends LTResponse {
 		if ( isset( $this->_where[ 'id_notebook' ] ) ) {
 			$query .= ' AND id_notebook='.$this->_where[ 'id_notebook' ];
 		} elseif ( isset( $this->_where[ 'name' ] ) ) {
-			$query .= " AND name LIKE '".$this->_where[ 'name' ]."'";
+			$query .= " AND name LIKE '%".$this->_where[ 'name' ]."%'";
 		}
 
 		try {

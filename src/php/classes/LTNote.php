@@ -165,7 +165,7 @@ class LTNote extends LTResponse {
 	}
 
 	# Checks if a notebook belongs to the user.
-	private function _notebookBelongsToUser () {
+	private function _notebookBelongsToUser ( $id_notebook ) {
 		$res = Database::query( "SELECT id_notebook FROM notebooks WHERE
 			id_notebook=".$id_notebook." AND owner=".$this->_uid );
 

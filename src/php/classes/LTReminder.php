@@ -137,7 +137,7 @@ class LTReminder extends LTResponse {
 			Database::where( 'id_reminder', $this->_where[ 'id_reminder' ] );
 
 			try {
-				Database::delete();
+				Database::delete( 'reminders' );
 				$this->_setSuccess();
 			} catch ( Exception $e ) {
 				$this->_setError();

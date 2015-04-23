@@ -65,7 +65,7 @@ class LTDocument extends LTResponse {
 			} else {
 				# First insert into the database
 				$insert = array(
-					'name' => $this->_getFileName( $origin ),
+					'name' => $_FILES[ 'document' ][ 'name' ],
 					'url' => 'tmp',		# Temporal name that will be changed
 					'note' => $this->_where[ 'id_note' ]
 				);
@@ -82,7 +82,7 @@ class LTDocument extends LTResponse {
 					# Real path
 					$realPath = $this->_generatePath(
 						$res[ 0 ][ 'max(id_document)' ],
-						$this->_getExtension( $origin )
+						$this->_getExtension( $_FILES[ 'document' ][ 'name' ] )
 					);
 
 					# Get the path to move the document

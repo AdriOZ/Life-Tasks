@@ -121,7 +121,7 @@ class LTNote extends LTResponse {
 
 			# Active status
 			if ( isset( $this->_where[ 'active' ] ) ) {
-				$update[ 'active' ] = true;
+				$update[ 'active' ] = 1;
 			}
 
 			# Nothing to update -> error

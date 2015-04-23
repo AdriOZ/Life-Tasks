@@ -103,8 +103,8 @@ class LTNotebook extends LTResponse {
 			&& $this->_belongsToUser( $this->_where[ 'id_notebook' ] ) ) {
 			Database::where( 'id_notebook', $this->_where[ 'id_notebook' ] );
 			try {
-				Database::delete();
-				$this->_deleteDocuments();
+				Database::delete( 'notebooks' );
+				$this->_deleteDocuments( $this->_where[ 'id_notebook' ] );
 				$this->_setSuccess();
 			} catch ( Exception $e ) {
 				$this->_setError();

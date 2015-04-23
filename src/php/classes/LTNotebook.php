@@ -39,7 +39,7 @@ class LTNotebook extends LTResponse {
 		if ( isset( $this->_where[ 'id_notebook' ] ) ) {
 			$query .= ' AND id_notebook='.$this->_where[ 'id_notebook' ];
 		} elseif ( isset( $this->_where[ 'name' ] ) ) {
-			$query .= " AND name LIKE '".$this->_where[ 'name' ]."'";
+			$query .= " AND name LIKE '%".$this->_where[ 'name' ]."%'";
 		}
 
 		try {
@@ -53,6 +53,7 @@ class LTNotebook extends LTResponse {
 	# Creates a new Notebook.
 	private function _insert () {
 		if ( !isset( $this->_where[ 'name' ] )
+			|| !strlen( $this->_where[ 'name' ] )
 			|| $this->_notebookExists( $this->_where[ 'name' ] ) ) {
 			$this->_setError();
 		} else {
@@ -79,6 +80,7 @@ class LTNotebook extends LTResponse {
 	private function _update () {
 		if ( !isset( $this->_where[ 'id_notebook' ] )
 			|| !isset( $this->_where[ 'name' ] )
+			|| !strlen( $this->_where[ 'name' ] )
 			|| !$this->_belongsToUser( $this->_where[ 'id_notebook' ] )
 			|| $this->_notebookExists( $this->_where[ 'name' ] ) ) {
 			$this->_setError();
@@ -101,8 +103,8 @@ class LTNotebook extends LTResponse {
 			&& $this->_belongsToUser( $this->_where[ 'id_notebook' ] ) ) {
 			Database::where( 'id_notebook', $this->_where[ 'id_notebook' ] );
 			try {
-				Database::delete();
-				$this->_deleteDocuments();
+				Database::delete( 'notebooks' );
+				$this->_deleteDocuments( $this->_where[ 'id_notebook' ] );
 				$this->_setSuccess();
 			} catch ( Exception $e ) {
 				$this->_setError();

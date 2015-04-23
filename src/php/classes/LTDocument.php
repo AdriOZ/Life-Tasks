@@ -171,7 +171,7 @@ class LTDocument extends LTResponse {
 
 	# Returns true if the new file can be uploaded.
 	private function _canUploadFile ( $size ) {
-		return filesize( Consts::FOLDER.$this->_uid ) + $size < Consts::MAX_FOLDER_SIZE;
+		return $this->_storageSize() + $size < Consts::MAX_FOLDER_SIZE;
 	}
 
 	# Generates the path of the file

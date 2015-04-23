@@ -71,6 +71,7 @@ class LTNote extends LTResponse {
 		if ( !isset( $this->_where[ 'title' ] )
 			|| !isset( $this->_where[ 'content' ] )
 			|| !isset( $this->_where[ 'id_notebook' ] )
+			|| !strlen( $this->_where[ 'title' ] )
 			|| !$this->_notebookBelongsToUser( $this->_where[ 'id_notebook' ] ) ) {
 			$this->_setError();
 		} else {
@@ -108,7 +109,8 @@ class LTNote extends LTResponse {
 			$update = array();
 
 			# Title
-			if ( isset( $this->_where[ 'title' ] ) ) {
+			if ( isset( $this->_where[ 'title' ] )
+				&& strlen( $this->_where[ 'title' ] ) ) {
 				$update[ 'title' ] = $this->_where[ 'title' ];
 			}
 
@@ -119,7 +121,7 @@ class LTNote extends LTResponse {
 
 			# Active status
 			if ( isset( $this->_where[ 'active' ] ) ) {
-				$update[ 'active' ] = true;
+				$update[ 'active' ] = 1;
 			}
 
 			# Nothing to update -> error
@@ -142,13 +144,15 @@ class LTNote extends LTResponse {
 	private function _delete () {
 		if ( !isset( $this->_where[ 'id_note' ] )
 			|| !isset( $this->_where[ 'id_notebook' ] )
-			|| !$this->_noteBelongsToUser( $this->_where[ 'id_note' ], $this->_where[ 'id_notebook' ] ) ) {
+			|| !$this->_noteBelongsToUser( $this->_where[ 'id_note' ],
+				$this->_where[ 'id_notebook' ] ) ) {
 			$this->_setError();
 		} else {
 			if ( $this->_isActive( $this->_where[ 'id_note' ] ) ) {
 				$this->_deactivateNote( $this->_where[ 'id_note' ] );
 			} else {
-				$this->_purge( $this->_where[ 'id_note' ] );
+				$this->_purge( $this->_where[ 'id_note' ],
+					$this->_where[ 'id_notebook' ] );
 			}
 		}
 	}
@@ -164,7 +168,7 @@ class LTNote extends LTResponse {
 	}
 
 	# Checks if a notebook belongs to the user.
-	private function _notebookBelongsToUser () {
+	private function _notebookBelongsToUser ( $id_notebook ) {
 		$res = Database::query( "SELECT id_notebook FROM notebooks WHERE
 			id_notebook=".$id_notebook." AND owner=".$this->_uid );
 
@@ -172,7 +176,7 @@ class LTNote extends LTResponse {
 	}
 
 	# Deletes all documents of the note.
-	private function _deleteDocuments ( $id_notebook, $id_note) {
+	private function _deleteDocuments ( $id_note, $id_notebook ) {
 		$path = Consts::FOLDER.$this->_uid;
 
 		# Deleting files contained in the note.
@@ -202,10 +206,10 @@ class LTNote extends LTResponse {
 	}
 
 	# Drops the note.
-	private function _purge ( $id_note ) {
+	private function _purge ( $id_note, $id_notebook ) {
 		Database::where( 'id_note', $id_note );
-		Database::delete();
-		$this->_deleteDocuments();
+		Database::delete( 'notes' );
+		$this->_deleteDocuments( $id_note, $id_notebook );
 		$this->_setSuccess();
 	}
 }

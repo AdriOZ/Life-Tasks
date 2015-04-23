@@ -5,9 +5,7 @@
 		<title>Server Side Test</title>
 	</head>
 	<body>
-		<hr/>
-		Users
-		<hr/>
+		<h3>Users</h3>
 		<!-- Login -->
 		<form action="php/access.php" method="post">
 			Name:
@@ -22,16 +20,29 @@
 			<input type="text" name="table" value="0" hidden="hidden"/>
 			<input type="submit" value="Login"/>
 		</form>
-		<hr/>
-		Notebooks
-		<hr/>
+		<h3>Notebooks</h3>
 		<!-- Insert -->
 		<form action="php/access.php" method="post">
 			Name: 
 			<input type="text" name="where[name]" />
-			<br/><br/>
 			<input type="text" name="action" value="4" hidden="hidden"/>
 			<input type="text" name="table" value="1" hidden="hidden"/>
+			<input type="submit" value="Insert"/>
+		</form>
+		<h3>Notes</h3>
+		<!-- Insert -->
+		<form action="php/access.php" method="post">
+			Title:
+			<input type="text" name="where[title]"/>
+			<br/><br/>
+			Content:
+			<input type="text" name="where[content]"/>
+			<br/><br/>
+			Notebook:
+			<input type="text" name="where[id_notebook]"/>
+			<br/><br/>
+			<input type="text" name="action" value="4" hidden="hidden"/>
+			<input type="text" name="table" value="2" hidden="hidden"/>
 			<input type="submit" value="Insert"/>
 		</form>
 	</body>

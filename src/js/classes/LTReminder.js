@@ -69,6 +69,10 @@ LT.Reminder.prototype = {
 
 	activateCounter: function () {
 		// TODO
+	},
+
+	deleteCounter: function () {
+		// TODO
 	}
 }; 
 }) ( window );

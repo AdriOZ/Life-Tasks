@@ -17,14 +17,6 @@ LT.Reminder = function ( id, datetime, sended ) {
 // methods and other properties
 LT.Reminder.prototype = {
 	/**
-	 * Maximum number of seconds left to activate a event listener
-	 * when the datetime is reached.
-	 * @type {Number}
-	 * @const
-	 */
-	MAX_SECONDS_TO_ACTIVATE: 3600,
-
-	/**
 	 * Returns an object with the information of the datetime.
 	 * @return {object} Object with the information.
 	 */
@@ -72,18 +64,6 @@ LT.Reminder.prototype = {
 	},
 
 	getSecondsToBeSended: function () {
-		// TODO
-	},
-
-	canActivateAlarm: function () {
-		// TODO
-	},
-
-	setAlarm: function ( callback ) {
-		// TODO
-	},
-
-	deleteAlarm: function () {
 		// TODO
 	}
 }; 

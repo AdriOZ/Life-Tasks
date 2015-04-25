@@ -11,7 +11,7 @@ LT.Reminder = function ( id, datetime, sended ) {
 	this._id = id;				// Reminder identificator
 	this._datetime = datetime;	// Datetime when it will be sended
 	this._sended = sended;		// Indicates if it is already sended
-	this._alarm = null;			// Interval of seconds when the alarm will be activated.
+	this._counter = null;		// Interval of seconds when the alarm will be activated.
 };
 
 // methods and other properties

@@ -65,6 +65,10 @@ LT.Reminder.prototype = {
 
 	getSecondsToBeSended: function () {
 		// TODO
+	},
+
+	activateCounter: function () {
+		// TODO
 	}
 }; 
 }) ( window );

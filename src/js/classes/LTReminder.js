@@ -33,9 +33,9 @@ LT.Reminder.prototype = {
 			year: yearMonthDay[ 0 ],
 			month: yearMonthDay[ 1 ],
 			day: yearMonthDay[ 2 ],
-			hour: hourMinuteSecond[ 0 ],
-			minute: hourMinuteSecond[ 1 ],
-			second: hourMinuteSecond[ 2 ]
+			hours: hourMinuteSecond[ 0 ],
+			minutes: hourMinuteSecond[ 1 ],
+			seconds: hourMinuteSecond[ 2 ]
 		};
 	},
 
@@ -69,6 +69,7 @@ LT.Reminder.prototype = {
 	 */
 	getHour: function () {
 		return this.getDatetime().hour;
+		return this.getDatetime().hours;
 	},
 
 	/**
@@ -76,7 +77,7 @@ LT.Reminder.prototype = {
 	 * @return {number} Minute of the datetime.
 	 */
 	getMinute: function () {
-		return this.getDatetime().minute;
+		return this.getDatetime().minutes;
 	},
 
 	/**
@@ -84,7 +85,7 @@ LT.Reminder.prototype = {
 	 * @return {number} Seconds of the datetime.
 	 */
 	getSeconds: function () {
-		return this.getDatetime().second;
+		return this.getDatetime().seconds;
 	},
 
 	/**
@@ -101,9 +102,9 @@ LT.Reminder.prototype = {
 			datetimeObject.year,
 			datetimeObject.month,
 			datetimeObject.day,
-			datetimeObject.hour,
-			datetimeObject.minute,
-			datetimeObject.second
+			datetimeObject.hours,
+			datetimeObject.minutes,
+			datetimeObject.seconds
 		);
 
 		return ( date.getTime() - now.getTime() ) * 1000;	// Milliseconds.

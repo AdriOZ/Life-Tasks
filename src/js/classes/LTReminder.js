@@ -91,7 +91,7 @@ LT.Reminder.prototype = {
 	 * Returns the seconds remaining to be sent.
 	 * @return {number} Seconds remaining.
 	 */
-	getSecondsToBeSent: function () {
+	getMillisecondsToBeSent: function () {
 		var datetimeObject,		// Datetime of the reminder.
 			date,				// Date object with the datetime of the reminder.
 			now;				// Date object.
@@ -99,14 +99,14 @@ LT.Reminder.prototype = {
 		now = new Date();
 		date = new Date(
 			datetimeObject.year,
-			datetimeObject.month,
+			datetimeObject.month -1 ,	// 0 - 11
 			datetimeObject.day,
 			datetimeObject.hours,
 			datetimeObject.minutes,
 			datetimeObject.seconds
 		);
 
-		return ( date - now ) / 1000;	// Milliseconds.
+		return ( date - now );
 	},
 
 	/**
@@ -123,7 +123,7 @@ LT.Reminder.prototype = {
 					clearTimeout( self._counter );	// Deleting counter.
 					self._sent = true;				// The reminder is sent.
 				},
-				this.getSecondsToBeSent()
+				this.getMillisecondsToBeSent()
 			);
 		}
 	},

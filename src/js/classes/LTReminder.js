@@ -135,6 +135,34 @@ LT.Reminder.prototype = {
 		if ( this._counter ) {
 			clearTimeout( this._counter );
 		}
+	},
+
+	/**
+	 * String representation of the object.
+	 * @return {string} String representation of the object.
+	 */
+	toString: function () {
+		return JSON.stringify(
+			{
+				id: this._id,
+				datetime: this._datetime,
+				sent: this._sent
+			}
+		);
+	},
+
+	/**
+	 * JSON representation of the object.
+	 * @return {string} JSON representation of the object.
+	 */
+	toJSON: function () {
+		return JSON.stringify(
+			{
+				id: this._id,
+				datetime: this._datetime,
+				sent: this._sent
+			}
+		);
 	}
 }; 
 }) ( window );

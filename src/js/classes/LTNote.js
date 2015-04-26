@@ -16,4 +16,39 @@ LT.Note = function ( id, title, content, active ) {
 	this._documents = [];		// Documents of the note.
 	this._reminders = [];		// Reminders of the note.
 };
+
+// Methods
+LT.Note.prototype = {
+	addDocument: function ( document ) {
+		// TODO
+	},
+
+	addReminder: function ( reminder ) {
+		// TODO
+	},
+
+	getDocumentById: function ( id ) {
+		// TODO
+	},
+
+	getDocumentByIndex: function ( index ) {
+		// TODO
+	},
+
+	getReminderById: function ( id ) {
+		// TODO
+	},
+
+	getReminderByIndex: function ( index ) {
+		// TODO
+	},
+
+	activateReminders: function () {
+		// TODO
+	},
+
+	deactivateReminders: function () {
+		// TODO
+	}
+};
 }) ( window );

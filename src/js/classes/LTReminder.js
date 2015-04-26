@@ -117,6 +117,31 @@ LT.Reminder.prototype = {
 		if ( this._counter ) {
 			clearTimeout( this._counter );
 		}
+	},
+
+	// Private methods
+	_yearsToSeconds: function ( years ) {
+		// TODO
+	},
+
+	_monthsToSeconds: function ( months ) {
+		// TODO
+	},
+
+	_daysToSeconds: function ( days ) {
+		// TODO
+	},
+
+	_hoursToSeconds: function ( hours ) {
+		// TODO
+	},
+
+	_minutesToSeconds: function ( minutes ) {
+		// TODO
+	},
+
+	_datetimeToSeconds: function ( years, months, days, hours, minutes ) {
+		// TODO
 	}
 }; 
 }) ( window );

@@ -87,8 +87,26 @@ LT.Reminder.prototype = {
 		return this.getDatetime().second;
 	},
 
+	/**
+	 * Returns the seconds remaining to be sent.
+	 * @return {number} Seconds remaining.
+	 */
 	getSecondsToBeSended: function () {
-		// TODO
+		var datetimeObject,		// Datetime of the reminder.
+			date,				// Date object with the datetime of the reminder.
+			now;				// Date object.
+		datetimeObject = this.getDatetime();
+		now = new Date();
+		date = new Date(
+			datetimeObject.year,
+			datetimeObject.month,
+			datetimeObject.day,
+			datetimeObject.hour,
+			datetimeObject.minute,
+			datetimeObject.second
+		);
+
+		return ( date.getTime() - now.getTime() ) * 1000;	// Milliseconds.
 	},
 
 	/**

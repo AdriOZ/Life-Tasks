@@ -106,7 +106,7 @@ LT.Reminder.prototype = {
 			datetimeObject.seconds
 		);
 
-		return ( date.getTime() - now.getTime() ) * 1000;	// Milliseconds.
+		return ( date - now ) / 1000;	// Milliseconds.
 	},
 
 	/**

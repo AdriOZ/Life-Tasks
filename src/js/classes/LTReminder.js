@@ -40,27 +40,27 @@ LT.Reminder.prototype = {
 	},
 
 	getYear: function () {
-		// TODO
+		return this.getDatetime().year;
 	},
 
 	getMonth: function () {
-		// TODO
+		return this.getDatetime().month;
 	},
 
 	getDay: function () {
-		// TODO
+		return this.getDatetime().day;
 	},
 
 	getHour: function () {
-		// TODO
+		return this.getDatetime().hour;
 	},
 
 	getMinute: function () {
-		// TODO
+		return this.getDatetime().minute;
 	},
 
 	getSeconds: function () {
-		// TODO
+		return this.getDatetime().second;
 	},
 
 	getSecondsToBeSended: function () {

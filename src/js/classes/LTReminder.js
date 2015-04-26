@@ -121,27 +121,32 @@ LT.Reminder.prototype = {
 
 	// Private methods
 	_yearsToSeconds: function ( years ) {
-		// TODO
+		return years * 365 * 24 * 60 * 60;
 	},
 
 	_monthsToSeconds: function ( months ) {
-		// TODO
+		return months * 30 * 24 * 60 * 60;
 	},
 
 	_daysToSeconds: function ( days ) {
-		// TODO
+		return days * 24 * 60 * 60;
 	},
 
 	_hoursToSeconds: function ( hours ) {
-		// TODO
+		return hours * 60 * 60;
 	},
 
 	_minutesToSeconds: function ( minutes ) {
-		// TODO
+		return minutes * 60;
 	},
 
-	_datetimeToSeconds: function ( years, months, days, hours, minutes ) {
-		// TODO
+	_datetimeToSeconds: function ( years, months, days, hours, minutes, seconds ) {
+		return this._yearsToSeconds( years )
+				+ this._monthsToSeconds( months )
+				+ this._daysToSeconds( days )
+				+ this._hoursToSeconds( hours )
+				+ this._minutesToSeconds( minutes )
+				+ parseInt( seconds );
 	}
 }; 
 }) ( window );

@@ -91,8 +91,23 @@ LT.Reminder.prototype = {
 		// TODO
 	},
 
+	/**
+	 * Activates the counter to sets the reminder status from not sended
+	 * to sended.
+	 */
 	activateCounter: function () {
-		// TODO
+		if ( !this._sended ) {
+			var self = this;	// Avoid scope errors
+
+			// Setting the counter.
+			this._counter = setTimeout(
+				function () {
+					clearTimeout( self._counter );	// Deleting counter.
+					self._sended = true;			// The reminder is sended.
+				},
+				this.getSecondsToBeSended()
+			);
+		}
 	},
 
 	deleteCounter: function () {

@@ -110,8 +110,13 @@ LT.Reminder.prototype = {
 		}
 	},
 
+	/**
+	 * Deletes the counter.
+	 */
 	deleteCounter: function () {
-		// TODO
+		if ( this._counter ) {
+			clearTimeout( this._counter );
+		}
 	}
 }; 
 }) ( window );

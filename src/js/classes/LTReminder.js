@@ -4,13 +4,13 @@ global.LT = global.LT || {};	// Namespace.
 /**
  * Class reminder.
  * @param {number} id       Reminder identifier.
- * @param {string} datetime Datetime when it will be sended.
- * @param {boolean} sended  Indicates if it is already sended.
+ * @param {string} datetime Datetime when it will be sent.
+ * @param {boolean} sent  Indicates if it is already sent.
  */
-LT.Reminder = function ( id, datetime, sended ) {
+LT.Reminder = function ( id, datetime, sent ) {
 	this._id = id;				// Reminder identificator
-	this._datetime = datetime;	// Datetime when it will be sended
-	this._sended = sended;		// Indicates if it is already sended
+	this._datetime = datetime;	// Datetime when it will be sent
+	this._sent = sent;			// Indicates if it is already sent
 	this._counter = null;		// Interval of seconds when the alarm will be activated.
 };
 
@@ -91,7 +91,7 @@ LT.Reminder.prototype = {
 	 * Returns the seconds remaining to be sent.
 	 * @return {number} Seconds remaining.
 	 */
-	getSecondsToBeSended: function () {
+	getSecondsToBeSent: function () {
 		var datetimeObject,		// Datetime of the reminder.
 			date,				// Date object with the datetime of the reminder.
 			now;				// Date object.
@@ -110,20 +110,20 @@ LT.Reminder.prototype = {
 	},
 
 	/**
-	 * Activates the counter to sets the reminder status from not sended
-	 * to sended.
+	 * Activates the counter to sets the reminder status from not sent
+	 * to sent.
 	 */
 	activateCounter: function () {
-		if ( !this._sended ) {
+		if ( !this._sent ) {
 			var self = this;	// Avoid scope errors
 
 			// Setting the counter.
 			this._counter = setTimeout(
 				function () {
 					clearTimeout( self._counter );	// Deleting counter.
-					self._sended = true;			// The reminder is sended.
+					self._sent = true;				// The reminder is sent.
 				},
-				this.getSecondsToBeSended()
+				this.getSecondsToBeSent()
 			);
 		}
 	},

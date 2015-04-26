@@ -39,26 +39,50 @@ LT.Reminder.prototype = {
 		};
 	},
 
+	/**
+	 * Returns the year of the datetime.
+	 * @return {number} Year of the datetime.
+	 */
 	getYear: function () {
 		return this.getDatetime().year;
 	},
 
+	/**
+	 * Returns the month of the datetime.
+	 * @return {number} Month of the datetime.
+	 */
 	getMonth: function () {
 		return this.getDatetime().month;
 	},
 
+	/**
+	 * Returns the day of the datetime.
+	 * @return {number} Day of the datetime.
+	 */
 	getDay: function () {
 		return this.getDatetime().day;
 	},
 
+	/**
+	 * Returns the hour of the datetime.
+	 * @return {number} hour of the datetime.
+	 */
 	getHour: function () {
 		return this.getDatetime().hour;
 	},
 
+	/**
+	 * Returns the minute of the datetime.
+	 * @return {number} Minute of the datetime.
+	 */
 	getMinute: function () {
 		return this.getDatetime().minute;
 	},
 
+	/**
+	 * Returns the seconds of the datetime.
+	 * @return {number} Seconds of the datetime.
+	 */
 	getSeconds: function () {
 		return this.getDatetime().second;
 	},

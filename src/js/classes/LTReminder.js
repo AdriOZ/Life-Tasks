@@ -67,7 +67,7 @@ LT.Reminder.prototype = {
 	 * Returns the hour of the datetime.
 	 * @return {number} hour of the datetime.
 	 */
-	getHour: function () {
+	getHours: function () {
 		return this.getDatetime().hours;
 	},
 
@@ -75,7 +75,7 @@ LT.Reminder.prototype = {
 	 * Returns the minute of the datetime.
 	 * @return {number} Minute of the datetime.
 	 */
-	getMinute: function () {
+	getMinutes: function () {
 		return this.getDatetime().minutes;
 	},
 

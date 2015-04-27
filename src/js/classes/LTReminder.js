@@ -134,6 +134,7 @@ LT.Reminder.prototype = {
 	deleteCounter: function () {
 		if ( this._counter ) {
 			clearTimeout( this._counter );
+			this._counter = null;
 		}
 	},
 

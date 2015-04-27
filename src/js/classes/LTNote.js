@@ -98,8 +98,16 @@ LT.Note.prototype = {
 		return reminder;
 	},
 
+	/**
+	 * Returns the reminder at the specific index.
+	 * @param  {number} index Index of the reminder.
+	 * @return {LT.Reminder|null}       Reminder at the specific index or null
+	 *                                  if it doesn't exist.
+	 */
 	getReminderByIndex: function ( index ) {
-		// TODO
+		return typeof this._reminders[ index ] === 'undefined'
+				? null
+				: this._reminders[ index ];
 	},
 
 	activateReminders: function () {

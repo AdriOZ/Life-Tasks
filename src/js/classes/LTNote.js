@@ -136,6 +136,16 @@ LT.Note.prototype = {
 		for ( var i in this._documents ) {
 			callback( this._documents[ i ] );
 		}
+	},
+
+	/**
+	 * Executes the callback for each reminder.
+	 * @param  {Function} callback Function that will be called.
+	 */
+	forEachReminder: function ( callback ) {
+		for ( var i in this._reminders ) {
+			callback( this._reminders[ i ] );
+		}
 	}
 };
 }) ( window );

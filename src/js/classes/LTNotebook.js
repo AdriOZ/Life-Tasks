@@ -56,6 +56,16 @@ LT.Notebook.prototype = {
 		return typeof this._notes[ index ] === 'undefined'
 				? null
 				: this._notes[ index ];
+	},
+
+	/**
+	 * Executes the callback for each note.
+	 * @param  {Function} callback Function that will be executed.
+	 */
+	forEachNote: function ( callback ) {
+		for ( var i in this._notes ) {
+			callback( this._notes[ i ] );
+		}
 	}
 };
 }) ( window );

@@ -146,6 +146,21 @@ LT.Note.prototype = {
 		for ( var i in this._reminders ) {
 			callback( this._reminders[ i ] );
 		}
+	},
+
+	/**
+	 * Returns a string representation of the note.
+	 * @return {string} String representation of the note.
+	 */
+	toString: function () {
+		return JSON.stringify(
+			{
+				id: this._id,
+				title: this._title,
+				content: this._content,
+				active: this._active
+			}
+		);
 	}
 };
 }) ( window );

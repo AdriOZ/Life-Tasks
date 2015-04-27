@@ -76,8 +76,27 @@ LT.Note.prototype = {
 				: this._documents[ index ];
 	},
 
+	/**
+	 * Returns the reminder with the specific id, or null
+	 * if it doesn't exist.
+	 * @param  {number} id Identifier of the reminder.
+	 * @return {LT.Reminder|null}    The required reminder or null if it doesn't
+	 *                               exist.
+	 */
 	getReminderById: function ( id ) {
-		// TODO
+		var reminder = null,				// Reminder that will be returned.
+			i = 0,							// Counter
+			len = this._reminders.length;	// Length of the array of reminders
+
+		while ( !reminder && i < len ) {
+			if ( this._reminders[ i ]._id == id ) {
+				reminder = this._reminders[ i ];
+			}
+
+			i++;
+		}
+
+		return reminder;
 	},
 
 	getReminderByIndex: function ( index ) {

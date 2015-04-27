@@ -63,8 +63,17 @@ LT.Note.prototype = {
 		return doc;
 	},
 
+	/**
+	 * Returns the document at the specific index, or null if it
+	 * doesn't exists.
+	 * @param  {number} index Index of the required document.
+	 * @return {LT.Document|null}       Required document or null if it doesn't
+	 *                                  exist.
+	 */
 	getDocumentByIndex: function ( index ) {
-		// TODO
+		return typeof this._documents[ index ] == 'undefined'
+				? null
+				: this._documents[ index ];
 	},
 
 	getReminderById: function ( id ) {

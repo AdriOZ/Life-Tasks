@@ -41,8 +41,26 @@ LT.Note.prototype = {
 		this._reminders.push( reminder );
 	},
 
+	/**
+	 * Search the document with the specific id.
+	 * @param  {number} id Identifier of the document.
+	 * @return {LT.Document|null}    The required document or null if it doesn't
+	 *                               exist.
+	 */
 	getDocumentById: function ( id ) {
-		// TODO
+		var doc = null,						// Document that will be returned.
+			i = 0,							// Counter.
+			len = this._documents.length;	// Length of the array.
+
+		while ( !doc && i < len ) {
+			i++;
+
+			if ( this._documents[ i ]._id == id ) {
+				doc = this._documents[ i ];
+			}
+		}
+
+		return doc;
 	},
 
 	getDocumentByIndex: function ( index ) {

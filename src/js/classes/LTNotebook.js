@@ -14,6 +14,15 @@ LT.Notebook = function ( id, name ) {
 
 // Methods
 LT.Notebook.prototype = {
-	// TODO
+	/**
+	 * Adds a new note to the notebook.
+	 * @param {LT.Note} note Note to be added.
+	 */
+	addNote: function ( note ) {
+		if ( !( note instanceof LT.Note ) ) {
+			throw 'note must be an instance of LT.Note';
+		}
+		this._notes.push( note );
+	}
 };
 }) ( window );

@@ -161,6 +161,23 @@ LT.Note.prototype = {
 				active: this._active
 			}
 		);
+	},
+
+	/**
+	 * Returns a JSON string of the object.
+	 * @return {string} JSON string of the object.
+	 */
+	toJSON: function () {
+		return JSON.stringify(
+			{
+				id: this._id,
+				title: this._title,
+				content: this._content,
+				active: this._active,
+				documents: this._documents,
+				reminders: this._reminders
+			}
+		);
 	}
 };
 }) ( window );

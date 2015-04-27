@@ -23,6 +23,27 @@ LT.Notebook.prototype = {
 			throw 'note must be an instance of LT.Note';
 		}
 		this._notes.push( note );
+	},
+
+	/**
+	 * Returns the note with the specifi id.
+	 * @param  {number} id Id of the note.
+	 * @return {LT.Note|null}    Returns the note with the specific id or null
+	 *                           if it doesn't exist.
+	 */
+	getNoteById: function ( id ) {
+		var note = null,				// Required note
+			i = 0,						// Counter
+			len = this._notes.length;	// Length of the array of notes.
+
+		while ( !note && i < len ) {
+			if ( this._notes[ i ]._id == id ) {
+				note = this._notes[ i ];
+			}
+			i++;
+		}
+
+		return note;
 	}
 };
 }) ( window );

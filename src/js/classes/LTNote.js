@@ -19,12 +19,26 @@ LT.Note = function ( id, title, content, active ) {
 
 // Methods
 LT.Note.prototype = {
-	addDocument: function ( document ) {
-		// TODO
+	/**
+	 * Add a new document to the note.
+	 * @param {LT.Document} doc New document to be added.
+	 */
+	addDocument: function ( doc ) {
+		if ( !( doc instanceof LT.Document ) ) {
+			throw 'doc must be an instance of LT.Document';
+		}
+		this._documents.push( doc );
 	},
 
+	/**
+	 * Add a new reminder to the note.
+	 * @param {LT.Reminder} reminder New reminder to be added.
+	 */
 	addReminder: function ( reminder ) {
-		// TODO
+		if ( !( reminder instanceof LT.Reminder ) ) {
+			throw 'reminder must be an instance of LT.Reminder';
+		}
+		this._reminders.push( reminder );
 	},
 
 	getDocumentById: function ( id ) {

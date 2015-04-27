@@ -145,6 +145,22 @@ LT.Note.prototype = {
 	},
 
 	/**
+	 * Unsets the reminder with the specific id.
+	 * @param  {number} id Identifier of the reminder.
+	 */
+	unsetReminderById: function ( id ) {
+		var newReminders = [];	// New array of reminders.
+
+		for ( var i in this._reminders ) {
+			if ( this._reminders[ i ]._id != id ) {
+				newReminders.push( this._reminders[ i ] );
+			}
+		}
+
+		this._reminders = newReminders;
+	},
+
+	/**
 	 * Executes the callback for each document.
 	 * @param  {Function} callback Function that will be called.
 	 */

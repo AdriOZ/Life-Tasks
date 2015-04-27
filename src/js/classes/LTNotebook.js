@@ -69,6 +69,22 @@ LT.Notebook.prototype = {
 	},
 
 	/**
+	 * Unsets the note with the specific id.
+	 * @param  {numeber} id Identifier of the note.
+	 */
+	unsetNoteById: function ( id ) {
+		var newNotes = [];		// New array of notes.
+
+		for ( var i in this._notes ) {
+			if ( this._notes[ i ]._id != id ) {
+				newNotes.push( this._notes[ i ] );
+			}
+		}
+
+		this._notes = newNotes;
+	},
+
+	/**
 	 * Returns a string representation of the notebook.
 	 * @return {string} String representation of the notebook.
 	 */

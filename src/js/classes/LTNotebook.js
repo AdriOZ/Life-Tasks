@@ -10,4 +10,9 @@ LT.Notebook = function ( id, name ) {
 	this._id = id;		// Identifier
 	this._name = name;	// Name of the notebook
 };
+
+// Methods
+LT.Notebook.prototype = {
+	// TODO
+};
 }) ( window );

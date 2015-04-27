@@ -66,6 +66,19 @@ LT.Notebook.prototype = {
 		for ( var i in this._notes ) {
 			callback( this._notes[ i ] );
 		}
+	},
+
+	/**
+	 * Returns a string representation of the notebook.
+	 * @return {string} String representation of the notebook.
+	 */
+	toString: function () {
+		return JSON.stringify(
+			{
+				id: this._id,
+				name: this._name
+			}
+		);
 	}
 };
 }) ( window );

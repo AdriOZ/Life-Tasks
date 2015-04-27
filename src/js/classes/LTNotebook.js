@@ -79,6 +79,20 @@ LT.Notebook.prototype = {
 				name: this._name
 			}
 		);
+	},
+
+	/**
+	 * Returns a JSON representation of the notebook.
+	 * @return {string} JSON representation of the notebook.
+	 */
+	toJSON: function () {
+		return JSON.stringify(
+			{
+				id: this._id,
+				name: this._name,
+				notes: this._notes
+			}
+		);
 	}
 };
 }) ( window );

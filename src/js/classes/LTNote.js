@@ -53,11 +53,10 @@ LT.Note.prototype = {
 			len = this._documents.length;	// Length of the array.
 
 		while ( !doc && i < len ) {
-			i++;
-
 			if ( this._documents[ i ]._id == id ) {
 				doc = this._documents[ i ];
 			}
+			i++;
 		}
 
 		return doc;

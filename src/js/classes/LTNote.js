@@ -110,12 +110,22 @@ LT.Note.prototype = {
 				: this._reminders[ index ];
 	},
 
+	/**
+	 * Activates the counter of the reminders.
+	 */
 	activateReminders: function () {
-		// TODO
+		for ( var i in this._reminders ) {
+			this._reminders[ i ].activateCounter();
+		}
 	},
 
+	/**
+	 * Deletes the counter of the reminders.
+	 */
 	deactivateReminders: function () {
-		// TODO
+		for ( var i in this._reminders ) {
+			this._reminders[ i ].deleteCounter();
+		}
 	}
 };
 }) ( window );

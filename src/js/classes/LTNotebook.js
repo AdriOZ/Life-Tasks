@@ -9,6 +9,7 @@ global.LT = global.LT || {};	// Namespace.
 LT.Notebook = function ( id, name ) {
 	this._id = id;		// Identifier
 	this._name = name;	// Name of the notebook
+	this._notes = [];	// Array of notes.
 };
 
 // Methods

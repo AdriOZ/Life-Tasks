@@ -129,6 +129,22 @@ LT.Note.prototype = {
 	},
 
 	/**
+	 * Unsets the document with the specific id.
+	 * @param  {number} id Identifier of the document.
+	 */
+	unsetDocumentById: function ( id ) {
+		var newDocuments = [];	// New array of documents.
+
+		for ( var i in this._documents ) {
+			if ( this._documents[ i ]._id != id ) {
+				newDocuments.push( this._documents[ i ] );
+			}
+		}
+
+		this._documents = newDocuments;
+	},
+
+	/**
 	 * Executes the callback for each document.
 	 * @param  {Function} callback Function that will be called.
 	 */

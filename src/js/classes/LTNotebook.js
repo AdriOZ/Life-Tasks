@@ -44,6 +44,18 @@ LT.Notebook.prototype = {
 		}
 
 		return note;
+	},
+
+	/**
+	 * Returns the note at the specific index.
+	 * @param  {number} index Index of the note.
+	 * @return {LT.Note|null}       Returns the note at the specific index or null
+	 *                              if it doesn't exist.
+	 */
+	getNoteByIndex: function ( index ) {
+		return typeof this._notes[ index ] === 'undefined'
+				? null
+				: this._notes[ index ];
 	}
 };
 }) ( window );

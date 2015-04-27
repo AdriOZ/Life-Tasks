@@ -70,7 +70,7 @@ LT.Note.prototype = {
 	 *                                  exist.
 	 */
 	getDocumentByIndex: function ( index ) {
-		return typeof this._documents[ index ] == 'undefined'
+		return typeof this._documents[ index ] === 'undefined'
 				? null
 				: this._documents[ index ];
 	},

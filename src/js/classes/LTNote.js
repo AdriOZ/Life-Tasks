@@ -126,6 +126,16 @@ LT.Note.prototype = {
 		for ( var i in this._reminders ) {
 			this._reminders[ i ].deleteCounter();
 		}
+	},
+
+	/**
+	 * Executes the callback for each document.
+	 * @param  {Function} callback Function that will be called.
+	 */
+	forEachDocument: function ( callback ) {
+		for ( var i in this._documents ) {
+			callback( this._documents[ i ] );
+		}
 	}
 };
 }) ( window );

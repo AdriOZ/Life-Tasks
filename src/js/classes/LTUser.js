@@ -25,6 +25,27 @@ LT.User.prototype = {
 			throw 'notebook must be an instance of LT.Notebook';
 		}
 		this._notebooks.push( notebook );
+	},
+
+	/**
+	 * Returns the notebook with the required id.
+	 * @param  {number} id Identifier of the notebook.
+	 * @return {LT.Notebook|null}    Returns the required notebook or null if
+	 *                               it doesn't exist.
+	 */
+	getNotebookById: function ( id ) {
+		var notebook = null,				// Required notebook
+			i = 0,							// Counter
+			len = this._notebooks.length;	// Length of the array of Notebooks
+
+		while ( !notebook && i < len ) {
+			if ( this._notebooks[ i ]._id == id ) {
+				notebook = this._notebooks;
+			}
+			i++;
+		}
+
+		return notebook;
 	}
 };
 }) ( window );

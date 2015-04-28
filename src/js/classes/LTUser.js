@@ -91,6 +91,20 @@ LT.User.prototype = {
 	 */
 	setPassword: function ( password ) {
 		this._password = md5( password );
+	},
+
+	/**
+	 * Returns a string representation of the user.
+	 * @return {string} String representation of the user.
+	 */
+	toString: function () {
+		return JSON.stringify(
+			{
+				id: this._id,
+				email: this._email,
+				password: this._password
+			}
+		);
 	}
 };
 }) ( window );

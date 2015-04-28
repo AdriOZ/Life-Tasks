@@ -73,6 +73,16 @@ LT.User.prototype = {
 			}
 		}
 		this._notebooks = newNotebooks;
+	},
+
+	/**
+	 * Executes the callback for each notebook.
+	 * @param  {Function} callback Function that will be executed.
+	 */
+	forEachNotebook: function ( callback ) {
+		for ( var i in this._notebooks ) {
+			callback( this._notebooks[ i ] );
+		}
 	}
 };
 }) ( window );

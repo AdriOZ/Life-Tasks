@@ -58,6 +58,21 @@ LT.User.prototype = {
 		return typeof this._notebooks[ index ] === 'undefined'
 				? null
 				: this._notebooks[ index ];
+	},
+
+	/**
+	 * Unsets the notebook with the specific id.
+	 * @param  {number} id Identifier of the notebook.
+	 */
+	unsetNotebookById: function ( id ) {
+		var newNotebooks = [];		// New array of notebooks.
+
+		for ( var i in this._notebooks ) {
+			if ( this._notebooks[ i ]._id != id ) {
+				newNotebooks.push( this._notebooks[ i ] );
+			}
+		}
+		this._notebooks = newNotebooks;
 	}
 };
 }) ( window );

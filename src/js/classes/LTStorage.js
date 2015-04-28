@@ -47,7 +47,9 @@ function importData () {
 	// TODO
 }
 
-/* Adding events */
-global.addEventListener( 'load', importData );
-global.addEventListener( 'beforeunload', exportData );
+/* Adding events only if the storage is enabled */
+if ( typeOfStorage !== NO_STORAGE ) {
+	global.addEventListener( 'load', importData );
+	global.addEventListener( 'beforeunload', exportData );
+}
 })( window, $ );

@@ -32,4 +32,22 @@ function getTypeOfStorage () {
 
 	return typeOfStorage;
 }
+
+/**
+ * Exports all data into the storage used.
+ */
+function exportData () {
+	// TODO
+}
+
+/**
+ * Import the storaged data into the LT.Storage variable.
+ */
+function importData () {
+	// TODO
+}
+
+/* Adding events */
+global.addEventListener( 'load', importData );
+global.addEventListener( 'beforeunload', exportData );
 })( window, $ );

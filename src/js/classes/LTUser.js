@@ -16,6 +16,15 @@ LT.User = function ( id, email, password ) {
 
 // Methods
 LT.User.prototype = {
-	/* TODO */
+	/**
+	 * Creates a new notebook.
+	 * @param {LT.Notebook} notebook Notebook to be added.
+	 */
+	addNotebook: function ( notebook ) {
+		if ( !( notebook instanceof LT.Notebook ) ) {
+			throw 'notebook must be an instance of LT.Notebook';
+		}
+		this._notebooks.push( notebook );
+	}
 };
 }) ( window );

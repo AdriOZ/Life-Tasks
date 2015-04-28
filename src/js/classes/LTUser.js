@@ -83,6 +83,14 @@ LT.User.prototype = {
 		for ( var i in this._notebooks ) {
 			callback( this._notebooks[ i ] );
 		}
+	},
+
+	/**
+	 * Sets a new password.
+	 * @param {string} password New value for the password.
+	 */
+	setPassword: function ( password ) {
+		this._password = md5( password );
 	}
 };
 }) ( window );

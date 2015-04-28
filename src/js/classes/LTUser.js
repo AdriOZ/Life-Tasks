@@ -13,4 +13,9 @@ LT.User = function ( id, email, password ) {
 	this._password = md5( password );	// Password of the user
 	this._notebooks = [];				// Array of notebooks
 };
+
+// Methods
+LT.User.prototype = {
+	/* TODO */
+};
 }) ( window );

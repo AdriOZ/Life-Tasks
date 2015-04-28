@@ -105,6 +105,21 @@ LT.User.prototype = {
 				password: this._password
 			}
 		);
+	},
+
+	/**
+	 * JSON representation of the user.
+	 * @return {string} JSON representation of the user.
+	 */
+	toJSON: function () {
+		return JSON.stringify(
+			{
+				id: this._id,
+				email: this._email,
+				password: this._password,
+				notebooks: this._notebooks
+			}
+		);
 	}
 };
 }) ( window );

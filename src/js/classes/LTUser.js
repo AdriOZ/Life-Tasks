@@ -46,6 +46,18 @@ LT.User.prototype = {
 		}
 
 		return notebook;
+	},
+
+	/**
+	 * Returns the notebook at the spicific index.
+	 * @param  {number} index Index of the required notebook.
+	 * @return {LT.Notebook|null}       Returns the required notebook or null if it
+	 *                             it doesn't exist.
+	 */
+	getNotebookByIndex: function ( index ) {
+		return typeof this._notebooks[ index ] === 'undefined'
+				? null
+				: this._notebooks[ index ];
 	}
 };
 }) ( window );

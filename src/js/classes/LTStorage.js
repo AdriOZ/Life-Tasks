@@ -44,7 +44,15 @@ function exportData () {
  * Import the storaged data into the LT.Storage variable.
  */
 function importData () {
-	// TODO
+	// Import the data from the cookies storage.
+	function importFromCookies () {
+		// TODO
+	}
+
+	// Import the data from the localStorage.
+	function importFromLocalStorage () {
+		// TODO
+	}
 }
 
 /* Adding events only if the storage is enabled */

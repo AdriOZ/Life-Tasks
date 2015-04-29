@@ -22,7 +22,7 @@ function getReminders () {
  */
 function getNotes ( $id_note ) {
 	return Database::query(
-		"SELECT title,content,notebook FROM notes WHERE ative=1
+		"SELECT title,content,notebook FROM notes WHERE active=1
 		AND id_note=".$id_note
 	);
 }

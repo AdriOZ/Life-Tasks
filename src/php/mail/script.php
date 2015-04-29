@@ -71,6 +71,39 @@ function convertPath ( $origin ) {
 	$parts[ 0 ] = '..';
 	return implode( '/' , $parts );
 }
+
+/**
+ * Sends the email with the indicated data.
+ * @param  array $dataToSend Array with the data.
+ * @return boolean             Returns true if the email is sent and false if
+ *                             not.
+ */
+function sendEmail ( $dataToSend ) {
+	$mail = new PHPMailer();
+
+	# Config
+	$mail->isSMTP();
+	$mail->Host = '';	# TODO
+	$mail->SMTPAuth = true;
+	$mail->Username = 'user@example.com';
+	$mail->Password = 'secret';
+	$mail->SMTPSecure = 'tls';
+	$mail->Port = 587;
+
+	# Data
+	$mail->From = '';	# TODO
+	$mail->FromName = 'Life and Tasks';
+	$mail->addAddress( $dataToSend[ 'to' ] );
+	$mail->Subject = $dataToSend[ 'title' ];
+	$mail->Body = $dataToSend[ 'content' ];
+
+	# Add documents
+	foreach ( $dataToSend[ 'documents' ] as $document ) {
+		$mail->$mail->addAttachment( $document[ 'path' ], $document[ 'name' ] );
+	}
+
+	return $mail->send();
+}
 ######################### Begin of the script ########################
 Database::connect();	# One point of connection
 

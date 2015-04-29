@@ -181,6 +181,22 @@ LT.Note.prototype = {
 	},
 
 	/**
+	 * Imports an array of serialized documents.
+	 * @param  {object} documents Array of JSON parsed documents.
+	 */
+	importDocuments: function ( documents ) {
+		for ( var i in documents ) {
+			this._documents.push(
+				new LT.Document(
+					documents[ i ].id,
+					documents[ i ].name,
+					documents[ i ].url
+				)
+			);
+		}
+	},
+
+	/**
 	 * Returns a string representation of the note.
 	 * @return {string} String representation of the note.
 	 */

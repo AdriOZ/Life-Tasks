@@ -85,6 +85,29 @@ LT.Notebook.prototype = {
 	},
 
 	/**
+	 * Import an array of serialized notes.
+	 * @param  {object} notes Array of JSON parsed notes.
+	 */
+	importNotes: function ( notes ) {
+		var aux;	// Import the notes.
+
+		for ( var i in notes ) {
+			aux = new LT.Note(
+				notes[ i ].id,
+				notes[ i ].title,
+				notes[ i ].content,
+				notes[ i ].active
+			);
+			// Importing documents and reminders
+			aux.importDocuments( notes[ i ].documents );
+			aux.importReminders( notes[ i ].reminders );
+
+			// Adding to the notebook
+			this._notes.push( aux );
+		}
+	},
+
+	/**
 	 * Returns a string representation of the notebook.
 	 * @return {string} String representation of the notebook.
 	 */

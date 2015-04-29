@@ -5,7 +5,7 @@ require '../classes/bbdd.php';						# Connect to the database
 ############################# Functions #############################
 /**
  * Search the reminders that must be sended.
- * @return [array] Array of reminders.
+ * @return array Array of reminders.
  */
 function getReminders () {
 	return Database::query(
@@ -132,7 +132,9 @@ foreach ( $reminders as $reminder ) {
 	}
 
 	# Send the email
-	sendEmail( $dataToSend );
+	if ( sendEmail( $dataToSend ) ) {
+		updateReminder( $reminder[ 'id_reminder' ] );
+	}
 }
 
 Database::disconnect();

@@ -58,4 +58,17 @@ function getFiles ( $id_note ) {
 	);
 }
 
+/**
+ * Converts the relative path of the documents to be correct
+ * for the actual path.
+ * @param  string $origin Original path.
+ * @return string         Correct path.
+ */
+function convertPath ( $origin ) {
+	# Origin: php/docs/'id_user'/'document'
+	# Real: ../docs/'id_user'/'document'
+	$parts = explode( '/', $origin );
+	$parts[ 0 ] = '..';
+	return implode( '/' , $parts );
+}
 ######################### Begin of the script ########################

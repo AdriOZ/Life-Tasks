@@ -37,7 +37,14 @@ function getTypeOfStorage () {
  * Exports all data into the storage used.
  */
 function exportData () {
-	// TODO
+	var COOKIES_LIFE = 30;	// Days to live.
+	if ( typeOfStorage === WEB_STORAGE ) {
+		localStorage.setItem( 'storage', JSON.stringify( LT.Storage ) );
+	} else if ( typeOfStorage === COOKIE_STORAGE ) {
+		$.cookie( 'id', LT.Storage._id, { expires: COOKIES_LIFE } );
+		$.cookie( 'email', LT.Storage._email, { expires: COOKIES_LIFE } );
+		$.cookie( 'password', LT.Storage._password, { expires: COOKIES_LIFE } );
+	}
 }
 
 /**

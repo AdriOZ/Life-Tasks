@@ -197,6 +197,22 @@ LT.Note.prototype = {
 	},
 
 	/**
+	 * Imports an array of serialized reminders.
+	 * @param  {object} reminders Array of JSON parsed reminders.
+	 */
+	importReminders: function ( reminders ) {
+		for ( var i in reminders ) {
+			this._reminders.push(
+				new LT.Reminder(
+					reminders[ i ].id,
+					reminders[ i ].datetime,
+					reminders[ i ].sent
+				)
+			);
+		}
+	},
+
+	/**
 	 * Returns a string representation of the note.
 	 * @return {string} String representation of the note.
 	 */

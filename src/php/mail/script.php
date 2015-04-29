@@ -13,5 +13,16 @@ function getReminders () {
 		<= sysdate()"
 	);
 }
-
+/**
+ * Search the title, content and notebook of the note with the
+ * specific id.
+ * @param  integer $id_note Identifier of the note.
+ * @return array          Array of notes.
+ */
+function getNotes ( $id_note ) {
+	return Database::query(
+		"SELECT title,content,notebook FROM notes WHERE ative=1
+		AND id_note=".$id_note
+	);
+}
 ######################### Begin of the script ########################

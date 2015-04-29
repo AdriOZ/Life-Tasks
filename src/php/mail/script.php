@@ -83,15 +83,15 @@ function sendEmail ( $dataToSend ) {
 
 	# Config
 	$mail->isSMTP();
-	$mail->Host = '';	# TODO
+	$mail->Host = '';								# TODO
 	$mail->SMTPAuth = true;
-	$mail->Username = 'user@example.com';
-	$mail->Password = 'secret';
+	$mail->Username = '';							# TODO
+	$mail->Password = '';							# TODO
 	$mail->SMTPSecure = 'tls';
 	$mail->Port = 587;
 
 	# Data
-	$mail->From = '';	# TODO
+	$mail->From = '';								# TODO
 	$mail->FromName = 'Life and Tasks';
 	$mail->addAddress( $dataToSend[ 'to' ] );
 	$mail->Subject = $dataToSend[ 'title' ];

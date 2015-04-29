@@ -38,4 +38,13 @@ function getEmail ( $id_notebook ) {
 		WHERE id_notebook=".$id_notebook.")"
 	);
 }
+
+/**
+ * Updates the status of the reminder with the spicific id.
+ * @param  integer $id_reminder Identifier of the reminder.
+ */
+function updateReminder ( $id_reminder ) {
+	Database::where( 'id_reminder', $id_reminder );
+	Database::update( 'reminders', array( 'sent', 1 ) );
+}
 ######################### Begin of the script ########################

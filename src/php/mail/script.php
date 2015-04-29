@@ -2,6 +2,12 @@
 require 'PHPMailer-master/class.phpmailer.php';		# To send emails
 require '../classes/bbdd.php';						# Connect to the database
 
+# Constants
+define( 'HOST', 'TOOD' );		# Host of the SMPT service.
+define( 'USERNAME', 'TODO' );	# Username for the SMPT
+define( 'PASSWORD', 'TODO' );	# Password of the user.
+define( 'FROM', 'TODO' );		# Email
+
 ############################# Functions #############################
 /**
  * Search the reminders that must be sended.
@@ -83,15 +89,14 @@ function sendEmail ( $dataToSend ) {
 
 	# Config
 	$mail->isSMTP();
-	$mail->Host = '';								# TODO
+	$mail->Host = HOST;
 	$mail->SMTPAuth = true;
-	$mail->Username = '';							# TODO
-	$mail->Password = '';							# TODO
+	$mail->Username = USERNAME;
+	$mail->Password = PASSWORD;
 	$mail->SMTPSecure = 'tls';
-	$mail->Port = 587;
 
 	# Data
-	$mail->From = '';								# TODO
+	$mail->From = FROM;
 	$mail->FromName = 'Life and Tasks';
 	$mail->addAddress( $dataToSend[ 'to' ] );
 	$mail->Subject = $dataToSend[ 'title' ];

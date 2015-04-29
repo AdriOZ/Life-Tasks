@@ -47,4 +47,15 @@ function updateReminder ( $id_reminder ) {
 	Database::where( 'id_reminder', $id_reminder );
 	Database::update( 'reminders', array( 'sent', 1 ) );
 }
+
+/**
+ * Search the documents associated with the note.
+ * @param  integer $id_note Identifier of the note.
+ */
+function getFiles ( $id_note ) {
+	return Database::query(
+		"SELECT name,url FROM documents WHERE note=".$id_note
+	);
+}
+
 ######################### Begin of the script ########################

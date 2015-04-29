@@ -72,3 +72,34 @@ function convertPath ( $origin ) {
 	return implode( '/' , $parts );
 }
 ######################### Begin of the script ########################
+Database::connect();	# One point of connection
+
+$reminders = getReminders();
+
+foreach ( $reminders as $reminder ) {
+	# Getting required data
+	$note = getNotes( $reminder[ 'note' ] );
+	$email = getEmail( $note[ 0 ][ 'notebook' ] );
+	$files = getFiles( $reminder[ 'note' ] );
+
+	# Making the array for the email
+	$dataToSend = array(
+		'title' => $note[ 0 ][ 'title' ],
+		'content' => $note[ 0 ][ 'content' ],
+		'to' => $email[ 0 ][ 'email' ],
+		'documents' => array()
+	);
+
+	# Adding documents
+	foreach ( $files as $file ) {
+		$dataToSend[ 'documents' ][] = array(
+			'name' => $file[ 'name' ],
+			'path' => convertPath( $file[ 'url' ] )
+		);
+	}
+
+	# Send the email
+	sendEmail( $dataToSend );
+}
+
+Database::disconnect();

@@ -13,6 +13,7 @@ function getReminders () {
 		<= sysdate()"
 	);
 }
+
 /**
  * Search the title, content and notebook of the note with the
  * specific id.
@@ -23,6 +24,18 @@ function getNotes ( $id_note ) {
 	return Database::query(
 		"SELECT title,content,notebook FROM notes WHERE ative=1
 		AND id_note=".$id_note
+	);
+}
+
+/**
+ * Search the email of the user that has the specific notebook.
+ * @param  integer $id_notebook Identifier of the notebook.
+ * @return array              Array with the data.
+ */
+function getEmail ( $id_notebook ) {
+	return Database::query(
+		"SELECT email FROM users WHERE id_user = (SELECT owner FROM notebooks
+		WHERE id_notebook=".$id_notebook.")"
 	);
 }
 ######################### Begin of the script ########################

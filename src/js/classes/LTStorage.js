@@ -44,7 +44,29 @@ function exportData () {
  * Import the storaged data into the LT.Storage variable.
  */
 function importData () {
-	// TODO
+	var aux;	// Parsed object
+
+	if ( typeOfStorage === WEB_STORAGE ) {
+		// Checks if there is data
+		if ( localStorage.getItem( 'storage' ) ) {
+			aux = JSON.parse( localStorage.getItem( 'storage' ) );
+
+			// Importing data
+			LT.Storage._id = aux.id;
+			LT.Storage._email = aux.email;
+			LT.Storage._password = aux.password;
+			LT.Storage.importNotebooks( aux.notebooks );
+		}
+	} else if ( typeOfStorage === COOKIE_STORAGE ) {
+		// With cookies, only store the id, email and password.
+		if ( $.cookie( 'id' )
+			&& $.cookie( 'email' )
+			&& $.cookie( 'password' ) ) {
+			LT.Storage._id = $.cookie( 'id' );
+			LT.Storage._email = $.cookie( 'email' );
+			LT.Storage._password = $.cookie( 'password' );
+		}
+	}
 }
 
 /* Adding events only if the storage is enabled */

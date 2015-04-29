@@ -37,7 +37,7 @@ class LTReminder extends LTResponse {
 			|| !$this->_noteBelongsToUser( $this->_where[ 'id_note' ] ) ) {
 			$this->_setError();
 		} else {
-			$query = "SELECT id_reminder,d_reminder,sended FROM reminders
+			$query = "SELECT id_reminder,d_reminder,sent FROM reminders
 			WHERE note=".$this->_where[ 'id_note' ];
 
 			try {
@@ -108,9 +108,9 @@ class LTReminder extends LTResponse {
 				);
 			}
 
-			# Sended
-			if ( isset( $this->_where[ 'sended' ] ) ) {
-				$update[ 'sended' ] = true;
+			# sent
+			if ( isset( $this->_where[ 'sent' ] ) ) {
+				$update[ 'sent' ] = true;
 			}
 
 			if ( count( $update ) ) {

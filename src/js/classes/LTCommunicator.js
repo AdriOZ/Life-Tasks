@@ -129,29 +129,50 @@ LT.Communicator = function () {
 		/**
 		 * Sets the action of the request to a query type.
 		 */
-		query: function () {
+		setQuery: function () {
 			_action = QUERY;
 		},
 
 		/**
 		 * Sets the action of the request to a insert type.
 		 */
-		insert: function () {
+		setInsert: function () {
 			_action = INSERT;
 		},
 
 		/**
 		 * Sets the action of the request to a update type.
 		 */
-		update: function () {
+		setUpdate: function () {
 			_action = UPDATE;
 		},
 
 		/**
 		 * Sets the action of the request to a delete type.
 		 */
-		delete: function () {
+		setDelete: function () {
 			_action = DELETE;
+		},
+
+		/**
+		 * Sets the action of the request to login type.
+		 */
+		setLogin: function () {
+			_action = LOGIN;
+		},
+
+		/**
+		 * Sets the action of the request to a log out type.
+		 */
+		setLogout: function () {
+			_action = LOGOUT;
+		},
+
+		/**
+		 * Sets the action of the request to a used storage type.
+		 */
+		setUsedStorage: function () {
+			_action = USED_STORAGE;
 		}
 	};
 };

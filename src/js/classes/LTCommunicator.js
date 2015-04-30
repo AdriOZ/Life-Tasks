@@ -173,6 +173,41 @@ LT.Communicator = function () {
 		 */
 		setUsedStorage: function () {
 			_action = USED_STORAGE;
+		},
+
+		/**
+		 * Sets the users table.
+		 */
+		setUsers: function () {
+			_table = USERS;
+		},
+
+		/**
+		 * Sets the notebooks table.
+		 */
+		setNotebooks: function () {
+			_table = NOTEBOOKS;
+		},
+
+		/**
+		 * Sets the notes table.
+		 */
+		setNotes: function () {
+			_table = NOTES;
+		},
+
+		/**
+		 * Sets the documents table.
+		 */
+		setDocuments: function () {
+			_table = DOCS;
+		},
+
+		/**
+		 * Sets the reminders table.
+		 */
+		setReminders: function () {
+			_table = REMINDERS;
 		}
 	};
 };

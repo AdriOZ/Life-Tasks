@@ -124,6 +124,23 @@ LT.Communicator = function () {
 	 */
 	REMINDERS = 4;
 
+	// Private functions
+	
+	// Checks if the data is correct. Throws exception if error
+	function _checkData () {
+		// TODO
+	}
+
+	// Checks if the action is correct for the table. Throws exception if error
+	function _checkTableAction () {
+		// TODO
+	}
+
+	// Checks both data and table-action. Throws exception if error
+	function _check () {
+		// TODO
+	}
+
 	// Closures
 	return {
 		/**

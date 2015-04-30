@@ -138,7 +138,8 @@ LT.Communicator = function () {
 
 	// Checks both data and table-action. Throws exception if error
 	function _check () {
-		// TODO
+		_checkData();
+		_checkTableAction();
 	}
 
 	// Closures

@@ -128,7 +128,21 @@ LT.Communicator = function () {
 	
 	// Checks if the data is correct. Throws exception if error
 	function _checkData () {
-		// TODO
+		if ( !_callback ) {
+			throw 'no callback is set';
+		}
+
+		if ( !_data ) {
+			_data = new FormData();
+		}
+
+		if ( typeof _table !== 'number' ) {
+			throw 'no table is set';
+		}
+
+		if ( typeof _action !== 'number' ) {
+			throw 'no action is set';
+		}
 	}
 
 	// Checks if the action is correct for the table. Throws exception if error

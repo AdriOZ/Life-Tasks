@@ -208,6 +208,17 @@ LT.Communicator = function () {
 		 */
 		setReminders: function () {
 			_table = REMINDERS;
+		},
+
+		/**
+		 * Sets the data to be sent.
+		 * @param {FormData} data Data to be sent.
+		 */
+		setData: function ( data ) {
+			if ( !( data instanceof FormData ) ) {
+				throw 'data must be an instance of FormData';
+			}
+			_data = data;
 		}
 	};
 };

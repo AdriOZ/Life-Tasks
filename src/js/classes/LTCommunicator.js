@@ -219,6 +219,17 @@ LT.Communicator = function () {
 				throw 'data must be an instance of FormData';
 			}
 			_data = data;
+		},
+
+		/**
+		 * Sets the callback that will be executed.
+		 * @param {Function} callback Function that will be executed.
+		 */
+		setCallback: function ( callback ) {
+			if ( typeof callback !== 'function' ) {
+				throw 'callback must be a function';
+			}
+			_callback = callback;
 		}
 	};
 };

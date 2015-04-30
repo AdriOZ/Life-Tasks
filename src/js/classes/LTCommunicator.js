@@ -273,6 +273,26 @@ LT.Communicator = function () {
 				throw 'callback must be a function';
 			}
 			_callback = callback;
+		},
+
+		/**
+		 * Makes the request and executes the callback.
+		 */
+		send: function () {
+			_check();	// Throws exception and stop execution
+
+			// Adding params
+			_data.append( 'table', _table );
+			_data.append( 'action', _action );
+
+			// Making the request
+			$.post(
+				{
+					url: ACCESS,
+					data: _data,
+					success: _callback
+				}
+			);
 		}
 	};
 };

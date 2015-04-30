@@ -147,7 +147,18 @@ LT.Communicator = function () {
 
 	// Checks if the action is correct for the table. Throws exception if error
 	function _checkTableAction () {
-		// TODO
+		if ( _action === USED_STORAGE && _action !== DOCS ) {
+			throw 'used storage request only can be used with documents table';
+		}
+
+		if ( ( _action === LOGIN || _action === LOGOUT )
+			&& _table !== USERS ) {
+			throw 'used action only can be used with users table';
+		}
+
+		if ( _action === UPDATE && _table === DOCS ) {
+			throw 'update action is not available for the documents table';
+		}
 	}
 
 	// Checks both data and table-action. Throws exception if error

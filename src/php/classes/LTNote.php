@@ -76,8 +76,8 @@ class LTNote extends LTResponse {
 			$this->_setError();
 		} else {
 			$insert = array(
-				'title' => $this->_where[ 'title' ],
-				'content' => $this->_where[ 'content' ],
+				'title' => htmlentities( $this->_where[ 'title' ] ),
+				'content' => htmlentities( $this->_where[ 'content' ] ),
 				'notebook' => $this->_where[ 'id_notebook' ]
 			);
 
@@ -111,12 +111,12 @@ class LTNote extends LTResponse {
 			# Title
 			if ( isset( $this->_where[ 'title' ] )
 				&& strlen( $this->_where[ 'title' ] ) ) {
-				$update[ 'title' ] = $this->_where[ 'title' ];
+				$update[ 'title' ] = htmlentities( $this->_where[ 'title' ] );
 			}
 
 			# Content
 			if ( isset( $this->_where[ 'content' ] ) ) {
-				$update[ 'content' ] = $this->_where[ 'content' ];
+				$update[ 'content' ] = htmlentities( $this->_where[ 'content' ] );
 			}
 
 			# Active status

@@ -58,7 +58,7 @@ class LTNotebook extends LTResponse {
 			$this->_setError();
 		} else {
 			$insert = array(
-				'name' => $this->_where[ 'name' ],
+				'name' => htmlentities( $this->_where[ 'name' ] ),
 				'owner' => $this->_uid
 			);
 
@@ -85,7 +85,7 @@ class LTNotebook extends LTResponse {
 			|| $this->_notebookExists( $this->_where[ 'name' ] ) ) {
 			$this->_setError();
 		} else {
-			$update = array( 'name' => $this->_where[ 'name' ] );
+			$update = array( 'name' => htmlentities( $this->_where[ 'name' ] ) );
 			Database::where( 'id_notebook', $this->_where[ 'id_notebook' ] );
 
 			try {

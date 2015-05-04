@@ -88,7 +88,7 @@ LT.Notebook.prototype = {
 	 * Import an array of serialized notes.
 	 * @param  {object} notes Array of JSON parsed notes.
 	 */
-	importNotes: function ( notes ) {
+	importNotesFromStorage: function ( notes ) {
 		var aux;	// Import the notes.
 
 		for ( var i in notes ) {
@@ -99,8 +99,8 @@ LT.Notebook.prototype = {
 				notes[ i ].active
 			);
 			// Importing documents and reminders
-			aux.importDocuments( notes[ i ].documents );
-			aux.importReminders( notes[ i ].reminders );
+			aux.importDocumentsFromStorage( notes[ i ].documents );
+			aux.importRemindersFromStorage( notes[ i ].reminders );
 
 			// Adding to the notebook
 			this._notes.push( aux );

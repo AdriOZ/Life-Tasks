@@ -62,7 +62,7 @@ function importData () {
 			LT.Storage._id = aux.id;
 			LT.Storage._email = aux.email;
 			LT.Storage._password = aux.password;
-			LT.Storage.importNotebooks( aux.notebooks );
+			LT.Storage.importNotebooksFromStorage( aux.notebooks );
 		}
 	} else if ( typeOfStorage === COOKIE_STORAGE ) {
 		// With cookies, only store the id, email and password.

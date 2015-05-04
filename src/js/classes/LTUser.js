@@ -97,7 +97,7 @@ LT.User.prototype = {
 	 * Import an array of serialized notebooks.
 	 * @param  {object} notebooks Array of JSON parsed notebooks.
 	 */
-	importNotebooks: function ( notebooks ) {
+	importNotebooksFromStorage: function ( notebooks ) {
 		var aux;	// Import the notebooks
 
 		for ( var i in notebooks ) {
@@ -107,7 +107,7 @@ LT.User.prototype = {
 			);
 
 			// Importing the notes
-			aux.importNotes( notebooks[ i ].notes );
+			aux.importNotesFromStorage( notebooks[ i ].notes );
 
 			// Adding to notebooks
 			this._notebooks.push( aux );

@@ -237,7 +237,75 @@ LT.RequestMaker = {
 	 * @type {Object}
 	 */
 	delete: {
-		/* TODO */
+		/**
+		 * Deletes the user account.
+		 * @param  {FormData}   data   Data to send to the server.
+		 * @param  {Function} callback Function that will be executed.
+		 */
+		user: function ( data, callback ) {
+			var send = LT.Communicator();
+			send.setUsers();
+			send.setDelete();
+			send.setCallback( callback );
+			send.setData( data );
+			send.send();
+		},
+
+		/**
+		 * Deletes a notebook.
+		 * @param  {FormData}   data   Data to send to the server.
+		 * @param  {Function} callback Function that will be executed.
+		 */
+		notebook: function ( data, callback ) {
+			var send = LT.Communicator();
+			send.setNotebooks();
+			send.setDelete();
+			send.setCallback( callback );
+			send.setData( data );
+			send.send();
+		},
+
+		/**
+		 * Deletes a note.
+		 * @param  {FormData}   data   Data to send to the server.
+		 * @param  {Function} callback Function that will be executed.
+		 */
+		note: function ( data, callback ) {
+			var send = LT.Communicator();
+			send.setNotes();
+			send.setDelete();
+			send.setCallback( callback );
+			send.setData( data );
+			send.send();
+		},
+
+		/**
+		 * Deletes a document.
+		 * @param  {FormData}   data   Data to send to the server.
+		 * @param  {Function} callback Function that will be executed.
+		 */
+		document: function ( data, callback ) {
+			var send = LT.Communicator();
+			send.setDocuments();
+			send.setDelete();
+			send.setCallback( callback );
+			send.setData( data );
+			send.send();
+		},
+
+		/**
+		 * Deletes a reminder.
+		 * @param  {FormData}   data   Data to send to the server.
+		 * @param  {Function} callback Function that will be executed.
+		 */
+		reminder: function ( data, callback ) {
+			var send = LT.Communicator();
+			send.setReminders();
+			send.setDelete();
+			send.setCallback( callback );
+			send.setData( data );
+			send.send();
+		}
 	}
 };
 

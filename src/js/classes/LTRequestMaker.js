@@ -37,7 +37,7 @@ LT.RequestMaker = {
 	 * @type {Object}
 	 */
 	insert: {
-		
+		/* TODO */
 	},
 	
 	/**
@@ -45,7 +45,7 @@ LT.RequestMaker = {
 	 * @type {Object}
 	 */
 	query: {
-		
+		/* TODO */
 	},
 	
 	/**
@@ -53,7 +53,7 @@ LT.RequestMaker = {
 	 * @type {Object}
 	 */
 	update: {
-		
+		/* TODO */
 	},
 	
 	/**
@@ -61,7 +61,7 @@ LT.RequestMaker = {
 	 * @type {Object}
 	 */
 	delete: {
-		
+		/* TODO */
 	}
 };
 

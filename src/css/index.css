@@ -1,0 +1,7 @@
+#myjumbotron {
+	padding-bottom: 50px;
+	background-image: url(../img/clouds.jpg);
+	background-repeat: no-repeat;
+	background-size: 100% 107%;
+	color: white;
+}

@@ -113,7 +113,61 @@ LT.RequestMaker = {
 	 * @type {Object}
 	 */
 	query: {
-		/* TODO */
+		/**
+		 * Search notebooks.
+		 * @param  {FormData}   data   Data to send to the server.
+		 * @param  {Function} callback Function that will be executed.
+		 */
+		notebook: function ( data, callback ) {
+			var send = LT.Communicator();
+			send.setNotebooks();
+			send.setQuery();
+			send.setCallback( callback );
+			send.setData( data );
+			send.send();
+		},
+
+		/**
+		 * Search notes.
+		 * @param  {FormData}   data   Data to send to the server.
+		 * @param  {Function} callback Function that will be executed.
+		 */
+		note: function ( data, callback ) {
+			var send = LT.Communicator();
+			send.setNotes();
+			send.setQuery();
+			send.setCallback( callback );
+			send.setData( data );
+			send.send();
+		},
+
+		/**
+		 * Search documents.
+		 * @param  {FormData}   data   Data to send to the server.
+		 * @param  {Function} callback Function that will be executed.
+		 */
+		document: function ( data, callback ) {
+			var send = LT.Communicator();
+			send.setDocuments();
+			send.setQuery();
+			send.setCallback( callback );
+			send.setData( data );
+			send.send();
+		},
+
+		/**
+		 * Search reminders.
+		 * @param  {FormData}   data   Data to send to the server.
+		 * @param  {Function} callback Function that will be executed.
+		 */
+		reminder: function ( data, callback ) {
+			var send = LT.Communicator();
+			send.setReminders();
+			send.setQuery();
+			send.setCallback( callback );
+			send.setData( data );
+			send.send();
+		}
 	},
 	
 	/**

@@ -175,7 +175,61 @@ LT.RequestMaker = {
 	 * @type {Object}
 	 */
 	update: {
-		/* TODO */
+		/**
+		 * Updates the user credentials.
+		 * @param  {FormData}   data   Data to send to the server.
+		 * @param  {Function} callback Function that will be executed.
+		 */
+		user: function ( data, callback ) {
+			var send = LT.Communicator();
+			send.setUsers();
+			send.setUpdate();
+			send.setCallback( callback );
+			send.setData( data );
+			send.send();
+		},
+
+		/**
+		 * Updates the name of a notebook.
+		 * @param  {FormData}   data   Data to send to the server.
+		 * @param  {Function} callback Function that will be executed.
+		 */
+		notebook: function ( data, callback ) {
+			var send = LT.Communicator();
+			send.setNotebooks();
+			send.setUpdate();
+			send.setCallback( callback );
+			send.setData( data );
+			send.send();
+		},
+
+		/**
+		 * Updates a note.
+		 * @param  {FormData}   data   Data to send to the server.
+		 * @param  {Function} callback Function that will be executed.
+		 */
+		note: function ( data, callback ) {
+			var send = LT.Communicator();
+			send.setNotes();
+			send.setUpdate();
+			send.setCallback( callback );
+			send.setData( data );
+			send.send();
+		},
+
+		/**
+		 * Updates a reminder.
+		 * @param  {FormData}   data   Data to send to the server.
+		 * @param  {Function} callback Function that will be executed.
+		 */
+		reminder: function ( data, callback ) {
+			var send = LT.Communicator();
+			send.setReminders();
+			send.setUpdate();
+			send.setCallback( callback );
+			send.setData( data );
+			send.send();
+		}
 	},
 	
 	/**

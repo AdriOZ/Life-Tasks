@@ -45,21 +45,17 @@ LT.HTML = (function () {
 
 			// Load navbar
 			$.post(
-				{
-					url: _sections.logedNavbar,
-					success: function ( content ) {
-						$( '#ltheader' ).html( content );
-					}
+				_sections.logedNavbar,
+				function ( content ) {
+					$( '#ltheader' ).html( content );
 				}
 			);
 
 			// Load content
 			$.post(
-				{
-					url: _sections.logedContent,
-					success: function ( content ) {
-						$( '#ltheader' ).html( content );
-					}
+				_sections.logedContent,
+				function ( content ) {
+					$( '#ltheader' ).html( content );
 				}
 			);
 		},
@@ -69,11 +65,9 @@ LT.HTML = (function () {
 		 */
 		loadIndex: function () {
 			$.post(
-				{
-					url: _sections.index,
-					success: function ( content ) {
-						$( document ).html( content );
-					}
+				_sections.index,
+				function ( content ) {
+					$( document ).html( content );
 				}
 			);
 		}

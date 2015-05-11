@@ -264,13 +264,7 @@ LT.Communicator = function () {
 			_data.append( 'action', _action );
 
 			// Making the request
-			$.post(
-				{
-					url: ACCESS,
-					data: _data,
-					success: _callback
-				}
-			);
+			$.post( ACCESS, _data, _callback );
 		}
 	};
 };

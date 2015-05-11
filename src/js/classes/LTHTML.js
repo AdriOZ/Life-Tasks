@@ -72,5 +72,5 @@ LT.HTML = (function () {
 			);
 		}
 	};
-});
+})();
 })( window, $ );

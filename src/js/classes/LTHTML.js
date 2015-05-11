@@ -18,12 +18,13 @@ LT.HTML = (function () {
 	_generalPath = 'html/';
 	_specificPath = _generalPath + _device + '/';
 	_sections = {
-		// TODO
+		logedNavbar: _generalPath + 'loged_navbar.html',
+		logedContent: _specificPath + 'loged_content.html'
 	};
 	_modals = {
 		// TODO
 	};
-	
+
 	// Returns true if the device is a mobile.
 	function _isMobile () {
 		return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i

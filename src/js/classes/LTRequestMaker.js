@@ -236,7 +236,7 @@ LT.RequestMaker = {
 	 * Contains the functions to make delete requests.
 	 * @type {Object}
 	 */
-	delete: {
+	del: {
 		/**
 		 * Deletes the user account.
 		 * @param  {FormData}   data   Data to send to the server.

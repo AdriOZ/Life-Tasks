@@ -18,6 +18,7 @@ LT.HTML = (function () {
 	_generalPath = 'html/';
 	_specificPath = _generalPath + _device + '/';
 	_sections = {
+		index: 'index.html',
 		logedNavbar: _generalPath + 'loged_navbar.html',
 		logedContent: _specificPath + 'loged_content.html'
 	};
@@ -33,7 +34,49 @@ LT.HTML = (function () {
 
 	// Closures
 	return {
+		/**
+		 * Loads the contents of the loged view.
+		 */
+		loadLogin: function () {
+			// Deleting previous content
+			$( '#ltpage' ).html(
+				'<div id="ltheader"></div><div id="ltcontent"></div>'
+			);
 
+			// Load navbar
+			$.post(
+				{
+					url: _sections.logedNavbar,
+					success: function ( content ) {
+						$( '#ltheader' ).html( content );
+					}
+				}
+			);
+
+			// Load content
+			$.post(
+				{
+					url: _sections.logedContent,
+					success: function ( content ) {
+						$( '#ltheader' ).html( content );
+					}
+				}
+			);
+		},
+
+		/**
+		 * Loads the index contents again.
+		 */
+		loadIndex: function () {
+			$.post(
+				{
+					url: _sections.index,
+					success: function ( content ) {
+						$( document ).html( content );
+					}
+				}
+			);
+		}
 	};
 });
 })( window, $ );

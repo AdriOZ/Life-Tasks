@@ -264,7 +264,7 @@ LT.Communicator = function () {
 			_data.append( 'action', _action );
 
 			// Making the request
-			$.post( ACCESS, _data, _callback );
+			$.post( ACCESS, $( _data ).serialize(), _callback );
 		}
 	};
 };

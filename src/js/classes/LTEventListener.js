@@ -8,9 +8,9 @@ global.LT = global.LT || {};	// Namespace
 LT.EventListener = {
 	/**
 	 * Makes the sign in request with data from the form.
-	 * @param  {object} element HTML form.
 	 */
-	signIn: function ( element ) {
+	signIn: function () {
+		var element = $( 'form' )[ 0 ];
 		var inputs = $( element ).find( 'input' );
 
 		/* Temporal user to keep the data safe */
@@ -39,6 +39,7 @@ LT.EventListener = {
 				}
 			}
 		);
+		return false;
 	},
 
 	/**

@@ -23,9 +23,20 @@ LT.EventListener = {
 
 		/* Making the request */
 		LT.RequestMaker.makeLogin(
-			element,
+			new FormData( element ),
 			function ( data ) {
-				// TODO
+				if ( data.status == LT.Communicator.SUCCESS ) {
+					// Loading credentials
+					LT.Storage._email = tmpUser._email;
+					LT.Storage._password = tmpUser._password;
+					LT.Storage._id = data.uid;
+					LT.Storage._notebooks = [];
+
+					// Loading view
+					LT.HTML.loadLogin();
+				} else {
+					// TODO
+				}
 			}
 		);
 	},

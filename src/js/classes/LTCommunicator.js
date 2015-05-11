@@ -20,28 +20,6 @@ LT.Communicator = function () {
 	ACCESS = 'php/access.php',
 
 	/**
-	 * Error message in the operation.
-	 * @type {Number}
-	 * @const
-	 */
-	ERROR = 0,
-
-	/**
-	 * Success message in the operation.
-	 * @type {Number}
-	 * @const
-	 */
-	SUCCESS = 1,
-
-	/**
-	 * The user can't save more file because is not storage
-	 * available.
-	 * @type {Number}
-	 * @const
-	 */
-	NO_STORAGE = 2,
-
-	/**
 	 * Login request.
 	 * @type {Number}
 	 * @const
@@ -166,6 +144,28 @@ LT.Communicator = function () {
 		_checkData();
 		_checkTableAction();
 	}
+
+	/**
+	 * Error message in the operation.
+	 * @type {Number}
+	 * @const
+	 */
+	this.ERROR = 0;
+
+	/**
+	 * Success message in the operation.
+	 * @type {Number}
+	 * @const
+	 */
+	this.SUCCESS = 1;
+
+	/**
+	 * The user can't save more file because is not storage
+	 * available.
+	 * @type {Number}
+	 * @const
+	 */
+	this.NO_STORAGE = 2;
 
 	// Closures
 	return {

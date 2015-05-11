@@ -145,28 +145,6 @@ LT.Communicator = function () {
 		_checkTableAction();
 	}
 
-	/**
-	 * Error message in the operation.
-	 * @type {Number}
-	 * @const
-	 */
-	this.ERROR = 0;
-
-	/**
-	 * Success message in the operation.
-	 * @type {Number}
-	 * @const
-	 */
-	this.SUCCESS = 1;
-
-	/**
-	 * The user can't save more file because is not storage
-	 * available.
-	 * @type {Number}
-	 * @const
-	 */
-	this.NO_STORAGE = 2;
-
 	// Closures
 	return {
 		/**
@@ -296,4 +274,25 @@ LT.Communicator = function () {
 		}
 	};
 };
+/**
+* Error message in the operation.
+* @type {Number}
+* @const
+*/
+LT.Communicator.ERROR = 0;
+
+/**
+* Success message in the operation.
+* @type {Number}
+* @const
+*/
+LT.Communicator.SUCCESS = 1;
+
+/**
+* The user can't save more file because is not storage
+* available.
+* @type {Number}
+* @const
+*/
+LT.Communicator.NO_STORAGE = 2;
 })( window, $ );

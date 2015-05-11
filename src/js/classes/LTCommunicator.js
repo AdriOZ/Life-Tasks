@@ -269,7 +269,8 @@ LT.Communicator = function () {
 				data: _data,
 				type: 'POST',
 				success: _callback,
-				processData: false
+				processData: false,
+				contentType: false
 			});
 		}
 	};

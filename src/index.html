@@ -26,6 +26,7 @@
 		<script async="async" type="application/javascript" src="js/classes/LTNote.js"></script>
 		<script async="async" type="application/javascript" src="js/classes/LTCommunicator.js"></script>
 		<script async="async" type="application/javascript" src="js/classes/LTRequestMaker.js"></script>
+		<script async="async" type="application/javascript" src="js/classes/LTHTML.js"></script>
 		<script async="async" type="application/javascript" src="js/classes/LTEventListener.js"></script>
 		<script type="application/javascript" src="js/classes/LTUser.js"></script>
 		<script type="application/javascript" src="js/classes/LTStorage.js"></script>
@@ -44,7 +45,7 @@
 			          <a class="navbar-brand" href="#"><strong>Life &amp; Tasks</strong></a>
 			        </div>
 			        <div id="navbar" class="navbar-collapse collapse">
-			          <form class="navbar-form navbar-right" onsubmit="LT.EventListener.signIn( this ); return false;">
+			          <form class="navbar-form navbar-right" onsubmit="return false;">
 			            <div class="form-group">
 			              <input type="email" required="required" maxlength="100" name="where[email]" placeholder="Your email" class="form-control"/>
 			            </div>
@@ -52,7 +53,7 @@
 			              <input type="password" required="required" name="where[pass]" placeholder="Your password" class="form-control"/>
 			            </div>
 			            <div class="form-group">
-			              <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+			              <button type="submit" onclick="LT.EventListener.signIn();"class="btn btn-primary btn-block">Sign in</button>
 			            </div>
 			          </form>
 			        </div>
@@ -63,7 +64,7 @@
 			        <div class="row">
 						<div class="col-xs-12 col-md-4 col-md-push-8">
 							<h2 class="text-center">Sign up for free</h2>
-							<form onsubmit="LT.EventListener.signUp( this ); return false;">
+							<form onsubmit="return LT.EventListener.signUp();">
 								<div class="form-group">
 									 <input type="email" required="required" maxlength="100" name="where[email]" placeholder="Your email" class="form-control input-lg"/>
 								</div>

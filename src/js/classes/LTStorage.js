@@ -4,6 +4,13 @@ global.LT = global.LT || {};	// Namespace
 /* Object */
 LT.Storage = new LT.User( -1, '', '' );		// Default user account
 
+/**
+ * Load everything of the user.
+ */
+LT.Storage.loadEverything = function () {
+
+};
+
 /* util */
 var NO_STORAGE = 0,			// Cookies disabled and no localStorage.
 	COOKIE_STORAGE = 1,		// Must use cookies because localStorage isn't supported.

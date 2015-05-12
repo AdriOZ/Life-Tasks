@@ -22,9 +22,6 @@ LT.HTML = (function () {
 		logedNavbar: _generalPath + 'loged_navbar.html',
 		logedContent: _specificPath + 'loged_content.html'
 	};
-	_modals = {
-		// TODO
-	};
 
 	// Returns true if the device is a mobile.
 	function _isMobile () {
@@ -34,6 +31,17 @@ LT.HTML = (function () {
 
 	// Closures
 	return {
+		/**
+		 * Shows a simple modal dialogue with the specific title and
+		 * content.
+		 * @param  {object} element Element that contains the modal dialogue.
+		 * @param  {string} title   Title of the modal dialogue.
+		 * @param  {string} content Content of the modal dialogue.
+		 */
+		simpleModalDialogue: function ( element, title, content ) {
+
+		},
+
 		/**
 		 * Loads the contents of the loged view.
 		 */

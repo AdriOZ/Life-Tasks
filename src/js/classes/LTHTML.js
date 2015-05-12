@@ -35,11 +35,11 @@ LT.HTML = (function () {
 		 * Shows a simple modal dialogue with the specific title and
 		 * content.
 		 * @param  {object} element Element that contains the modal dialogue.
-		 * @param  {string} title   Title of the modal dialogue.
 		 * @param  {string} content Content of the modal dialogue.
 		 */
-		simpleModalDialogue: function ( element, title, content ) {
-
+		simpleModalDialogue: function ( element, content ) {
+			$( element ).find( '.modal-title' ).text( content );
+			$( element ).modal( 'show' );
 		},
 
 		/**

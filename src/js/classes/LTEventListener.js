@@ -13,32 +13,38 @@ LT.EventListener = {
 		var element = $( 'form' )[ 0 ];
 		var inputs = $( element ).find( 'input' );
 
-		/* Temporal user to keep the data safe */
-		var tmpUser = new LT.User( -1, '', '' );
-		tmpUser._email = inputs.first().val();
-		tmpUser.setPassword( inputs.last().val() );
+		if ( inputs[ 0 ].value && inputs[ 1 ].value ) {
+			/* Temporal user to keep the data safe */
+			var tmpUser = new LT.User( -1, '', '' );
+			tmpUser._email = inputs.first().val();
+			tmpUser.setPassword( inputs.last().val() );
 
-		/* Replacing password to md5 cyphered password */
-		$( element ).find( 'input' ).last().val( tmpUser._password );
+			/* Replacing password to md5 cyphered password */
+			$( element ).find( 'input' ).last().val( tmpUser._password );
 
-		/* Making the request */
-		LT.RequestMaker.makeLogin(
-			new FormData( element ),
-			function ( data ) {
-				if ( data.status == LT.Communicator.SUCCESS ) {
-					// Loading credentials
-					LT.Storage._email = tmpUser._email;
-					LT.Storage._password = tmpUser._password;
-					LT.Storage._id = data.uid;
-					LT.Storage._notebooks = [];
+			/* Making the request */
+			LT.RequestMaker.makeLogin(
+				new FormData( element ),
+				function ( data ) {
+					if ( data.status == LT.Communicator.SUCCESS ) {
+						// Loading credentials
+						LT.Storage._email = tmpUser._email;
+						LT.Storage._password = tmpUser._password;
+						LT.Storage._id = data.uid;
+						LT.Storage._notebooks = [];
 
-					// Loading view
-					LT.HTML.loadLogin();
-				} else {
-					// TODO
+						// Loading view
+						LT.HTML.loadLogin();
+					} else {
+						LT.HTML.simpleModalDialogue(
+							$( '#mymodal' ),
+							'Incorrect email or password'
+						);
+						$( element ).find( 'input' ).last().val( '' );
+					}
 				}
-			}
-		);
+			);
+		}
 		return false;
 	},
 

@@ -20,28 +20,6 @@ LT.Communicator = function () {
 	ACCESS = 'php/access.php',
 
 	/**
-	 * Error message in the operation.
-	 * @type {Number}
-	 * @const
-	 */
-	ERROR = 0,
-
-	/**
-	 * Success message in the operation.
-	 * @type {Number}
-	 * @const
-	 */
-	SUCCESS = 1,
-
-	/**
-	 * The user can't save more file because is not storage
-	 * available.
-	 * @type {Number}
-	 * @const
-	 */
-	NO_STORAGE = 2,
-
-	/**
 	 * Login request.
 	 * @type {Number}
 	 * @const
@@ -286,14 +264,36 @@ LT.Communicator = function () {
 			_data.append( 'action', _action );
 
 			// Making the request
-			$.post(
-				{
-					url: ACCESS,
-					data: _data,
-					success: _callback
-				}
-			);
+			$.ajax({
+				url: ACCESS,
+				data: _data,
+				type: 'POST',
+				success: _callback,
+				processData: false,
+				contentType: false
+			});
 		}
 	};
 };
+/**
+* Error message in the operation.
+* @type {Number}
+* @const
+*/
+LT.Communicator.ERROR = 0;
+
+/**
+* Success message in the operation.
+* @type {Number}
+* @const
+*/
+LT.Communicator.SUCCESS = 1;
+
+/**
+* The user can't save more file because is not storage
+* available.
+* @type {Number}
+* @const
+*/
+LT.Communicator.NO_STORAGE = 2;
 })( window, $ );

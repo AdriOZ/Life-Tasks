@@ -94,27 +94,6 @@ LT.User.prototype = {
 	},
 
 	/**
-	 * Import an array of serialized notebooks.
-	 * @param  {object} notebooks Array of JSON parsed notebooks.
-	 */
-	importNotebooksFromStorage: function ( notebooks ) {
-		var aux;	// Import the notebooks
-
-		for ( var i in notebooks ) {
-			aux = new LT.Notebook(
-				notebooks[ i ].id,
-				notebooks[ i ].name
-			);
-
-			// Importing the notes
-			aux.importNotesFromStorage( notebooks[ i ].notes );
-
-			// Adding to notebooks
-			this._notebooks.push( aux );
-		}
-	},
-
-	/**
 	 * Returns a string representation of the user.
 	 * @return {string} String representation of the user.
 	 */

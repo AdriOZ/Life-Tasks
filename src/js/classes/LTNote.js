@@ -181,38 +181,6 @@ LT.Note.prototype = {
 	},
 
 	/**
-	 * Imports an array of serialized documents.
-	 * @param  {object} documents Array of JSON parsed documents.
-	 */
-	importDocumentsFromStorage: function ( documents ) {
-		for ( var i in documents ) {
-			this._documents.push(
-				new LT.Document(
-					documents[ i ].id,
-					documents[ i ].name,
-					documents[ i ].url
-				)
-			);
-		}
-	},
-
-	/**
-	 * Imports an array of serialized reminders.
-	 * @param  {object} reminders Array of JSON parsed reminders.
-	 */
-	importRemindersFromStorage: function ( reminders ) {
-		for ( var i in reminders ) {
-			this._reminders.push(
-				new LT.Reminder(
-					reminders[ i ].id,
-					reminders[ i ].datetime,
-					reminders[ i ].sent
-				)
-			);
-		}
-	},
-
-	/**
 	 * Returns a string representation of the note.
 	 * @return {string} String representation of the note.
 	 */

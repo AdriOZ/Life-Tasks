@@ -63,7 +63,7 @@ LT.HTML = (function () {
 			$.post(
 				_sections.logedContent,
 				function ( content ) {
-					$( '#ltheader' ).html( content );
+					$( '#ltcontent' ).html( content );
 				}
 			);
 		},

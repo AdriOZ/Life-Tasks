@@ -8,13 +8,12 @@ LT.Storage.loadEverything = function () {
 	LT.RequestMaker.query.notebook( new FormData(), loadNotebooks );
 
 	function loadNotebooks ( data ) {
-		var tmpData = JSON.parse( data );
 		var tmpNotebook;
 
-		for ( var i in tmpData.notebooks ) {
+		for ( var i in data.notebooks ) {
 			tmpNotebook = new LT.Notebook(
-				tmpData.notebooks[ i ].id_notebook,
-				tmpData.notebooks[ i ].name
+				data.notebooks[ i ].id_notebook,
+				data.notebooks[ i ].name
 			);
 			LT.Storage.addNotebook( tmpNotebook );
 			loadNotes( tmpNotebook );
@@ -27,10 +26,9 @@ LT.Storage.loadEverything = function () {
 		LT.RequestMaker.query.note(
 			tmpRequest,
 			function ( data ) {
-				var tmpData = JSON.parse( data );
 				var tmpNote;
 
-				for ( var i in tmpData.notes ) {
+				for ( var i in data.notes ) {
 					tmpNote = new LT.Note(
 						tmpNote.notes[ i ].id_note,
 						tmpNote.notes[ i ].title,
@@ -51,14 +49,13 @@ LT.Storage.loadEverything = function () {
 		LT.RequestMaker.query.document(
 			tmpRequest,
 			function ( data ) {
-				var tmpData = JSON.parse( data );
 				var tmpDocument;
 
-				for ( var i in tmpData.documents ) {
+				for ( var i in data.documents ) {
 					tmpDocument = new LT.Document(
-						tmpData.documents[ i ].id_document,
-						tmpData.documents[ i ].name,
-						tmpData.documents[ i ].url
+						data.documents[ i ].id_document,
+						data.documents[ i ].name,
+						data.documents[ i ].url
 					);
 					note.addDocument( tmpDocument );
 				}
@@ -72,14 +69,13 @@ LT.Storage.loadEverything = function () {
 		LT.RequestMaker.query.document(
 			tmpRequest,
 			function ( data ) {
-				var tmpData = JSON.parse( data );
 				var tmpReminder;
 
-				for ( var i in tmpData.reminders ) {
+				for ( var i in data.reminders ) {
 					tmpReminder = new LT.Reminder(
-						tmpData.reminders[ i ].id_reminder,
-						tmpData.reminders[ i ].d_reminder,
-						tmpData.reminders[ i ].sent
+						data.reminders[ i ].id_reminder,
+						data.reminders[ i ].d_reminder,
+						data.reminders[ i ].sent
 					);
 					tmpReminder.activateCounter();
 					note.addDocument( tmpReminder );
@@ -151,7 +147,7 @@ function importData () {
 function exportData () {
 	var COOKIES_LIFE = 30;	// Days to live.
 	if ( typeOfStorage === WEB_STORAGE ) {
-		localStorage.setItem( 'storage', JSON.stringify( LT.Storage ) );
+		localStorage.setItem( 'storage', LT.Storage.toJSON() );
 	} else if ( typeOfStorage === COOKIE_STORAGE ) {
 		$.cookie( 'id', LT.Storage._id, { expires: COOKIES_LIFE } );
 		$.cookie( 'email', LT.Storage._email, { expires: COOKIES_LIFE } );
@@ -171,6 +167,7 @@ if ( typeOfStorage !== NO_STORAGE ) {
 			tmp.append( 'where[email]', LT.Storage._email );
 			tmp.append( 'where[pass]', LT.Storage._password );
 			LT.RequestMaker.makeLogin( tmp, LT.Storage.loadEverything );
+			LT.HTML.loadLogin();
 		}
 	});
 

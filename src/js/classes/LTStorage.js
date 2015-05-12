@@ -4,6 +4,10 @@ global.LT = global.LT || {};	// Namespace
 /* Object */
 LT.Storage = new LT.User( -1, '', '' );		// Default user account
 
+LT.Storage.loadEverything = function () {
+
+};
+
 var NO_STORAGE = 0,			// Cookies disabled and no localStorage.
 	COOKIE_STORAGE = 1,		// Must use cookies because localStorage isn't supported.
 	WEB_STORAGE = 2;		// localStorage supported.
@@ -79,7 +83,12 @@ if ( typeOfStorage !== NO_STORAGE ) {
 	// Import
 	global.addEventListener( 'load', function () {
 		importData();		// Set the data
-		loadEverything();	// Load extra data
+		
+		// Make a login request and get extra data
+		var tmp = new FormData();
+		tmp.append( 'where[email]', LT.Storage._email );
+		tmp.append( 'where[pass]', LT.Storage._password );
+		LT.RequestMaker.makeLogin( tmp, LT.Storage.loadEverything );
 	});
 
 	// Export

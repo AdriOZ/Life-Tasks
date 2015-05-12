@@ -11,10 +11,10 @@ LT.Storage.loadEverything = function () {
 		var tmpData = JSON.parse( data );
 		var tmpNotebook;
 
-		for ( var i in tmpData ) {
+		for ( var i in tmpData.notebooks ) {
 			tmpNotebook = new LT.Notebook(
-				tmpData[ i ].id_notebook,
-				tmpData[ i ].name
+				tmpData.notebooks[ i ].id_notebook,
+				tmpData.notebooks[ i ].name
 			);
 			LT.Storage.addNotebook( tmpNotebook );
 			loadNotes( tmpNotebook );
@@ -30,12 +30,12 @@ LT.Storage.loadEverything = function () {
 				var tmpData = JSON.parse( data );
 				var tmpNote;
 
-				for ( var i in tmpData ) {
+				for ( var i in tmpData.notes ) {
 					tmpNote = new LT.Note(
-						tmpNote[ i ].id_note,
-						tmpNote[ i ].title,
-						tmpNote[ i ].content,
-						tmpNote[ i ].active
+						tmpNote.notes[ i ].id_note,
+						tmpNote.notes[ i ].title,
+						tmpNote.notes[ i ].content,
+						tmpNote.notes[ i ].active
 					);
 					notebook.addNote( tmpNote );
 					loadDocuments( tmpNote );
@@ -54,11 +54,11 @@ LT.Storage.loadEverything = function () {
 				var tmpData = JSON.parse( data );
 				var tmpDocument;
 
-				for ( var i in tmpData ) {
+				for ( var i in tmpData.documents ) {
 					tmpDocument = new LT.Document(
-						tmpData[ i ].id_document,
-						tmpData[ i ].name,
-						tmpData[ i ].url
+						tmpData.documents[ i ].id_document,
+						tmpData.documents[ i ].name,
+						tmpData.documents[ i ].url
 					);
 					note.addDocument( tmpDocument );
 				}
@@ -75,11 +75,11 @@ LT.Storage.loadEverything = function () {
 				var tmpData = JSON.parse( data );
 				var tmpReminder;
 
-				for ( var i in tmpData ) {
+				for ( var i in tmpData.reminders ) {
 					tmpReminder = new LT.Reminder(
-						tmpData[ i ].id_reminder,
-						tmpData[ i ].d_reminder,
-						tmpData[ i ].sent
+						tmpData.reminders[ i ].id_reminder,
+						tmpData.reminders[ i ].d_reminder,
+						tmpData.reminders[ i ].sent
 					);
 					tmpReminder.activateCounter();
 					note.addDocument( tmpReminder );

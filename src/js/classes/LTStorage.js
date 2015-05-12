@@ -166,10 +166,12 @@ if ( typeOfStorage !== NO_STORAGE ) {
 		importData();		// Set the data
 		
 		// Make a login request and get extra data
-		var tmp = new FormData();
-		tmp.append( 'where[email]', LT.Storage._email );
-		tmp.append( 'where[pass]', LT.Storage._password );
-		LT.RequestMaker.makeLogin( tmp, LT.Storage.loadEverything );
+		if ( LT.Storage._id !== -1 ) {
+			var tmp = new FormData();
+			tmp.append( 'where[email]', LT.Storage._email );
+			tmp.append( 'where[pass]', LT.Storage._password );
+			LT.RequestMaker.makeLogin( tmp, LT.Storage.loadEverything );
+		}
 	});
 
 	// Export

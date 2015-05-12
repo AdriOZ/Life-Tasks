@@ -32,7 +32,8 @@ LT.EventListener = {
 						LT.Storage._password = tmpUser._password;
 						LT.Storage._id = data.uid;
 						LT.Storage._notebooks = [];
-
+						LT.Storage.loadEverything();
+						
 						// Loading view
 						LT.HTML.loadLogin();
 					} else {

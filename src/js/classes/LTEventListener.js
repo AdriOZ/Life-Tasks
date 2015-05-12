@@ -91,6 +91,23 @@ LT.EventListener = {
 			);
 		}
 		return false;
+	},
+
+	/**
+	 * Makes the sign out request.
+	 */
+	signOut: function () {
+		// Request
+		LT.RequestMaker.makeLogout(function () {
+			// Reset Data
+			LT.Storage._id = -1;
+			LT.Storage._email = '';
+			LT.Storage._password = '';
+			LT.Storage._notebooks = [];
+
+			// Load the index
+			LT.HTML.loadIndex();
+		});
 	}
 };
 })( window, $ );

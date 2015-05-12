@@ -18,7 +18,7 @@ LT.HTML = (function () {
 	_generalPath = 'html/';
 	_specificPath = _generalPath + _device + '/';
 	_sections = {
-		index: 'index.html',
+		index: _generalPath + 'index.html',
 		logedNavbar: _generalPath + 'loged_navbar.html',
 		logedContent: _specificPath + 'loged_content.html'
 	};
@@ -75,7 +75,7 @@ LT.HTML = (function () {
 			$.post(
 				_sections.index,
 				function ( content ) {
-					$( document ).html( content );
+					$( 'body' ).html( content );
 				}
 			);
 		}

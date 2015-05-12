@@ -30,10 +30,10 @@ LT.Storage.loadEverything = function () {
 
 				for ( var i in data.notes ) {
 					tmpNote = new LT.Note(
-						tmpNote.notes[ i ].id_note,
-						tmpNote.notes[ i ].title,
-						tmpNote.notes[ i ].content,
-						tmpNote.notes[ i ].active
+						data.notes[ i ].id_note,
+						data.notes[ i ].title,
+						data.notes[ i ].content,
+						data.notes[ i ].active
 					);
 					notebook.addNote( tmpNote );
 					loadDocuments( tmpNote );
@@ -66,7 +66,7 @@ LT.Storage.loadEverything = function () {
 	function loadReminders ( note ) {
 		var tmpRequest = new FormData();
 		tmpRequest.append( 'where[id_note]', note._id );
-		LT.RequestMaker.query.document(
+		LT.RequestMaker.query.reminder(
 			tmpRequest,
 			function ( data ) {
 				var tmpReminder;
@@ -78,7 +78,7 @@ LT.Storage.loadEverything = function () {
 						data.reminders[ i ].sent
 					);
 					tmpReminder.activateCounter();
-					note.addDocument( tmpReminder );
+					note.addReminder( tmpReminder );
 				}
 			}
 		);

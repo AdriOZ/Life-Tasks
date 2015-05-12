@@ -37,7 +37,7 @@ LT.EventListener = {
 						LT.HTML.loadLogin();
 					} else {
 						LT.HTML.simpleModalDialogue(
-							$( '#mymodal' ),
+							$( '#sign_up_in' ),
 							'Incorrect email or password'
 						);
 						$( element ).find( 'input' ).last().val( '' );

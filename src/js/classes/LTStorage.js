@@ -73,4 +73,10 @@ function exportData () {
 		$.cookie( 'password', LT.Storage._password, { expires: COOKIES_LIFE } );
 	}
 }
+
+/* Adding events only if the storage is enabled */
+if ( typeOfStorage !== NO_STORAGE ) {
+	global.addEventListener( 'load', importData );
+	global.addEventListener( 'beforeunload', exportData );
+}
 })( window, $ );

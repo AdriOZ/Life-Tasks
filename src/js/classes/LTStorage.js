@@ -5,7 +5,88 @@ global.LT = global.LT || {};	// Namespace
 LT.Storage = new LT.User( -1, '', '' );		// Default user account
 
 LT.Storage.loadEverything = function () {
+	LT.RequestMaker.query.notebook( new FormData(), loadNotebooks );
 
+	function loadNotebooks ( data ) {
+		var tmpData = JSON.parse( data );
+		var tmpNotebook;
+
+		for ( var i in tmpData ) {
+			tmpNotebook = new LT.Notebook(
+				tmpData[ i ].id_notebook,
+				tmpData[ i ].name
+			);
+			LT.Storage.addNotebook( tmpNotebook );
+			loadNotes( tmpNotebook );
+		}
+	}
+
+	function loadNotes ( notebook ) {
+		var tmpRequest = new FormData();
+		tmpRequest.append( 'where[id_notebook]', notebook._id );
+		LT.RequestMaker.query.note(
+			tmpRequest,
+			function ( data ) {
+				var tmpData = JSON.parse( data );
+				var tmpNote;
+
+				for ( var i in tmpData ) {
+					tmpNote = new LT.Note(
+						tmpNote[ i ].id_note,
+						tmpNote[ i ].title,
+						tmpNote[ i ].content,
+						tmpNote[ i ].active
+					);
+					notebook.addNote( tmpNote );
+					loadDocuments( tmpNote );
+					loadReminders( tmpNote );
+				}
+			}
+		);
+	}
+
+	function loadDocuments ( note ) {
+		var tmpRequest = new FormData();
+		tmpRequest.append( 'where[id_note]', note._id );
+		LT.RequestMaker.query.document(
+			tmpRequest,
+			function ( data ) {
+				var tmpData = JSON.parse( data );
+				var tmpDocument;
+
+				for ( var i in tmpData ) {
+					tmpDocument = new LT.Document(
+						tmpData[ i ].id_document,
+						tmpData[ i ].name,
+						tmpData[ i ].url
+					);
+					note.addDocument( tmpDocument );
+				}
+			}
+		);
+	}
+
+	function loadReminders ( note ) {
+		var tmpRequest = new FormData();
+		tmpRequest.append( 'where[id_note]', note._id );
+		LT.RequestMaker.query.document(
+			tmpRequest,
+			function ( data ) {
+				var tmpData = JSON.parse( data );
+				var tmpReminder;
+
+				for ( var i in tmpData ) {
+					tmpReminder = new LT.Reminder(
+						tmpData[ i ].id_reminder,
+						tmpData[ i ].d_reminder,
+						tmpData[ i ].sent
+					);
+					tmpReminder.activateCounter();
+					note.addDocument( tmpReminder );
+				}
+			}
+		);
+	}
 };
 
 var NO_STORAGE = 0,			// Cookies disabled and no localStorage.

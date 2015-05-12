@@ -76,7 +76,13 @@ function exportData () {
 
 /* Adding events only if the storage is enabled */
 if ( typeOfStorage !== NO_STORAGE ) {
-	global.addEventListener( 'load', importData );
+	// Import
+	global.addEventListener( 'load', function () {
+		importData();		// Set the data
+		loadEverything();	// Load extra data
+	});
+
+	// Export
 	global.addEventListener( 'beforeunload', exportData );
 }
 })( window, $ );

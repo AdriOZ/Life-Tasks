@@ -94,6 +94,18 @@ LT.User.prototype = {
 	},
 
 	/**
+	 * Returns the total number of deleted notes.
+	 * @return {number} Sum of the number of deleted notes of all notebooks.
+	 */
+	numberOfDeletedNotes: function () {
+		var counter = 0;
+		for ( var i in this._notebooks ) {
+			counter += this._notebooks[ i ].numberOfDeletedNotes();
+		}
+		return counter;
+	},
+
+	/**
 	 * Returns a string representation of the user.
 	 * @return {string} String representation of the user.
 	 */

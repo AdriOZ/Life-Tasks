@@ -1,24 +1,27 @@
 <div class="panel panel-default">
-<div class="panel-heading" role="tab" id="h_id_">
+<div class="panel-heading" role="tab" id="h_theId">
     <h4 class="panel-title">
-      <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#_id_" aria-expanded="false" aria-controls="_id_">
-        _title_
+      <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#_theId" aria-expanded="false" aria-controls="_theId">
+        {{title}}
       </a>
     </h4>
   </div>
-  <div id="_id_" class="panel-collapse collapse" role="tabpanel" aria-labelledby="h_id_">
+  <div id="_theId" class="panel-collapse collapse" role="tabpanel" aria-labelledby="h_theId">
     <div class="panel-body list-group">
       <div class="list-group-item">
-        _content_
+        {{content}}
       </div>
       <div class="list-group-item">
-        Documents: _documents_
+        Documents: {{documents}}
       </div>
       <div class="list-group-item">
-        Reminders: _reminders_
+        Reminders: {{reminders}}
       </div>
       <div class="list-group-item">
-
+        <form>
+          <button type="button" class="btn btn-default">Modify</button>
+          <button type="button" class="btn btn-danger">Delete</button>
+        </form>
       </div>
     </div>
   </div>

@@ -21,7 +21,9 @@ LT.HTML = (function () {
 		index: _generalPath + 'index.html',
 		logedNavbar: _generalPath + 'loged_navbar.html',
 		logedContent: _specificPath + 'loged_content.html',
-		notebook: _generalPath + 'notebook.html'
+		notebook: _generalPath + 'notebook.html',
+		notesContainer: _generalPath + 'notes_container.html',
+		note: _generalPath + 'note.html'
 	};
 
 	// Returns true if the device is a mobile.
@@ -102,17 +104,69 @@ LT.HTML = (function () {
 					LT.Storage.forEachNotebook(function ( nt ) {
 						var cpy = data;
 						// Replacing content
-						cpy = cpy.replace( '_name_', nt._name );
-						cpy = cpy.replace( '_number_',
+						cpy = cpy.replace( '{{name}}', nt._name );
+						cpy = cpy.replace( '{{number}}',
 							nt.numberOfActiveNotes() );
 						cpy += document.getElementById( 'ltnotebooks' ).innerHTML;
 						// Adding html
 						document.getElementById( 'ltnotebooks' ).innerHTML = cpy;
 					});
+
+					// Only if the device is not a mobile the notebook must be
+					// loeaded.
+					if ( _device !== 'mobile' ) {
+						// Set the first notebook as selected
+						$( '#ltnotebooks a' ).first().addClass( 'active' );
+
+						// Load the contents of the notebook
+						LT.HTML.loadNotesContainer(
+							LT.Storage._notebooks[ LT.Storage._notebooks.length -1 ]
+						);
+					}
 				},
 				'text'
 			);
 		},
+
+		/**
+		 * Loads the html that will contain the notes.
+		 * @param  {LT.Notebook} nt Notebook.
+		 */
+		loadNotesContainer: function ( nt ) {
+			$.post(
+				_sections.notesContainer,
+				'',
+				function ( data ) {
+					data = data.replace( '{{name}}', nt._name );
+					$( '#ltnotescontainer' ).html( data );
+					LT.HTML.loadNotes( nt );
+				},
+				'text'
+			);
+		},
+
+		/**
+		 * Loads the notes of the notebook.
+		 * @param  {LT.Notebook} nt Noebook.
+		 */
+		loadNotes: function ( nt ) {
+			$.post(
+				_sections.note,
+				'',
+				function ( data ) {
+					nt.forEachNote(function ( note ) {
+						var cpy = data;
+						cpy = cpy.replace( /_theId/g, note._id );
+						cpy = cpy.replace( '{{title}}', note._title );
+						cpy = cpy.replace( '{{content}}', note._content );
+						cpy += document.getElementById( 'ltnotes' ).innerHTML;
+						document.getElementById( 'ltnotes' ).innerHTML = cpy;
+					});
+				},
+				'text'
+			);
+		},
+
 		/**
 		 * Display a progress bar while the content is loaded.
 		 */

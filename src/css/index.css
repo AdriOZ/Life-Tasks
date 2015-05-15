@@ -5,3 +5,8 @@
 	background-size: 100% 107%;
 	color: white;
 }
+
+#ltnotes {
+	max-height: 400px;
+	overflow: scroll;
+}

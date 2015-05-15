@@ -26,6 +26,9 @@ LT.EventListener = {
 			LT.RequestMaker.makeLogin(
 				new FormData( element ),
 				function ( data ) {
+					// Deleting content of the input password
+					$( element ).find( 'input' ).last().val( '' );
+
 					if ( data.status == LT.Communicator.SUCCESS ) {
 						// Loading credentials
 						LT.Storage._email = tmpUser._email;
@@ -41,7 +44,6 @@ LT.EventListener = {
 							$( '#sign_up_in' ),
 							'Incorrect email or password'
 						);
-						$( element ).find( 'input' ).last().val( '' );
 					}
 				}
 			);

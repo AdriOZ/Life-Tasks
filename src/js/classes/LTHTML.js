@@ -67,7 +67,13 @@ LT.HTML = (function () {
 				'',
 				function ( content ) {
 					$( '#ltcontent' ).html( content );
+
+					// Load notebooks
 					LT.HTML.loadNotebooks();
+
+					// Load the number of deleted notes
+					$( '#lttrash span.badge' )
+						.text( LT.Storage.numberOfDeletedNotes() );
 				}
 			);
 		},
@@ -97,7 +103,8 @@ LT.HTML = (function () {
 						var cpy = data;
 						// Replacing content
 						cpy = cpy.replace( '_name_', nt._name );
-						cpy = cpy.replace( '_number_', nt._notes.length );
+						cpy = cpy.replace( '_number_',
+							nt.numberOfActiveNotes() );
 						cpy += document.getElementById( 'ltnotebooks' ).innerHTML;
 						// Adding html
 						document.getElementById( 'ltnotebooks' ).innerHTML = cpy;

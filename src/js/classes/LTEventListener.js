@@ -35,7 +35,7 @@ LT.EventListener = {
 						LT.Storage.loadEverything();
 
 						// Loading view
-						LT.HTML.loadLogin();
+						LT.HTML.loadProgressBar();
 					} else {
 						LT.HTML.simpleModalDialogue(
 							$( '#sign_up_in' ),

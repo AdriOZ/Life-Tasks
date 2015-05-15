@@ -20,7 +20,8 @@ LT.HTML = (function () {
 	_sections = {
 		index: _generalPath + 'index.html',
 		logedNavbar: _generalPath + 'loged_navbar.html',
-		logedContent: _specificPath + 'loged_content.html'
+		logedContent: _specificPath + 'loged_content.html',
+		notebook: _generalPath + 'notebook.html'
 	};
 
 	// Returns true if the device is a mobile.
@@ -54,6 +55,7 @@ LT.HTML = (function () {
 			// Load navbar
 			$.post(
 				_sections.logedNavbar,
+				'',
 				function ( content ) {
 					$( '#ltheader' ).html( content );
 				}
@@ -62,8 +64,10 @@ LT.HTML = (function () {
 			// Load content
 			$.post(
 				_sections.logedContent,
+				'',
 				function ( content ) {
 					$( '#ltcontent' ).html( content );
+					LT.HTML.loadNotebooks();
 				}
 			);
 		},
@@ -74,10 +78,52 @@ LT.HTML = (function () {
 		loadIndex: function () {
 			$.post(
 				_sections.index,
+				'',
 				function ( content ) {
 					$( 'body' ).html( content );
 				}
 			);
+		},
+
+		/**
+		 * Loads the notebooks into the container div.
+		 */
+		loadNotebooks: function () {
+			$.post(
+				_sections.notebook,
+				'',
+				function ( data ) {
+					LT.Storage.forEachNotebook(function ( nt ) {
+						var cpy = data;
+						// Replacing content
+						cpy = cpy.replace( '_name_', nt._name );
+						cpy = cpy.replace( '_number_', nt._notes.length );
+						cpy += document.getElementById( 'ltnotebooks' ).innerHTML;
+						// Adding html
+						document.getElementById( 'ltnotebooks' ).innerHTML = cpy;
+					});
+				},
+				'text'
+			);
+		},
+		/**
+		 * Display a progress bar while the content is loaded.
+		 */
+		loadProgressBar: function () {
+			var counter = 0,	// Counts the time
+				interval;		// Save the interval
+			$( '#progressbar' ).modal( 'show' );
+
+			interval = global.setInterval(function () {
+				if ( counter < 100 ) {
+					counter += 5;
+					$( '#progressbar div.progress-bar' ).width( counter + '%' );
+				} else {
+					global.clearInterval( interval );
+					$( '#progressbar' ).modal( 'hide' );
+					LT.HTML.loadLogin();
+				}
+			},100);	// 2 seconds
 		}
 	};
 })();

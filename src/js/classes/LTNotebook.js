@@ -92,7 +92,7 @@ LT.Notebook.prototype = {
 	numberOfDeletedNotes: function () {
 		var counter = 0;
 		for ( var i in this._notes ) {
-			counter += this._notes[ 0 ]._active ? 0 : 1;
+			counter += this._notes[ i ]._active ? 0 : 1;
 		}
 		return counter;
 	},

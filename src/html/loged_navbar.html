@@ -7,16 +7,10 @@
 	            <span class="icon-bar"></span>
 	            <span class="icon-bar"></span>
 	        </button>
-	        <a class="navbar-brand" href="#"><strong>Life &amp; Tasks</strong></a>
+	        <a class="navbar-brand" href="index.html"><strong>Life &amp; Tasks</strong></a>
 	    </div>
 	    <div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav navbar-right">
-			    <li>
-			    	<a href="#">Notebooks</a>
-			    </li>
-			    <li>
-			    	<a href="#">Trash</a>
-			    </li>
 			    <li>
 			    	<a href="#">Account</a>
 			    </li>
@@ -24,9 +18,9 @@
 			    	<a href="#">Help</a>
 			    </li>
 			    <li>
-			    	<form class="navbar-form">
+			    	<form class="navbar-form" onsubmit="return false;">
 	            			<div class="form-group">
-	              			<button type="submit" class="btn btn-primary btn-block">
+	              			<button type="submit" class="btn btn-primary btn-block" onclick="LT.EventListener.signOut();">
 	              				Log out
 	              			</button>
 	            		</div>

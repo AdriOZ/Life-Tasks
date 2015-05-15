@@ -6,6 +6,7 @@ LT.Storage = new LT.User( -1, '', '' );		// Default user account
 
 LT.Storage.loadEverything = function () {
 	LT.RequestMaker.query.notebook( new FormData(), loadNotebooks );
+	var chargedNotebooks = false;	// Times that the loadNotebooks function has been called.
 
 	function loadNotebooks ( data ) {
 		var tmpNotebook;
@@ -167,7 +168,7 @@ if ( typeOfStorage !== NO_STORAGE ) {
 			tmp.append( 'where[email]', LT.Storage._email );
 			tmp.append( 'where[pass]', LT.Storage._password );
 			LT.RequestMaker.makeLogin( tmp, LT.Storage.loadEverything );
-			LT.HTML.loadLogin();
+			LT.HTML.loadProgressBar();
 		}
 	});
 

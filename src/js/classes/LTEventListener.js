@@ -26,6 +26,9 @@ LT.EventListener = {
 			LT.RequestMaker.makeLogin(
 				new FormData( element ),
 				function ( data ) {
+					// Deleting content of the input password
+					$( element ).find( 'input' ).last().val( '' );
+
 					if ( data.status == LT.Communicator.SUCCESS ) {
 						// Loading credentials
 						LT.Storage._email = tmpUser._email;
@@ -35,13 +38,12 @@ LT.EventListener = {
 						LT.Storage.loadEverything();
 
 						// Loading view
-						LT.HTML.loadLogin();
+						LT.HTML.loadProgressBar();
 					} else {
 						LT.HTML.simpleModalDialogue(
 							$( '#sign_up_in' ),
 							'Incorrect email or password'
 						);
-						$( element ).find( 'input' ).last().val( '' );
 					}
 				}
 			);
@@ -91,6 +93,23 @@ LT.EventListener = {
 			);
 		}
 		return false;
+	},
+
+	/**
+	 * Makes the sign out request.
+	 */
+	signOut: function () {
+		// Request
+		LT.RequestMaker.makeLogout(function () {
+			// Reset Data
+			LT.Storage._id = -1;
+			LT.Storage._email = '';
+			LT.Storage._password = '';
+			LT.Storage._notebooks = [];
+
+			// Load the index
+			LT.HTML.loadIndex();
+		});
 	}
 };
 })( window, $ );

@@ -85,6 +85,27 @@ LT.Notebook.prototype = {
 	},
 
 	/**
+	 * Returns the number of notes in the notebook that are
+	 * in the trash.
+	 * @return {number} Number of deleted notes.
+	 */
+	numberOfDeletedNotes: function () {
+		var counter = 0;
+		for ( var i in this._notes ) {
+			counter += this._notes[ 0 ]._active ? 0 : 1;
+		}
+		return counter;
+	},
+
+	/**
+	 * Returns the number of notes that still active.
+	 * @return {number} Number of active notes.
+	 */
+	numberOfActiveNotes: function () {
+		return this._notes.length - this.numberOfDeletedNotes();
+	},
+
+	/**
 	 * Returns a string representation of the notebook.
 	 * @return {string} String representation of the notebook.
 	 */

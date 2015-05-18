@@ -23,7 +23,8 @@ LT.HTML = (function () {
 		logedContent: _specificPath + 'loged_content.html',
 		notebook: _generalPath + 'notebook.html',
 		notesContainer: _generalPath + 'notes_container.html',
-		note: _generalPath + 'note.html'
+		note: _generalPath + 'note.html',
+		deletedNotes: _generalPath + 'deleted_note.html'
 	};
 
 	// Returns true if the device is a mobile.
@@ -156,13 +157,58 @@ LT.HTML = (function () {
 				'',
 				function ( data ) {
 					nt.forEachNote(function ( note ) {
-						var cpy = data;
-						cpy = cpy.replace( /_theId/g, note._id );
-						cpy = cpy.replace( '{{title}}', note._title );
-						cpy = cpy.replace( '{{content}}', note._content );
-						cpy += document.getElementById( 'ltnotes' ).innerHTML;
-						document.getElementById( 'ltnotes' ).innerHTML = cpy;
+						if ( note._active ) {
+							var cpy = data;
+							cpy = cpy.replace( /_theId/g, note._id );
+							cpy = cpy.replace( '{{title}}', note._title );
+							cpy = cpy.replace( '{{content}}', note._content );
+							cpy += document.getElementById( 'ltnotes' )
+								.innerHTML;
+							document.getElementById( 'ltnotes' )
+								.innerHTML = cpy;
+						}
 					});
+				},
+				'text'
+			);
+		},
+
+		/**
+		 * Load the notes that are not active.
+		 */
+		loadDeletedNotes: function () {
+			// Load the notes
+			$.post(
+				_sections.notesContainer,
+				'',
+				function ( data ) {
+					data = data.replace( '{{name}}', 'Trash' );
+					$( '#ltnotescontainer' ).html( data );
+					$( '#ltnotescontainer > div' ).last().remove();
+
+					// Load the notes
+					$.post(
+						_sections.deletedNotes,
+						'',
+						function ( data ) {
+							var cpy;	// Copy of the data
+							var deletedNotes = LT.Storage.getDeletedNotes();
+							for ( var i in deletedNotes ) {
+								cpy = data;
+								cpy = cpy.replace( /_theId/g,
+									deletedNotes[ i ]._id );
+								cpy = cpy.replace( '{{title}}',
+									deletedNotes[ i ]._title );
+								cpy = cpy.replace( '{{content}}',
+									deletedNotes[ i ]._content );
+								cpy += document.getElementById( 'ltnotes' )
+									.innerHTML;
+								document.getElementById( 'ltnotes' )
+									.innerHTML = cpy;
+							}
+						},
+						'text'
+					);
 				},
 				'text'
 			);

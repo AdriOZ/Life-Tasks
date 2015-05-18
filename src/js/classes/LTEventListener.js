@@ -118,9 +118,18 @@ LT.EventListener = {
 	 * @param  {number} id      Identifier of the notebook.
 	 */
 	loadNotebook: function ( element, id ) {
-		$( '#ltnotebooks a' ).removeClass( 'active' );
+		$( '#ltnotebooks a, #lttrash a' ).removeClass( 'active' );
 		$( element ).addClass( 'active' );
 		LT.HTML.loadNotesContainer( LT.Storage.getNotebookById( id ) );
+	},
+
+	/**
+	 * Loads the notes that are not active.
+	 */
+	loadDeletedNotes: function () {
+		$( '#ltnotebooks a' ).removeClass( 'active' );
+		$( '#lttrash a' ).addClass( 'active' );
+		LT.HTML.loadDeletedNotes();
 	}
 };
 })( window, $ );

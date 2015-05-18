@@ -110,6 +110,16 @@ LT.EventListener = {
 			// Load the index
 			LT.HTML.loadIndex();
 		});
+	},
+
+	/**
+	 * Loads the notes from the notebook.
+	 * @param  {HTMLElement} element Link to the notebook.
+	 * @param  {number} id      Identifier of the notebook.
+	 */
+	loadNotebook: function ( element, id ) {
+		$( '#ltnotebooks a' ).removeClass( 'active' );
+		$( element ).addClass( 'active' );
 	}
 };
 })( window, $ );

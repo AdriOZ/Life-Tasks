@@ -104,6 +104,7 @@ LT.HTML = (function () {
 					LT.Storage.forEachNotebook(function ( nt ) {
 						var cpy = data;
 						// Replacing content
+						cpy = cpy.replace( '{{id}}', nt._id );
 						cpy = cpy.replace( '{{name}}', nt._name );
 						cpy = cpy.replace( '{{number}}',
 							nt.numberOfActiveNotes() );
@@ -113,7 +114,7 @@ LT.HTML = (function () {
 					});
 
 					// Only if the device is not a mobile the notebook must be
-					// loeaded.
+					// loaded.
 					if ( _device !== 'mobile' ) {
 						// Set the first notebook as selected
 						$( '#ltnotebooks a' ).first().addClass( 'active' );

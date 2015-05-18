@@ -85,6 +85,23 @@ LT.User.prototype = {
 	},
 
 	/**
+	 * Returns an array with all notes that are not active in all
+	 * notebooks.
+	 * @return {object} Array of notes that are not active.
+	 */
+	getDeletedNotes: function () {
+		var tmp = null,		// Save the deleted notes for each notebook
+			deleted = [];	// Save all not active notes
+		for ( var i in this._notebooks ) {
+			tmp = this._notebooks[ i ].getDeletedNotes();
+			for ( var j in tmp ) {
+				deleted.push( tmp[ j ] );
+			}
+		}
+		return deleted;
+	},
+
+	/**
 	 * Sets a new password.
 	 * @param {string} password New value for the password.
 	 */

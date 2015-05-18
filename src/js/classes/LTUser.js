@@ -40,11 +40,10 @@ LT.User.prototype = {
 
 		while ( !notebook && i < len ) {
 			if ( this._notebooks[ i ]._id == id ) {
-				notebook = this._notebooks;
+				notebook = this._notebooks[ i ];
 			}
 			i++;
 		}
-
 		return notebook;
 	},
 

@@ -120,6 +120,7 @@ LT.EventListener = {
 	loadNotebook: function ( element, id ) {
 		$( '#ltnotebooks a' ).removeClass( 'active' );
 		$( element ).addClass( 'active' );
+		LT.HTML.loadNotesContainer( LT.Storage.getNotebookById( id ) );
 	}
 };
 })( window, $ );

@@ -10,3 +10,8 @@
 	max-height: 400px;
 	overflow: scroll;
 }
+
+#ltnotebooks {
+	max-height: 315px;
+	overflow: scroll;
+}

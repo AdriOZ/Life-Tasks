@@ -122,6 +122,21 @@ LT.User.prototype = {
 	},
 
 	/**
+	 * Indicates if there is a notebook called with that name.
+	 * @param  {string} name Name of the notebook.
+	 * @return {boolean}      Returns true if the notebooks exists and false
+	 *                        if not.
+	 */
+	notebookExists: function ( name ) {
+		for ( var i in this._notebooks ) {
+			if ( this._notebooks[ i ]._name === name ) {
+				return true;
+			}
+		}
+		return false;
+	},
+
+	/**
 	 * Returns a string representation of the user.
 	 * @return {string} String representation of the user.
 	 */

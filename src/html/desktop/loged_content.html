@@ -5,7 +5,7 @@
 			<h2 class="text-center">Notebooks</h2>
 			<div class="list-group">
 				<div id="ltnotebooks"></div>
-			  <button type="button" class="btn btn-success btn-block list-group-item">Add</button>
+			  <button type="button" class="btn btn-success btn-block list-group-item" onclick="LT.EventListener.loadNewNotebook()">Add</button>
 			</div>
 			<h2 class="text-center">Trash</h2>
 			<div class="list-group" id="lttrash">
@@ -18,4 +18,27 @@
 		<div class="col-md-7 col-md-push-1 col-xs-4 col-xs-push-2" id="ltnotescontainer">
 		</div>
 	</div>
+</div>
+
+<!-- Modal dialogues -->
+<div id="notebookActions" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">New Notebook</h4>
+      </div>
+      <div class="modal-body">
+      	<form>
+      		<div class="form-group">
+      			 <input type="text" placeholder="Name" class="form-control input-lg"/>
+      		</div>
+      	</form>
+      </div>
+      <div class="modal-footer">
+      	<button type="button" class="btn btn-success" onclick="LT.EventListener.createNewNotebook()">Save</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
 </div>

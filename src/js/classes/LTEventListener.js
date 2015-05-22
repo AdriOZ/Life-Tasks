@@ -130,6 +130,58 @@ LT.EventListener = {
 		$( '#ltnotebooks a' ).removeClass( 'active' );
 		$( '#lttrash a' ).addClass( 'active' );
 		LT.HTML.loadDeletedNotes();
+	},
+
+	/**
+	 * The modal with the content is displayed.
+	 */
+	loadNewNotebook: function () {
+		$( '#notebookActions' ).modal( 'show' );
+	},
+
+	/**
+	 * Controls the creation of a new notebook.
+	 */
+	createNewNotebook: function () {
+		var text = $( '#notebookActions input' )[ 0 ].value,
+			formData = new FormData(),
+			newNotebook;
+
+		if ( !text ) {
+			$( '#notebookActions div.form-group' ).addClass( 'has-error' );
+			$( '#notebookActions h4' ).text( 'Untitled notebook' );
+		} else if ( LT.Storage.notebookExists( text ) ) {
+			$( '#notebookActions div.form-group' ).addClass( 'has-error' );
+			$( '#notebookActions h4' ).text( 'There is already a notebook called "' +
+				text + '"' );
+		} else {
+			formData.append( 'where[name]', text );
+			LT.RequestMaker.insert.notebook(
+				formData,
+				function ( data ) {
+					if ( data.status === LT.Communicator.ERROR ) {
+						$( '#notebookActions div.form-group' )
+							.addClass( 'has-error' );
+						$( '#notebookActions h4' ).text( 'Too long name' );
+					} else {
+						// Creating the notebook
+						newNotebook = new LT.Notebook( data.id_notebook, text );
+						LT.Storage.addNotebook( newNotebook );
+
+						// Re-load notebooks
+						$( '#ltnotebooks' ).html( '' );
+						LT.HTML.loadNotebooks();
+
+						// Close the modal and change properties
+						$( '#notebookActions' ).modal( 'hide' );
+						$( '#notebookActions div.form-group' )
+							.removeClass( 'has-error' );
+						$( '#notebookActions h4' ).text( 'New Notebook' );
+						$( '#notebookActions input' )[ 0 ].value = '';
+					}
+				}
+			);
+		}
 	}
 };
 })( window, $ );

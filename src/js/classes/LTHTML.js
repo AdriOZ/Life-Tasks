@@ -162,6 +162,10 @@ LT.HTML = (function () {
 							cpy = cpy.replace( /_theId/g, note._id );
 							cpy = cpy.replace( '{{title}}', note._title );
 							cpy = cpy.replace( '{{content}}', note._content );
+							cpy = cpy.replace( '{{documents}}',
+								note.documentsToHTML() );
+							cpy = cpy.replace( '{{reminders}}',
+								note.remindersToHTML() );
 							cpy += document.getElementById( 'ltnotes' )
 								.innerHTML;
 							document.getElementById( 'ltnotes' )
@@ -201,6 +205,10 @@ LT.HTML = (function () {
 									deletedNotes[ i ]._title );
 								cpy = cpy.replace( '{{content}}',
 									deletedNotes[ i ]._content );
+								cpy = cpy.replace( '{{documents}}',
+									deletedNotes[ i ].documentsToHTML() );
+								cpy = cpy.replace( '{{reminders}}',
+									deletedNotes[ i ].remindersToHTML() );
 								cpy += document.getElementById( 'ltnotes' )
 									.innerHTML;
 								document.getElementById( 'ltnotes' )

@@ -181,6 +181,37 @@ LT.Note.prototype = {
 	},
 
 	/**
+	 * Returns the html representation of the array of documents.
+	 * @return {string} HTML string with the documents.
+	 */
+	documentsToHTML: function () {
+		var stringOfDocuments = '',		// Temporal string to save de link
+			tmpDocuments = [];			// Array of the strings of documents
+
+		for ( var i in this._documents ) {
+			stringOfDocuments = '<a href="' + this._documents[ i ]._url + '"';
+			stringOfDocuments += 'target="_blank" download>';
+			stringOfDocuments += this._documents[ i ]._name;
+			stringOfDocuments += '</a>';
+			tmpDocuments.push( stringOfDocuments );
+		}
+		return tmpDocuments.join( ' | ' );
+	},
+
+	/**
+	 * Returns the html representation of the array of reminders
+	 * @return {string} HTML string with the reminders.
+	 */
+	remindersToHTML: function () {
+		var tmpReminders = [];
+
+		for ( var i in this._reminders ) {
+			tmpReminders.push( this._reminders[ i ]._datetime );
+		}
+		return tmpReminders.join( ' | ' );
+	},
+
+	/**
 	 * Returns a string representation of the note.
 	 * @return {string} String representation of the note.
 	 */

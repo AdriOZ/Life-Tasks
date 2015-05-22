@@ -169,7 +169,6 @@ LT.EventListener = {
 						LT.Storage.addNotebook( newNotebook );
 
 						// Re-load notebooks
-						$( '#ltnotebooks' ).html( '' );
 						LT.HTML.loadNotebooks();
 
 						// Close the modal and change properties
@@ -182,6 +181,26 @@ LT.EventListener = {
 				}
 			);
 		}
+	},
+
+	/**
+	 * Deletes the notebook.
+	 * @param  {integer} id_notebook Identifier of the notebook.
+	 */
+	deleteNotebook: function ( id_notebook ) {
+		$( '#areYouSure' ).modal( 'show' );
+		$( '#areYouSure button.btn-danger' ).click(function () {
+			$( '#areYouSure' ).modal( 'hide' );
+			var formData = new FormData();
+			formData.append( 'where[id_notebook]', id_notebook );
+			LT.RequestMaker.del.notebook(
+				formData,
+				function ( data ) {
+					LT.Storage.unsetNotebookById( id_notebook );
+					LT.HTML.loadNotebooks();
+				}
+			);
+		});
 	}
 };
 })( window, $ );

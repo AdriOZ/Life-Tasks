@@ -2,9 +2,9 @@
 <div class="panel-group" role="tablist" aria-multiselectable="true" id="ltnotes">
 </div>
 <div class="text-center">
-	<form>
-		<button type="button" class="btn btn-success">New Note</button>
-		<button type="button" class="btn btn-default">Modify</button>
-		<button type="button" class="btn btn-danger">Delete</button>
+	<form onsubmit="return false;">
+		<button type="button" class="btn btn-success" onclick="">New Note</button>
+		<button type="button" class="btn btn-default" onclick="">Modify</button>
+		<button type="button" class="btn btn-danger" onclick="LT.EventListener.deleteNotebook(_theID)">Delete</button>
 	</form>
 </div>

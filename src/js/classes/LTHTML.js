@@ -102,6 +102,8 @@ LT.HTML = (function () {
 				_sections.notebook,
 				'',
 				function ( data ) {
+					$( '#ltnotebooks' ).html( '' );		// Empty
+
 					LT.Storage.forEachNotebook(function ( nt ) {
 						var cpy = data;
 						// Replacing content
@@ -141,6 +143,7 @@ LT.HTML = (function () {
 					'',
 					function ( data ) {
 						data = data.replace( '{{name}}', nt._name );
+						data = data.replace( /_theID/g, nt._id );
 						$( '#ltnotescontainer' ).html( data );
 						LT.HTML.loadNotes( nt );
 					},

@@ -135,16 +135,18 @@ LT.HTML = (function () {
 		 * @param  {LT.Notebook} nt Notebook.
 		 */
 		loadNotesContainer: function ( nt ) {
-			$.post(
-				_sections.notesContainer,
-				'',
-				function ( data ) {
-					data = data.replace( '{{name}}', nt._name );
-					$( '#ltnotescontainer' ).html( data );
-					LT.HTML.loadNotes( nt );
-				},
-				'text'
-			);
+			if ( nt ) {
+				$.post(
+					_sections.notesContainer,
+					'',
+					function ( data ) {
+						data = data.replace( '{{name}}', nt._name );
+						$( '#ltnotescontainer' ).html( data );
+						LT.HTML.loadNotes( nt );
+					},
+					'text'
+				);
+			}
 		},
 
 		/**

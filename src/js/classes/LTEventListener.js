@@ -197,6 +197,7 @@ LT.EventListener = {
 				formData,
 				function ( data ) {
 					LT.Storage.unsetNotebookById( id_notebook );
+					$( '#ltnotescontainer' ).html( '' );
 					LT.HTML.loadNotebooks();
 				}
 			);

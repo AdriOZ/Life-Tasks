@@ -21,7 +21,7 @@
 </div>
 
 <!-- Modal dialogues -->
-<div id="notebookActions" class="modal fade" role="dialog">
+<div id="createNotebook" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <!-- Modal content-->
     <div class="modal-content">
@@ -37,11 +37,12 @@
       </div>
       <div class="modal-footer">
       	<button type="button" class="btn btn-success" onclick="LT.EventListener.createNewNotebook()">Save</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="$( '#notebookActions div.form-group' ).removeClass( 'has-error' );$( '#notebookActions h4' ).text( 'New Notebook' );$( '#notebookActions input' )[ 0 ].value = '';">Cancel</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="$( '#createNotebook div.form-group' ).removeClass( 'has-error' );$( '#createNotebook h4' ).text( 'New Notebook' );$( '#createNotebook input' )[ 0 ].value = '';">Cancel</button>
       </div>
     </div>
   </div>
 </div>
+
 <div id="areYouSure" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <!-- Modal content-->
@@ -52,6 +53,28 @@
       <div class="modal-footer">
       	<button type="button" class="btn btn-danger">Delete</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="modifyNotebook" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Modify notebook</h4>
+      </div>
+      <div class="modal-body">
+        <form onsubmit="return false;">
+          <div class="form-group">
+             <input type="text" placeholder="Name" class="form-control input-lg"/>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success">Modify</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="$( '#modifyNotebook div.form-group' ).removeClass( 'has-error' );$( '#modifyNotebook h4' ).text( 'New Notebook' );$( '#modifyNotebook input' )[ 0 ].value = '';">Cancel</button>
       </div>
     </div>
   </div>

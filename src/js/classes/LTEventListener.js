@@ -136,23 +136,23 @@ LT.EventListener = {
 	 * The modal with the content is displayed.
 	 */
 	loadNewNotebook: function () {
-		$( '#notebookActions' ).modal( 'show' );
+		$( '#createNotebook' ).modal( 'show' );
 	},
 
 	/**
 	 * Controls the creation of a new notebook.
 	 */
 	createNewNotebook: function () {
-		var text = $( '#notebookActions input' )[ 0 ].value,
+		var text = $( '#createNotebook input' )[ 0 ].value,
 			formData = new FormData(),
 			newNotebook;
 
 		if ( !text ) {
-			$( '#notebookActions div.form-group' ).addClass( 'has-error' );
-			$( '#notebookActions h4' ).text( 'Untitled notebook' );
+			$( '#createNotebook div.form-group' ).addClass( 'has-error' );
+			$( '#createNotebook h4' ).text( 'Untitled notebook' );
 		} else if ( LT.Storage.notebookExists( text ) ) {
-			$( '#notebookActions div.form-group' ).addClass( 'has-error' );
-			$( '#notebookActions h4' ).text( 'There is already a notebook called "' +
+			$( '#createNotebook div.form-group' ).addClass( 'has-error' );
+			$( '#createNotebook h4' ).text( 'There is already a notebook called "' +
 				text + '"' );
 		} else {
 			formData.append( 'where[name]', text );
@@ -160,9 +160,9 @@ LT.EventListener = {
 				formData,
 				function ( data ) {
 					if ( data.status === LT.Communicator.ERROR ) {
-						$( '#notebookActions div.form-group' )
+						$( '#createNotebook div.form-group' )
 							.addClass( 'has-error' );
-						$( '#notebookActions h4' ).text( 'Too long name' );
+						$( '#createNotebook h4' ).text( 'Too long name' );
 					} else {
 						// Creating the notebook
 						newNotebook = new LT.Notebook( data.id_notebook, text );
@@ -172,11 +172,11 @@ LT.EventListener = {
 						LT.HTML.loadNotebooks();
 
 						// Close the modal and change properties
-						$( '#notebookActions' ).modal( 'hide' );
-						$( '#notebookActions div.form-group' )
+						$( '#createNotebook' ).modal( 'hide' );
+						$( '#createNotebook div.form-group' )
 							.removeClass( 'has-error' );
-						$( '#notebookActions h4' ).text( 'New Notebook' );
-						$( '#notebookActions input' )[ 0 ].value = '';
+						$( '#createNotebook h4' ).text( 'New Notebook' );
+						$( '#createNotebook input' )[ 0 ].value = '';
 					}
 				}
 			);
@@ -200,6 +200,66 @@ LT.EventListener = {
 					LT.HTML.loadNotebooks();
 				}
 			);
+		});
+	},
+
+	/**
+	 * Modifies de name of the notebook.
+	 * @param  {integer} id_notebook Identifier of the notebook.
+	 */
+	modifyNotebook: function ( id_notebook ) {
+		var tmpNotebook = LT.Storage.getNotebookById( id_notebook );
+		$( '#modifyNotebook h4' ).text( 'Modify ' + tmpNotebook._name );
+		$( '#modifyNotebook input' )[ 0 ].value = tmpNotebook._name;
+		$( '#modifyNotebook' ).modal( 'show' );
+
+		// Event listener
+		$( '#modifyNotebook button.btn-success' ).click(function () {
+			var text = $( '#modifyNotebook input' )[ 0 ].value,
+				formData;
+
+			if ( !text ) {
+				$( '#modifyNotebook div.form-group' ).addClass( 'has-error' );
+				$( '#modifyNotebook h4' ).text( 'Untitled notebook' );
+			} else if ( text === tmpNotebook._name ) {
+				// Close the modal and change properties
+				$( '#modifyNotebook' ).modal( 'hide' );
+				$( '#modifyNotebook div.form-group' )
+					.removeClass( 'has-error' );
+				$( '#modifyNotebook h4' ).text( 'Modify' );
+				$( '#modifyNotebook input' )[ 0 ].value = '';
+			} else if ( LT.Storage.notebookExists( text ) ) {
+				$( '#modifyNotebook div.form-group' ).addClass( 'has-error' );
+				$( '#modifyNotebook h4' ).text( 'There is already a notebook called "' +
+					text + '"' );
+			} else {
+				// Make the request
+				formData = new FormData();
+				formData.append( 'where[name]', text );
+				formData.append( 'where[id_notebook]', id_notebook );
+				LT.RequestMaker.update.notebook(
+					formData,
+					function ( data ) {
+						if ( data.status === LT.Communicator.ERROR ) {
+							$( '#modifyNotebook div.form-group' )
+								.addClass( 'has-error' );
+							$( '#modifyNotebook h4' ).text( 'Too long name' );
+						} else {
+							tmpNotebook._name = text;
+
+							// Re-load notebooks
+							LT.HTML.loadNotebooks();
+
+							// Close the modal and change properties
+							$( '#modifyNotebook' ).modal( 'hide' );
+							$( '#modifyNotebook div.form-group' )
+								.removeClass( 'has-error' );
+							$( '#modifyNotebook h4' ).text( 'Modify' );
+							$( '#modifyNotebook input' )[ 0 ].value = '';
+						}
+					}
+				);
+			}
 		});
 	}
 };

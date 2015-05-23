@@ -136,6 +136,7 @@ LT.EventListener = {
 	 * The modal with the content is displayed.
 	 */
 	loadNewNotebook: function () {
+		$( '#createNotebook h4' ).removeClass( 'text-danger' );
 		$( '#createNotebook' ).modal( 'show' );
 	},
 
@@ -150,10 +151,12 @@ LT.EventListener = {
 		if ( !text ) {
 			$( '#createNotebook div.form-group' ).addClass( 'has-error' );
 			$( '#createNotebook h4' ).text( 'Untitled notebook' );
+			$( '#createNotebook h4' ).addClass( 'text-danger' );
 		} else if ( LT.Storage.notebookExists( text ) ) {
 			$( '#createNotebook div.form-group' ).addClass( 'has-error' );
 			$( '#createNotebook h4' ).text( 'There is already a notebook called "' +
 				text + '"' );
+			$( '#createNotebook h4' ).addClass( 'text-danger' );
 		} else {
 			formData.append( 'where[name]', text );
 			LT.RequestMaker.insert.notebook(
@@ -211,6 +214,7 @@ LT.EventListener = {
 	modifyNotebook: function ( id_notebook ) {
 		var tmpNotebook = LT.Storage.getNotebookById( id_notebook );
 		$( '#modifyNotebook h4' ).text( 'Modify ' + tmpNotebook._name );
+		$( '#modifyNotebook h4' ).removeClass( 'text-danger' );
 		$( '#modifyNotebook input' )[ 0 ].value = tmpNotebook._name;
 		$( '#modifyNotebook' ).modal( 'show' );
 
@@ -222,6 +226,7 @@ LT.EventListener = {
 			if ( !text ) {
 				$( '#modifyNotebook div.form-group' ).addClass( 'has-error' );
 				$( '#modifyNotebook h4' ).text( 'Untitled notebook' );
+				$( '#modifyNotebook h4' ).addClass( 'text-danger' );
 			} else if ( text === tmpNotebook._name ) {
 				// Close the modal and change properties
 				$( '#modifyNotebook' ).modal( 'hide' );
@@ -233,6 +238,7 @@ LT.EventListener = {
 				$( '#modifyNotebook div.form-group' ).addClass( 'has-error' );
 				$( '#modifyNotebook h4' ).text( 'There is already a notebook called "' +
 					text + '"' );
+				$( '#modifyNotebook h4' ).addClass( 'text-danger' );
 			} else {
 				// Make the request
 				formData = new FormData();

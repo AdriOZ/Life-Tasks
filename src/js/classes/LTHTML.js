@@ -21,7 +21,10 @@ LT.HTML = (function () {
 		index: _generalPath + 'index.html',
 		logedNavbar: _generalPath + 'loged_navbar.html',
 		logedContent: _specificPath + 'loged_content.html',
-		notebook: _generalPath + 'notebook.html'
+		notebook: _generalPath + 'notebook.html',
+		notesContainer: _generalPath + 'notes_container.html',
+		note: _generalPath + 'note.html',
+		deletedNotes: _generalPath + 'deleted_note.html'
 	};
 
 	// Returns true if the device is a mobile.
@@ -99,20 +102,131 @@ LT.HTML = (function () {
 				_sections.notebook,
 				'',
 				function ( data ) {
+					$( '#ltnotebooks' ).html( '' );		// Empty
+
 					LT.Storage.forEachNotebook(function ( nt ) {
 						var cpy = data;
 						// Replacing content
-						cpy = cpy.replace( '_name_', nt._name );
-						cpy = cpy.replace( '_number_',
+						cpy = cpy.replace( '{{id}}', nt._id );
+						cpy = cpy.replace( '{{name}}', nt._name );
+						cpy = cpy.replace( '{{number}}',
 							nt.numberOfActiveNotes() );
 						cpy += document.getElementById( 'ltnotebooks' ).innerHTML;
 						// Adding html
 						document.getElementById( 'ltnotebooks' ).innerHTML = cpy;
 					});
+
+					// Only if the device is not a mobile the notebook must be
+					// loaded.
+					if ( _device !== 'mobile' ) {
+						// Set the first notebook as selected
+						$( '#ltnotebooks a' ).first().addClass( 'active' );
+
+						// Load the contents of the notebook
+						LT.HTML.loadNotesContainer(
+							LT.Storage._notebooks[ LT.Storage._notebooks.length -1 ]
+						);
+					}
 				},
 				'text'
 			);
 		},
+
+		/**
+		 * Loads the html that will contain the notes.
+		 * @param  {LT.Notebook} nt Notebook.
+		 */
+		loadNotesContainer: function ( nt ) {
+			if ( nt ) {
+				$.post(
+					_sections.notesContainer,
+					'',
+					function ( data ) {
+						data = data.replace( '{{name}}', nt._name );
+						data = data.replace( /_theID/g, nt._id );
+						$( '#ltnotescontainer' ).html( data );
+						LT.HTML.loadNotes( nt );
+					},
+					'text'
+				);
+			}
+		},
+
+		/**
+		 * Loads the notes of the notebook.
+		 * @param  {LT.Notebook} nt Noebook.
+		 */
+		loadNotes: function ( nt ) {
+			$.post(
+				_sections.note,
+				'',
+				function ( data ) {
+					nt.forEachNote(function ( note ) {
+						if ( note._active ) {
+							var cpy = data;
+							cpy = cpy.replace( /_theId/g, note._id );
+							cpy = cpy.replace( '{{title}}', note._title );
+							cpy = cpy.replace( '{{content}}', note._content );
+							cpy = cpy.replace( '{{documents}}',
+								note.documentsToHTML() );
+							cpy = cpy.replace( '{{reminders}}',
+								note.remindersToHTML() );
+							cpy += document.getElementById( 'ltnotes' )
+								.innerHTML;
+							document.getElementById( 'ltnotes' )
+								.innerHTML = cpy;
+						}
+					});
+				},
+				'text'
+			);
+		},
+
+		/**
+		 * Load the notes that are not active.
+		 */
+		loadDeletedNotes: function () {
+			// Load the notes
+			$.post(
+				_sections.notesContainer,
+				'',
+				function ( data ) {
+					data = data.replace( '{{name}}', 'Trash' );
+					$( '#ltnotescontainer' ).html( data );
+					$( '#ltnotescontainer > div' ).last().remove();
+
+					// Load the notes
+					$.post(
+						_sections.deletedNotes,
+						'',
+						function ( data ) {
+							var cpy;	// Copy of the data
+							var deletedNotes = LT.Storage.getDeletedNotes();
+							for ( var i in deletedNotes ) {
+								cpy = data;
+								cpy = cpy.replace( /_theId/g,
+									deletedNotes[ i ]._id );
+								cpy = cpy.replace( '{{title}}',
+									deletedNotes[ i ]._title );
+								cpy = cpy.replace( '{{content}}',
+									deletedNotes[ i ]._content );
+								cpy = cpy.replace( '{{documents}}',
+									deletedNotes[ i ].documentsToHTML() );
+								cpy = cpy.replace( '{{reminders}}',
+									deletedNotes[ i ].remindersToHTML() );
+								cpy += document.getElementById( 'ltnotes' )
+									.innerHTML;
+								document.getElementById( 'ltnotes' )
+									.innerHTML = cpy;
+							}
+						},
+						'text'
+					);
+				},
+				'text'
+			);
+		},
+
 		/**
 		 * Display a progress bar while the content is loaded.
 		 */

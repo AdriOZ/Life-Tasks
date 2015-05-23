@@ -1,0 +1,10 @@
+<h2 class="text-center">{{name}}</h2>
+<div class="panel-group" role="tablist" aria-multiselectable="true" id="ltnotes">
+</div>
+<div class="text-center">
+	<form onsubmit="return false;">
+		<button type="button" class="btn btn-success" onclick="">New Note</button>
+		<button type="button" class="btn btn-default" onclick="LT.EventListener.modifyNotebook(_theID)">Modify</button>
+		<button type="button" class="btn btn-danger" onclick="LT.EventListener.deleteNotebook(_theID)">Delete</button>
+	</form>
+</div>

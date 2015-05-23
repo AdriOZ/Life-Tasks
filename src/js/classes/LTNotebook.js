@@ -59,6 +59,19 @@ LT.Notebook.prototype = {
 	},
 
 	/**
+	 * Returns an array with the notes that are not active.
+	 * @return {object} Array of LT.Notes.
+	 */
+	getDeletedNotes: function () {
+		var deleted = [];
+		for ( var i in this._notes ) {
+			if ( !this._notes[ i ]._active )
+				deleted.push( this._notes[ i ] );
+		}
+		return deleted;
+	},
+
+	/**
 	 * Executes the callback for each note.
 	 * @param  {Function} callback Function that will be executed.
 	 */

@@ -89,14 +89,14 @@
       <div class="modal-body">
         <form onsubmit="return false;">
         <div class="form-group">
-          <input type="email" required="required" maxlength="100" name="where[email]" placeholder="Your email" class="form-control input-lg"/>
+          <input type="email" maxlength="100" name="where[email]" placeholder="Your email" class="form-control input-lg"/>
         </div>
         <div class="form-group">
-          <input type="password" required="required" name="where[pass]" placeholder="Your password" class="form-control input-lg"/>
+          <input type="password" name="where[pass]" placeholder="Your password" class="form-control input-lg"/>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-primary">Apply changes</button>
+        <button type="submit" class="btn btn-primary" onclick="LT.EventListener.modifyAccount()">Apply changes</button>
         </form>
         <button type="button" class="btn btn-danger">Delete</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

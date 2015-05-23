@@ -282,6 +282,49 @@ LT.EventListener = {
 				LT.HTML.loadIndex();
 			}
 		);
+	},
+
+	/**
+	 * Modifies the account settings.
+	 */
+	modifyAccount: function () {
+		var email = $( '#accountSettings input' )[ 0 ].value,
+			pass = $( '#accountSettings input' )[ 1 ].value,
+			tmp = {},
+			formData = new FormData();
+		// Errors
+		if ( email && email !== LT.Storage._email ) {
+			formData.append( 'where[email]', email );
+			tmp[ 'where[email]' ] = email;
+		} else if ( email === LT.Storage._email ) {
+			$( '#accountSettings' ).modal( 'hide' );
+		}
+
+		if ( pass ) {
+			pass = md5( pass );
+			formData.append( 'where[pass]', pass );
+			tmp[ 'where[pass]' ] = pass;
+		}
+
+		// If there is data to send
+		if ( tmp[ 'where[email]' ] || tmp[ 'where[pass]' ] ) {
+			LT.RequestMaker.update.user(
+				formData,
+				function ( data ) {
+					if ( data === LT.Communicator.ERROR ) {
+						$( '#accountSettings h4' )
+							.text( '"' + email + '" is already taken' );
+						$( '#accountSettings h4' ).addClass( 'text-danger' );
+						$( '#accountSettings div.form-group' ).first()
+							.addClass( 'has-error' );
+					} else {
+						$( '#accountSettings' ).modal( 'hide' );
+						LT.Storage._email = email;
+						LT.Storage._password = pass;
+					}
+				}
+			);
+		}
 	}
 };
 })( window, $ );

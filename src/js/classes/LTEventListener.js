@@ -262,6 +262,26 @@ LT.EventListener = {
 				);
 			}
 		});
+	},
+
+	/**
+	 * Deletes the account.
+	 */
+	deleteAccount: function () {
+		$( '#accountSettings' ).modal( 'hide' );
+		LT.RequestMaker.del.user(
+			new FormData(),
+			function ( data ) {
+				// Reset Data
+				LT.Storage._id = -1;
+				LT.Storage._email = '';
+				LT.Storage._password = '';
+				LT.Storage._notebooks = [];
+
+				// Load the index
+				LT.HTML.loadIndex();
+			}
+		);
 	}
 };
 })( window, $ );

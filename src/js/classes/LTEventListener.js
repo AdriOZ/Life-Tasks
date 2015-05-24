@@ -331,6 +331,23 @@ LT.EventListener = {
 				}
 			);
 		}
+	},
+
+	/**
+	 * Show the modal dialogue to create a new note.
+	 * @param  {number} id_notebook Identifier of the notebook
+	 */
+	createNote: function ( id_notebook ) {
+		var tmpNotebook = LT.Storage.getNotebookById( id_notebook );
+		$( '#createNote' ).modal( 'show' );
+	},
+
+	/**
+	 * Goes back to the notebooks view in mobiles and
+	 * tablets browsers.
+	 */
+	backToNotebooks: function () {
+		LT.HTML.loadLogin();
 	}
 };
 })( window, $ );

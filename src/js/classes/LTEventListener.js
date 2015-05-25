@@ -340,14 +340,140 @@ LT.EventListener = {
 	createNote: function ( id_notebook ) {
 		var tmpNotebook = LT.Storage.getNotebookById( id_notebook );
 		$( '#createNote' ).modal( 'show' );
+		$( '#createNote .btn-success' ).unbind( 'click' );
+
+		// Create the note
+		$( '#createNote .btn-success' ).click(function () {
+			var title = $( '#createNote input' )[ 0 ].value,
+				content = $( '#createNote textarea' )[ 0 ].value,
+				docs = $( '#createNote input' )[ 1 ].files,
+				formDataNote = new FormData(),
+				formDataDocs = new FormData(),
+				formDataReminders = new FormData();
+
+			// First create the note
+			formDataNote.append( 'where[id_notebook]', id_notebook );
+			formDataNote.append( 'where[title]', title );
+			formDataNote.append( 'where[content]', content );
+
+			// Making the request
+			LT.RequestMaker.insert.note(
+				formDataNote,
+				function ( data ) {
+					var tmpNote = new LT.Note( data.id_note, title,
+						content, 1 );
+
+					// Add the note to the notebook
+					tmpNotebook.addNote( tmpNote );
+
+                    // Add reminders TODO
+                    // Add documents TODO
+
+                    // Reload everything
+                    LT.HTML.loadNotebooks();
+                    LT.HTML.loadNotesContainer( tmpNotebook );
+				}
+			);
+		});
 	},
 
-	/**
-	 * Goes back to the notebooks view in mobiles and
-	 * tablets browsers.
-	 */
-	backToNotebooks: function () {
-		LT.HTML.loadLogin();
-	}
+    /**
+     * Deletes the note with the specific id.
+     * @param {number} id_note Identifier of the note.
+     */
+    deleteNote: function ( id_note ) {
+        var tmpNote,                    // Note that will be deleted
+            tmpNotebook,                // Notebok that contains the note
+            formData = new FormData();  // Data that will be sent to the server
+
+        // Get the note
+        LT.Storage.forEachNotebook(function (notebook) {
+            var tmp = notebook.getNoteById( id_note );
+            if ( tmp ) {
+                tmpNote = tmp;
+                tmpNotebook = notebook;
+                formData.append( 'where[id_note]', tmpNote._id );
+                formData.append( 'where[id_notebook]', tmpNotebook._id );
+            }
+        });
+
+        // If the note has note been deleted, deletes it
+        // if not, a modal is displayed
+        if ( tmpNote._active ) {
+            // Making the request
+            LT.RequestMaker.del.note(
+                formData,
+                function ( data ) {
+                    tmpNote._active = false;
+                    // Reload everything
+                    $( 'a[onclick="LT.EventListener.loadNotebook( this, ' +
+                        tmpNotebook._id + ' ); return false;"] span.badge')
+                            .text( tmpNotebook.numberOfActiveNotes() );
+                    $( '#lttrash span.badge')
+                        .text( LT.Storage.numberOfDeletedNotes() );
+
+                    // Reload the container
+                    LT.HTML.loadNotesContainer( tmpNotebook );
+                }
+            );
+        } else {
+            // Display the modal
+            $( '#areYouSure').modal( 'show' );
+
+            // Event
+            $( '#areYouSure button.btn-danger').unbind( 'click' );
+            $( '#areYouSure button.btn-danger').click(function () {
+                // Making the request
+                LT.RequestMaker.del.note(
+                    formData,
+                    function ( data ) {
+                        tmpNotebook.unsetNoteById( id_note );
+                        $( '#lttrash span.badge')
+                            .text( LT.Storage.numberOfDeletedNotes() );
+                        // Reload the container
+                        LT.HTML.loadDeletedNotes();
+                        $( '#areYouSure').modal( 'hide' );
+                    }
+                );
+            });
+        }
+    },
+
+    /**
+     * Retores the note that has been deleted.
+     * @param id_note Identifier of the note.
+     */
+    restoreNote: function ( id_note ) {
+        var tmpNote,                    // Note that will be deleted
+            tmpNotebook,                // Notebok that contains the note
+            formData = new FormData();  // Data that will be sent to the server
+
+        // Get the note
+        LT.Storage.forEachNotebook(function (notebook) {
+            var tmp = notebook.getNoteById( id_note );
+            if ( tmp ) {
+                tmpNote = tmp;
+                tmpNotebook = notebook;
+                formData.append( 'where[id_note]', tmpNote._id );
+                formData.append( 'where[id_notebook]', tmpNotebook._id );
+                formData.append( 'where[active]', 1 );
+            }
+
+            // Making the request
+            LT.RequestMaker.update.note(
+                formData,
+                function ( data ) {
+                    tmpNote._active = 1;
+                    // Reload everything
+                    $( 'a[onclick="LT.EventListener.loadNotebook( this, ' +
+                    tmpNotebook._id + ' ); return false;"] span.badge')
+                        .text( tmpNotebook.numberOfActiveNotes() );
+                    $( '#lttrash span.badge')
+                        .text( LT.Storage.numberOfDeletedNotes() );
+                    LT.HTML.loadDeletedNotes();
+                }
+            );
+        });
+    }
 };
 })( window, $ );

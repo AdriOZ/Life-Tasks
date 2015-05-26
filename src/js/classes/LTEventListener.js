@@ -136,6 +136,7 @@ LT.EventListener = {
 	 * The modal with the content is displayed.
 	 */
 	loadNewNotebook: function () {
+		$( '#createNotebook h4' ).removeClass( 'text-danger' );
 		$( '#createNotebook' ).modal( 'show' );
 	},
 
@@ -150,10 +151,12 @@ LT.EventListener = {
 		if ( !text ) {
 			$( '#createNotebook div.form-group' ).addClass( 'has-error' );
 			$( '#createNotebook h4' ).text( 'Untitled notebook' );
+			$( '#createNotebook h4' ).addClass( 'text-danger' );
 		} else if ( LT.Storage.notebookExists( text ) ) {
 			$( '#createNotebook div.form-group' ).addClass( 'has-error' );
 			$( '#createNotebook h4' ).text( 'There is already a notebook called "' +
 				text + '"' );
+			$( '#createNotebook h4' ).addClass( 'text-danger' );
 		} else {
 			formData.append( 'where[name]', text );
 			LT.RequestMaker.insert.notebook(
@@ -197,6 +200,7 @@ LT.EventListener = {
 				formData,
 				function ( data ) {
 					LT.Storage.unsetNotebookById( id_notebook );
+					$( '#ltnotescontainer' ).html( '' );
 					LT.HTML.loadNotebooks();
 				}
 			);
@@ -210,6 +214,7 @@ LT.EventListener = {
 	modifyNotebook: function ( id_notebook ) {
 		var tmpNotebook = LT.Storage.getNotebookById( id_notebook );
 		$( '#modifyNotebook h4' ).text( 'Modify ' + tmpNotebook._name );
+		$( '#modifyNotebook h4' ).removeClass( 'text-danger' );
 		$( '#modifyNotebook input' )[ 0 ].value = tmpNotebook._name;
 		$( '#modifyNotebook' ).modal( 'show' );
 
@@ -221,6 +226,7 @@ LT.EventListener = {
 			if ( !text ) {
 				$( '#modifyNotebook div.form-group' ).addClass( 'has-error' );
 				$( '#modifyNotebook h4' ).text( 'Untitled notebook' );
+				$( '#modifyNotebook h4' ).addClass( 'text-danger' );
 			} else if ( text === tmpNotebook._name ) {
 				// Close the modal and change properties
 				$( '#modifyNotebook' ).modal( 'hide' );
@@ -232,6 +238,7 @@ LT.EventListener = {
 				$( '#modifyNotebook div.form-group' ).addClass( 'has-error' );
 				$( '#modifyNotebook h4' ).text( 'There is already a notebook called "' +
 					text + '"' );
+				$( '#modifyNotebook h4' ).addClass( 'text-danger' );
 			} else {
 				// Make the request
 				formData = new FormData();
@@ -261,6 +268,212 @@ LT.EventListener = {
 				);
 			}
 		});
-	}
+	},
+
+	/**
+	 * Deletes the account.
+	 */
+	deleteAccount: function () {
+		$( '#accountSettings' ).modal( 'hide' );
+		LT.RequestMaker.del.user(
+			new FormData(),
+			function ( data ) {
+				// Reset Data
+				LT.Storage._id = -1;
+				LT.Storage._email = '';
+				LT.Storage._password = '';
+				LT.Storage._notebooks = [];
+
+				// Load the index
+				LT.HTML.loadIndex();
+			}
+		);
+	},
+
+	/**
+	 * Modifies the account settings.
+	 */
+	modifyAccount: function () {
+		var email = $( '#accountSettings input' )[ 0 ].value,
+			pass = $( '#accountSettings input' )[ 1 ].value,
+			tmp = {},
+			formData = new FormData();
+		// Errors
+		if ( email && email !== LT.Storage._email ) {
+			formData.append( 'where[email]', email );
+			tmp[ 'where[email]' ] = email;
+		} else if ( email === LT.Storage._email ) {
+			$( '#accountSettings' ).modal( 'hide' );
+		}
+
+		if ( pass ) {
+			pass = md5( pass );
+			formData.append( 'where[pass]', pass );
+			tmp[ 'where[pass]' ] = pass;
+		}
+
+		// If there is data to send
+		if ( tmp[ 'where[email]' ] || tmp[ 'where[pass]' ] ) {
+			LT.RequestMaker.update.user(
+				formData,
+				function ( data ) {
+					if ( data === LT.Communicator.ERROR ) {
+						$( '#accountSettings h4' )
+							.text( '"' + email + '" is already taken' );
+						$( '#accountSettings h4' ).addClass( 'text-danger' );
+						$( '#accountSettings div.form-group' ).first()
+							.addClass( 'has-error' );
+					} else {
+						$( '#accountSettings' ).modal( 'hide' );
+						LT.Storage._email = email;
+						LT.Storage._password = pass;
+					}
+				}
+			);
+		}
+	},
+
+	/**
+	 * Show the modal dialogue to create a new note.
+	 * @param  {number} id_notebook Identifier of the notebook
+	 */
+	createNote: function ( id_notebook ) {
+		var tmpNotebook = LT.Storage.getNotebookById( id_notebook );
+		$( '#createNote' ).modal( 'show' );
+		$( '#createNote .btn-success' ).unbind( 'click' );
+
+		// Create the note
+		$( '#createNote .btn-success' ).click(function () {
+			var title = $( '#createNote input' )[ 0 ].value,
+				content = $( '#createNote textarea' )[ 0 ].value,
+				docs = $( '#createNote input' )[ 1 ].files,
+				formDataNote = new FormData(),
+				formDataDocs = new FormData(),
+				formDataReminders = new FormData();
+
+			// First create the note
+			formDataNote.append( 'where[id_notebook]', id_notebook );
+			formDataNote.append( 'where[title]', title );
+			formDataNote.append( 'where[content]', content );
+
+			// Making the request
+			LT.RequestMaker.insert.note(
+				formDataNote,
+				function ( data ) {
+					var tmpNote = new LT.Note( data.id_note, title,
+						content, 1 );
+
+					// Add the note to the notebook
+					tmpNotebook.addNote( tmpNote );
+
+                    // Add reminders TODO
+                    // Add documents TODO
+
+                    // Reload everything
+                    LT.HTML.loadNotebooks();
+                    LT.HTML.loadNotesContainer( tmpNotebook );
+				}
+			);
+		});
+	},
+
+    /**
+     * Deletes the note with the specific id.
+     * @param {number} id_note Identifier of the note.
+     */
+    deleteNote: function ( id_note ) {
+        var tmpNote,                    // Note that will be deleted
+            tmpNotebook,                // Notebok that contains the note
+            formData = new FormData();  // Data that will be sent to the server
+
+        // Get the note
+        LT.Storage.forEachNotebook(function (notebook) {
+            var tmp = notebook.getNoteById( id_note );
+            if ( tmp ) {
+                tmpNote = tmp;
+                tmpNotebook = notebook;
+                formData.append( 'where[id_note]', tmpNote._id );
+                formData.append( 'where[id_notebook]', tmpNotebook._id );
+            }
+        });
+
+        // If the note has note been deleted, deletes it
+        // if not, a modal is displayed
+        if ( tmpNote._active ) {
+            // Making the request
+            LT.RequestMaker.del.note(
+                formData,
+                function ( data ) {
+                    tmpNote._active = false;
+                    // Reload everything
+                    $( 'a[onclick="LT.EventListener.loadNotebook( this, ' +
+                        tmpNotebook._id + ' ); return false;"] span.badge')
+                            .text( tmpNotebook.numberOfActiveNotes() );
+                    $( '#lttrash span.badge')
+                        .text( LT.Storage.numberOfDeletedNotes() );
+
+                    // Reload the container
+                    LT.HTML.loadNotesContainer( tmpNotebook );
+                }
+            );
+        } else {
+            // Display the modal
+            $( '#areYouSure').modal( 'show' );
+
+            // Event
+            $( '#areYouSure button.btn-danger').unbind( 'click' );
+            $( '#areYouSure button.btn-danger').click(function () {
+                // Making the request
+                LT.RequestMaker.del.note(
+                    formData,
+                    function ( data ) {
+                        tmpNotebook.unsetNoteById( id_note );
+                        $( '#lttrash span.badge')
+                            .text( LT.Storage.numberOfDeletedNotes() );
+                        // Reload the container
+                        LT.HTML.loadDeletedNotes();
+                        $( '#areYouSure').modal( 'hide' );
+                    }
+                );
+            });
+        }
+    },
+
+    /**
+     * Retores the note that has been deleted.
+     * @param id_note Identifier of the note.
+     */
+    restoreNote: function ( id_note ) {
+        var tmpNote,                    // Note that will be deleted
+            tmpNotebook,                // Notebok that contains the note
+            formData = new FormData();  // Data that will be sent to the server
+
+        // Get the note
+        LT.Storage.forEachNotebook(function (notebook) {
+            var tmp = notebook.getNoteById( id_note );
+            if ( tmp ) {
+                tmpNote = tmp;
+                tmpNotebook = notebook;
+                formData.append( 'where[id_note]', tmpNote._id );
+                formData.append( 'where[id_notebook]', tmpNotebook._id );
+                formData.append( 'where[active]', 1 );
+            }
+
+            // Making the request
+            LT.RequestMaker.update.note(
+                formData,
+                function ( data ) {
+                    tmpNote._active = 1;
+                    // Reload everything
+                    $( 'a[onclick="LT.EventListener.loadNotebook( this, ' +
+                    tmpNotebook._id + ' ); return false;"] span.badge')
+                        .text( tmpNotebook.numberOfActiveNotes() );
+                    $( '#lttrash span.badge')
+                        .text( LT.Storage.numberOfDeletedNotes() );
+                    LT.HTML.loadDeletedNotes();
+                }
+            );
+        });
+    }
 };
 })( window, $ );

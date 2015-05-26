@@ -20,10 +20,9 @@
 	</div>
 </div>
 
-<!-- Modal dialogues -->
+<!-- Modal dialogue to create a new note -->
 <div id="createNotebook" class="modal fade" role="dialog">
   <div class="modal-dialog">
-    <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title">New Notebook</h4>
@@ -43,9 +42,9 @@
   </div>
 </div>
 
+<!-- Modal dialogue to confirm the remove actions -->
 <div id="areYouSure" class="modal fade" role="dialog">
   <div class="modal-dialog">
-    <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title">Are you sure?</h4>
@@ -58,9 +57,9 @@
   </div>
 </div>
 
+<!-- Modal dialogue to modify the name of a notebook -->
 <div id="modifyNotebook" class="modal fade" role="dialog">
   <div class="modal-dialog">
-    <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title">Modify notebook</h4>
@@ -79,3 +78,119 @@
     </div>
   </div>
 </div>
+
+<!-- Modal dialogue to account actions -->
+<div id="accountSettings" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Account Settings</h4>
+      </div>
+      <div class="modal-body">
+        <form onsubmit="return false;">
+        <div class="form-group">
+          <input type="email" maxlength="100" name="where[email]" placeholder="Your email" class="form-control input-lg"/>
+        </div>
+        <div class="form-group">
+          <input type="password" name="where[pass]" placeholder="Your password" class="form-control input-lg"/>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" onclick="LT.EventListener.modifyAccount()">Apply</button>
+        </form>
+        <button type="button" class="btn btn-danger">Delete</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="application/javascript">
+  $( '#accountSettings' ).on( 'show.bs.modal', function () {
+    // Prepare the modal
+    $( '#accountSettings button.btn-danger' ).unbind( 'click' );
+    $( '#accountSettings h4' ).removeClass( 'text-danger' );
+    $( '#accountSettings h4' ).text( 'Account Settings' );
+    $( '#accountSettings div.form-group' ).removeClass( 'has-error' );
+    $( '#accountSettings input' ).first().val( LT.Storage._email );
+    $( '#accountSettings input' ).last().val( '' );
+
+    // Setting correct events
+    $( '#accountSettings button.btn-danger' ).click(function () {
+      // Are you sure?
+      $( '#accountSettings h4' )
+        .text( 'Click again if you really want to delete your account' );
+      $( '#accountSettings h4' ).addClass( 'text-danger' );
+
+      // If the user really wants to delete the account
+      $( '#accountSettings button.btn-danger' )
+        .click( LT.EventListener.deleteAccount );
+    })
+  } );
+</script>
+
+<!-- Modal dialogue create a new note -->
+<div id="createNote" class="modal fade" role="dialog" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">New note</h4>
+      </div>
+      <form onsubmit="return false;" enctype="multipart/form-data">
+      <div class="modal-body">
+        <div class="form-group">
+          <input type="text" maxlength="100" placeholder="Title..." class="form-control input-lg"/>
+        </div>
+        <div class="form-group">
+          <textarea class="form-control input-lg" placeholder="Content..."></textarea>
+        </div>
+        <div class="row">
+          <div class="col-xs-6">
+            <h4>Documents</h4>
+            <input type="file" multiple="multiple" />
+          </div>
+          <div class="col-xs-6">
+            <h4>Reminders</h4>
+            <div id="remindersContainer">
+              
+            </div>
+            <button type="button" id="addReminder" class="btn btn-default">Add</button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-success">Create</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+<script type="application/javascript">
+  $( '#createNote' ).on( 'show.bs.modal', function () {
+    // Prepare the modal
+    $( '#createNote input' )[ 0 ].value = '';
+    $( '#createNote textarea' ).val( '' );
+    $( '#remindersContainer' )
+      .html( '<div class="form-group"><div class="input-group date" id="datetimepicker1"><input type="text" class="form-control"/><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span></div></div>' );
+    $( '#remindersContainer .date' ).datetimepicker(
+      {
+        locale: 'en',
+        format: 'YYYY-MM-DD HH:mm:ss',
+        minDate: new Date()
+      }
+    );
+
+    $( '#addReminder' ).unbind( 'click' );
+    $( '#addReminder' ).click(function () {
+      document.getElementById( 'remindersContainer' ).innerHTML += '<div class="form-group"><div class="input-group date" id="datetimepicker1"><input type="text" class="form-control"/><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span></div></div>';
+
+      $( '#remindersContainer .date' ).datetimepicker(
+      {
+        locale: 'en',
+        format: 'YYYY-MM-DD HH:mm:ss',
+        minDate: new Date()
+      }
+    );
+    });
+  });
+</script>

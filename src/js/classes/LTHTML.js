@@ -146,6 +146,11 @@ LT.HTML = (function () {
 						data = data.replace( /_theID/g, nt._id );
 						$( '#ltnotescontainer' ).html( data );
 						LT.HTML.loadNotes( nt );
+
+						// Show navbar in mobile
+						if ( _device === 'mobile' ) {
+							$( 'nav.navbar-fixed-bottom' ).removeClass( 'hide' );
+						}
 					},
 					'text'
 				);
@@ -225,6 +230,10 @@ LT.HTML = (function () {
 				},
 				'text'
 			);
+			// Show navbar in mobile
+			if ( _device === 'mobile' ) {
+				$( 'nav.navbar-fixed-bottom' ).removeClass( 'hide' );
+			}
 		},
 
 		/**

@@ -20,7 +20,7 @@
 
 <!-- Navbar in the bottom -->
 <nav class="navbar hide navbar-fixed-bottom">
-  <button type="button" class="btn btn-info btn-lg btn-block navbar-btn" onclick="LT.HTML.loadLogin()">Notebooks</button>
+  <button type="button" class="btn btn-info btn-lg btn-block navbar-btn" onclick="LT.HTML.backToNotebooks()">Notebooks</button>
 </nav>
 
 <!-- Modal dialogue to create a new note -->
@@ -175,7 +175,7 @@
     $( '#createNote input' )[ 0 ].value = '';
     $( '#createNote textarea' ).val( '' );
     $( '#remindersContainer' )
-      .html( '<div class="form-group"><div class="input-group date" id="datetimepicker1"><input type="text" class="form-control"/><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span></div></div>' );
+      .html( '<div class="form-group"><div class="input-group date"><input type="datetime" class="form-control"/><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span></div></div>' );
     $( '#remindersContainer .date' ).datetimepicker(
       {
         locale: 'en',
@@ -186,7 +186,7 @@
 
     $( '#addReminder' ).unbind( 'click' );
     $( '#addReminder' ).click(function () {
-      document.getElementById( 'remindersContainer' ).innerHTML += '<div class="form-group"><div class="input-group date" id="datetimepicker1"><input type="text" class="form-control"/><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span></div></div>';
+      document.getElementById( 'remindersContainer' ).innerHTML += '<div class="form-group"><div class="input-group date"><input type="datetime" class="form-control"/><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span></div></div>';
 
       $( '#remindersContainer .date' ).datetimepicker(
       {

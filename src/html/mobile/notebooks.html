@@ -1,0 +1,13 @@
+<h2 class="text-center">Notebooks</h2>
+<div class="list-group">
+    <div id="ltnotebooks"></div>
+    <button type="button" class="btn btn-success btn-block list-group-item" onclick="LT.EventListener.loadNewNotebook()">Add</button>
+</div>
+<h2 class="text-center">Trash</h2>
+<div class="list-group" id="lttrash">
+    <a href="#" class="list-group-item text-center" onclick="LT.EventListener.loadDeletedNotes(); return false;">
+        Removed notes
+        <span class="badge">0</span>
+    </a>
+</div>
+</div>

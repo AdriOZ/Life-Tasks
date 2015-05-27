@@ -24,7 +24,8 @@ LT.HTML = (function () {
 		notebook: _generalPath + 'notebook.html',
 		notesContainer: _generalPath + 'notes_container.html',
 		note: _generalPath + 'note.html',
-		deletedNotes: _generalPath + 'deleted_note.html'
+		deletedNotes: _generalPath + 'deleted_note.html',
+        mobileNotebooks: _specificPath + 'notebooks.html'
 	};
 
 	// Returns true if the device is a mobile.
@@ -254,7 +255,26 @@ LT.HTML = (function () {
 					LT.HTML.loadLogin();
 				}
 			},100);	// 2 seconds
-		}
+		},
+
+        /**
+         * Goes back to the notebooks view.
+         */
+        backToNotebooks: function () {
+            // Hide the navbar
+            $( 'nav.navbar-fixed-bottom').addClass( 'hide' );
+
+            // Load sections
+            $.post(
+                _sections.mobileNotebooks,
+                '',
+                function ( data ) {
+                    $( '#ltnotescontainer').html( data );
+                    LT.HTML.loadNotebooks();
+                },
+                'text'
+            );
+        }
 	};
 })();
 })( window, $ );

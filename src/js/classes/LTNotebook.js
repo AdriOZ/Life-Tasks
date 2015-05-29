@@ -118,6 +118,16 @@ LT.Notebook.prototype = {
 		return this._notes.length - this.numberOfDeletedNotes();
 	},
 
+    clone: function () {
+        var tmp = new LT.Notebook( this._id, this._name );
+
+        for ( var i in this._notes ) {
+            tmp.addNote( this._notes[ i ].clone() );
+        }
+
+        return tmp;
+    },
+
 	/**
 	 * Returns a string representation of the notebook.
 	 * @return {string} String representation of the notebook.

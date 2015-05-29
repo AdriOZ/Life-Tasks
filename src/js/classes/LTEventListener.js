@@ -338,26 +338,167 @@ LT.EventListener = {
 	 * @param  {number} id_notebook Identifier of the notebook
 	 */
 	createNote: function ( id_notebook ) {
+        $( '#createNote').modal( 'show' );
+        $( '#createNote' ).on( 'hide.bs.modal', function () {
+            var tmpNotebook = LT.Storage.getNotebookById( id_notebook );
+            $( '#ltnotes').html( '' );
+            LT.HTML.loadNotes( tmpNotebook );
+        });
+        $( '#createNote button.btn-success').click(
+            function () {
+                var tmpNotebook = LT.Storage.getNotebookById( id_notebook );
+                var tmpNote = getNote();
 
-        function insertReminders ( reminders ) {
+                // Insert into the database
+                var formData = new FormData();
+                formData.append( 'where[id_notebook]', id_notebook );
+                formData.append( 'where[title]', tmpNote._title );
+                formData.append( 'where[content]', tmpNote._content );
 
-        }
+                // Make the request
+                LT.RequestMaker.insert.note(
+                    formData,
+                    function ( data ) {
+                        // Insert in the notebook
+                        tmpNote._id = data.id_note;
+                        tmpNotebook.addNote( tmpNote );
 
-        function insertDocuments ( documents ) {
+                        // Insert reminders and documents
+                        var reminders = getReminders(),
+                            documents = getDocuments();
 
-        }
+                        if ( reminders.length ) {
+                            insertReminders( reminders );
+                        }
 
-        function getReminders () {
+                        if ( documents.length ) {
+                            insertDocuments( documents );
+                        }
 
-        }
+                        if ( !document.length && !reminders.length ) {
+                            closeModal();
+                        }
+                    }
+                );
 
-        function getDocuments () {
+                function insertReminders ( reminders ) {
+                    reminders.forEach(function ( el ) {
+                        var formData = new FormData(),
+                            times = el.getDatetime();
+                        formData.append( 'where[id_note]', tmpNote._id );
+                        formData.append( 'where[year]', times.year );
+                        formData.append( 'where[month]', times.month );
+                        formData.append( 'where[day]', times.day );
+                        formData.append( 'where[hour]', times.hours );
+                        formData.append( 'where[minute]', times.minutes );
+                        formData.append( 'where[second]', times.seconds );
 
-        }
+                        // Making the request
+                        LT.RequestMaker.insert.reminder(
+                            formData,
+                            function ( data ) {
+                                el._id = data.id_reminder;
 
-        function getNote () {
+                                // Add to the note
+                                tmpNote.addReminder( el );
+                            }
+                        );
+                    });
+                }
 
-        }
+                function insertDocuments ( documents ) {
+                    documents.forEach(function ( el, index ) {
+                        var formData = new FormData();
+                        formData.append( 'where[id_note]', tmpNote._id );
+                        formData.append( 'document', el );
+
+                        // Send
+                        LT.RequestMaker.insert.document(
+                            formData,
+                            function ( data ) {
+                                // Check errors
+                                if ( data.status === LT.Communicator.NO_STORAGE ) {
+                                    // Stop
+                                    closeModal();
+                                    // Display a modal with the information
+                                    LT.HTML.simpleModalDialogue(
+                                        $( '#simpleModal' ),
+                                        'You have reached the 10 MB of Storage for documents'
+                                    );
+                                    throw 'Limit Storage';
+                                } else {
+                                    var tmpDocument = new LT.Document(
+                                        data.id_document,
+                                        '',
+                                        ''
+                                    );
+
+                                    // Get the results
+                                    var formData = new FormData();
+                                    formData.append( 'where[id_note]', tmpNote._id );
+
+                                    LT.RequestMaker.query.document(
+                                        formData,
+                                        function ( data ) {
+                                            for ( var i in data.documents ) {
+                                                if ( data.documents[ i ].id_document === tmpDocument._id ) {
+                                                    tmpDocument._url = data.documents[ i].url;
+                                                    tmpDocument._name = data.documents[ i ].name;
+
+                                                    // Add to the note
+                                                    tmpNote.addDocument( tmpDocument );
+                                                }
+                                            }
+                                        }
+                                    );
+                                }
+
+                                // Check if it is the last document to close
+                                // the modal
+                                if ( index === documents.length - 1 ) {
+                                    closeModal();
+                                }
+                            }
+                        );
+                    });
+                }
+
+                function getReminders () {
+                    var reminders = [];
+                    $( '#remindersContainer input').each( function ( index, el ) {
+                        if ( el.value ) {
+                            reminders.push( new LT.Reminder( -1, el.value, false ) );
+                        }
+                    });
+                    return reminders;
+                }
+
+                function getDocuments () {
+                    var documents = [];
+                    var inputDocuments = $( '#createNote input' )[ 1].files;
+
+                    for ( var i in inputDocuments ) {
+                        documents.push( inputDocuments[ i ] );
+                    }
+
+                    return documents;
+                }
+
+                function getNote () {
+                    return new LT.Note(
+                        -1,
+                        $( '#createNote input' )[ 0].value,
+                        $( '#createNote textarea' )[ 0].value,
+                        true
+                    );
+                }
+
+                function closeModal () {
+                    // Close the modal
+                    $( '#createNote').modal( 'hide' );
+                }
+            }
+        );
 	},
 
     /**

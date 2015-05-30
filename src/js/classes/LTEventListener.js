@@ -338,7 +338,56 @@ LT.EventListener = {
 	 * @param  {number} id_notebook Identifier of the notebook
 	 */
 	createNote: function ( id_notebook ) {
+        $( '#createNote').modal( 'show' );
+        $( '#createNote .btn-success').click(
+            function () {
+                var tmpNotebook = LT.Storage.getNotebookById( id_notebook );
+                var creator = new LT.NoteCreator();
 
+                // Setting the params
+                creator.addNotebook( id_notebook );
+                creator.addTitle( $( '#createNote input' )[ 0 ].value );
+                creator.addContent( $( '#createNote textarea' )[ 0].value );
+
+                // Add reminders
+                $( '#remindersContainer input').each(
+                    function ( index, value ) {
+                        if ( value.value )
+                            creator.addReminder( value.value );
+                    }
+                );
+
+                // Add documents
+                var documents = $( '#createNote input' )[ 1 ].files;
+
+                if ( documents.length ) {
+                    for ( var i in documents ) {
+                        creator.addDocument( documents[ i ] );
+                    }
+                }
+
+                // Create the note
+                creator.execute(
+                    function ( note ) {
+                        // Add the note
+                        tmpNotebook.addNote( note );
+
+                        // Close the modal and re-load the notes
+                        LT.HTML.loadNotes( tmpNotebook );
+                        $( '#createNote').modal( 'hide' );
+
+                        // If a document could not be created, show
+                        // a modal
+                        if ( documents.length !== note._documents.length ) {
+                            LT.HTML.simpleModalDialogue(
+                                '#simpleModal',
+                                'You have reached the 10 MB of storage'
+                            );
+                        }
+                    }
+                );
+            }
+        );
 	},
 
     /**

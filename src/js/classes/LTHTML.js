@@ -167,8 +167,7 @@ LT.HTML = (function () {
 				_sections.note,
 				'',
 				function ( data ) {
-                    var ntCopy = nt.clone();
-                    ntCopy.forEachNote(function ( note ) {
+                    nt.forEachNote(function ( note ) {
 						if ( note._active ) {
 							var cpy = data;
 							cpy = cpy.replace( /_theId/g, note._id );

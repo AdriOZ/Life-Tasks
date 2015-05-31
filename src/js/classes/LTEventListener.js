@@ -339,7 +339,7 @@ LT.EventListener = {
 	 */
 	createNote: function ( id_notebook ) {
         $( '#createNote').modal( 'show' );
-        $( '#createNote .btn-success').click(
+        $( '#createNote button.btn-success').click(
             function () {
                 var tmpNotebook = LT.Storage.getNotebookById( id_notebook );
                 var creator = new LT.NoteCreator();
@@ -352,8 +352,9 @@ LT.EventListener = {
                 // Add reminders
                 $( '#remindersContainer input').each(
                     function ( index, value ) {
-                        if ( value.value )
+                        if ( value.value ) {
                             creator.addReminder( value.value );
+                        }
                     }
                 );
 
@@ -369,12 +370,19 @@ LT.EventListener = {
                 // Create the note
                 creator.execute(
                     function ( note ) {
+                        // Delete the event
+                        $( '#createNote button.btn-success').unbind( 'click' );
+
                         // Add the note
                         tmpNotebook.addNote( note );
 
                         // Close the modal and re-load the notes
+                        $( '#ltnotes').html( '' );
                         LT.HTML.loadNotes( tmpNotebook );
                         $( '#createNote').modal( 'hide' );
+
+                        // Number of the left menu
+                        $( '#ltnotebooks a.active span').text( tmpNotebook.numberOfActiveNotes() );
 
                         // If a document could not be created, show
                         // a modal

@@ -85,7 +85,6 @@ LT.NoteCreator.prototype = {
                 function ( data ) {
                     reminder._id = data.id_reminder;
                     self._tmpNote.addReminder( reminder );
-
                     // Call the function with the next index
                     self._insertReminder( index + 1, callback );
                 }
@@ -103,7 +102,7 @@ LT.NoteCreator.prototype = {
          calls itself recursively adding 1 to the index.
          */
         if ( index <  this._tmpDocuments.length ) {
-            var document = new LT.Document(
+            var tmpDocument = new LT.Document(
                 -1,                         // Temporal id
                 '',                         // Temporal name
                 ''                          // Temporal url
@@ -118,18 +117,16 @@ LT.NoteCreator.prototype = {
             LT.RequestMaker.insert.document(
                 formData,
                 function ( data ) {
-                    if ( data.status === LT.Communicator.NO_STORAGE ) {
-                        // Try with the next document
-                        self._insertDocument( index + 1, callback );
-                    } else {
-                        document._id = data.id_document;
-                        document._name = data.name;
-                        document._url = data.url;
+                    if ( data.status === LT.Communicator.SUCCESS ) {
+                        tmpDocument._id = data.id_document;
+                        tmpDocument._name = data.name;
+                        tmpDocument._url = data.url;
 
                         // Next document
-                        self._tmpNote.addDocument( document );
-                        self._insertDocument( index + 1, callback );
+                        self._tmpNote.addDocument( tmpDocument );
                     }
+                    // Next document
+                    self._insertDocument( index + 1, callback );
                 }
             );
         } else {

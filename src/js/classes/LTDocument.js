@@ -62,6 +62,10 @@ LT.Document.prototype = {
 				: 'document';
 	},
 
+    clone: function () {
+        return new LT.Document( this._id, this._name, this._url );
+    },
+
 	/**
 	 * Returns a string in JSON format with information of the document.
 	 * @return {string} String with information of the document.

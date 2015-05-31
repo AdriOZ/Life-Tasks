@@ -110,6 +110,9 @@ class LTDocument extends LTResponse {
 						$this->_setSuccess();
 						$this->_setResult( 'id_document',
 							$res[ 0 ][ 'max(id_document)']  );
+                        $this->_setResult( 'name',
+                            $_FILES[ 'document' ][ 'name' ] );
+                        $this->_setResult( 'url', $realPath );
 					} else {
 						$this->_setError();
 					}
@@ -193,7 +196,7 @@ class LTDocument extends LTResponse {
 				.$id_note[ 0 ][ 'note' ]			# Note id
 				.'_'								# Separator
 				.$id_document						# Document id
-				.'.'.$extension;					# Extesion of the document
+				.'.'.$extension;					# Extension of the document
 	}
 
 	# Returns the extension from a filename.

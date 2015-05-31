@@ -338,43 +338,64 @@ LT.EventListener = {
 	 * @param  {number} id_notebook Identifier of the notebook
 	 */
 	createNote: function ( id_notebook ) {
-		var tmpNotebook = LT.Storage.getNotebookById( id_notebook );
-		$( '#createNote' ).modal( 'show' );
-		$( '#createNote .btn-success' ).unbind( 'click' );
+        $( '#createNote').modal( 'show' );
+        $( '#createNote button.btn-success').click(
+            function () {
+                var tmpNotebook = LT.Storage.getNotebookById( id_notebook );
+                var creator = new LT.NoteCreator();
 
-		// Create the note
-		$( '#createNote .btn-success' ).click(function () {
-			var title = $( '#createNote input' )[ 0 ].value,
-				content = $( '#createNote textarea' )[ 0 ].value,
-				docs = $( '#createNote input' )[ 1 ].files,
-				formDataNote = new FormData(),
-				formDataDocs = new FormData(),
-				formDataReminders = new FormData();
+                // Setting the params
+                creator.addNotebook( id_notebook );
+                creator.addTitle( $( '#createNote input' )[ 0 ].value );
+                creator.addContent( $( '#createNote textarea' )[ 0].value );
 
-			// First create the note
-			formDataNote.append( 'where[id_notebook]', id_notebook );
-			formDataNote.append( 'where[title]', title );
-			formDataNote.append( 'where[content]', content );
+                // Add reminders
+                $( '#remindersContainer input').each(
+                    function ( index, value ) {
+                        if ( value.value ) {
+                            creator.addReminder( value.value );
+                        }
+                    }
+                );
 
-			// Making the request
-			LT.RequestMaker.insert.note(
-				formDataNote,
-				function ( data ) {
-					var tmpNote = new LT.Note( data.id_note, title,
-						content, 1 );
+                // Add documents
+                var documents = $( '#createNote input' )[ 1 ].files;
 
-					// Add the note to the notebook
-					tmpNotebook.addNote( tmpNote );
+                if ( documents.length ) {
+                    for ( var i in documents ) {
+                        creator.addDocument( documents[ i ] );
+                    }
+                }
 
-                    // Add reminders TODO
-                    // Add documents TODO
+                // Create the note
+                creator.execute(
+                    function ( note ) {
+                        // Delete the event
+                        $( '#createNote button.btn-success').unbind( 'click' );
 
-                    // Reload everything
-                    LT.HTML.loadNotebooks();
-                    LT.HTML.loadNotesContainer( tmpNotebook );
-				}
-			);
-		});
+                        // Add the note
+                        tmpNotebook.addNote( note );
+
+                        // Close the modal and re-load the notes
+                        $( '#ltnotes').html( '' );
+                        LT.HTML.loadNotes( tmpNotebook );
+                        $( '#createNote').modal( 'hide' );
+
+                        // Number of the left menu
+                        $( '#ltnotebooks a.active span').text( tmpNotebook.numberOfActiveNotes() );
+
+                        // If a document could not be created, show
+                        // a modal
+                        if ( documents.length !== note._documents.length ) {
+                            LT.HTML.simpleModalDialogue(
+                                '#simpleModal',
+                                'You have reached the 10 MB of storage'
+                            );
+                        }
+                    }
+                );
+            }
+        );
 	},
 
     /**
@@ -458,22 +479,22 @@ LT.EventListener = {
                 formData.append( 'where[id_notebook]', tmpNotebook._id );
                 formData.append( 'where[active]', 1 );
             }
-
-            // Making the request
-            LT.RequestMaker.update.note(
-                formData,
-                function ( data ) {
-                    tmpNote._active = 1;
-                    // Reload everything
-                    $( 'a[onclick="LT.EventListener.loadNotebook( this, ' +
-                    tmpNotebook._id + ' ); return false;"] span.badge')
-                        .text( tmpNotebook.numberOfActiveNotes() );
-                    $( '#lttrash span.badge')
-                        .text( LT.Storage.numberOfDeletedNotes() );
-                    LT.HTML.loadDeletedNotes();
-                }
-            );
         });
+
+        // Making the request
+        LT.RequestMaker.update.note(
+            formData,
+            function ( data ) {
+                tmpNote._active = 1;
+                // Reload everything
+                $( 'a[onclick="LT.EventListener.loadNotebook( this, ' +
+                tmpNotebook._id + ' ); return false;"] span.badge')
+                    .text( tmpNotebook.numberOfActiveNotes() );
+                $( '#lttrash span.badge')
+                    .text( LT.Storage.numberOfDeletedNotes() );
+                LT.HTML.loadDeletedNotes();
+            }
+        );
     }
 };
 })( window, $ );

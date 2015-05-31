@@ -138,6 +138,10 @@ LT.Reminder.prototype = {
 		}
 	},
 
+    clone: function () {
+        return new LT.Reminder( this._id, this._datetime, this._sent );
+    },
+
 	/**
 	 * String representation of the object.
 	 * @return {string} String representation of the object.

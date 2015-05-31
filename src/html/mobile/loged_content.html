@@ -9,13 +9,32 @@
 			</div>
 			<h2 class="text-center">Trash</h2>
 			<div class="list-group" id="lttrash">
-			  <a href="#" class="list-group-item text-center">
+			  <a href="#" class="list-group-item text-center" onclick="LT.EventListener.loadDeletedNotes(); return false;">
 			    Removed notes
 			    <span class="badge">0</span>
 			  </a>
 			</div>
 		</div>
 	</div>
+</div>
+
+<!-- Navbar in the bottom -->
+<nav class="navbar hide navbar-fixed-bottom">
+  <button type="button" class="btn btn-info btn-lg btn-block navbar-btn" onclick="LT.HTML.backToNotebooks()">Notebooks</button>
+</nav>
+
+<!-- Modal dialogue to confirm the remove actions -->
+<div id="simpleModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- Modal dialogue to create a new note -->
@@ -124,4 +143,72 @@
         .click( LT.EventListener.deleteAccount );
     })
   } );
+</script>
+
+
+<!-- Modal dialogue create a new note -->
+<div id="createNote" class="modal fade" role="dialog" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">New note</h4>
+      </div>
+      <form onsubmit="return false;" enctype="multipart/form-data">
+      <div class="modal-body">
+        <div class="form-group">
+          <input type="text" maxlength="100" placeholder="Title..." class="form-control input-lg"/>
+        </div>
+        <div class="form-group">
+          <textarea class="form-control input-lg" placeholder="Content..."></textarea>
+        </div>
+        <div class="row">
+          <div class="col-xs-6">
+            <h4>Documents</h4>
+            <input type="file" multiple="multiple" />
+          </div>
+          <div class="col-xs-6">
+            <h4>Reminders</h4>
+            <div id="remindersContainer">
+              
+            </div>
+            <button type="button" id="addReminder" class="btn btn-default">Add</button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-success">Create</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+<script type="application/javascript">
+  $( '#createNote' ).on( 'show.bs.modal', function () {
+    // Prepare the modal
+    $( '#createNote input' )[ 0 ].value = '';
+    $( '#createNote textarea' ).val( '' );
+    $( '#remindersContainer' )
+      .html( '<div class="form-group"><div class="input-group date"><input type="datetime" class="form-control"/><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span></div></div>' );
+    $( '#remindersContainer .date' ).datetimepicker(
+      {
+        locale: 'en',
+        format: 'YYYY-MM-DD HH:mm:ss',
+        minDate: new Date()
+      }
+    );
+
+    $( '#addReminder' ).unbind( 'click' );
+    $( '#addReminder' ).click(function () {
+      document.getElementById( 'remindersContainer' ).innerHTML += '<div class="form-group"><div class="input-group date"><input type="datetime" class="form-control"/><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span></div></div>';
+
+      $( '#remindersContainer .date' ).datetimepicker(
+      {
+        locale: 'en',
+        format: 'YYYY-MM-DD HH:mm:ss',
+        minDate: new Date()
+      }
+    );
+    });
+  });
 </script>

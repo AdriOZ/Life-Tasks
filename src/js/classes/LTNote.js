@@ -211,6 +211,21 @@ LT.Note.prototype = {
 		return tmpReminders.join( ' | ' );
 	},
 
+    clone: function () {
+        var tmp = new LT.Note( this._id, this._title,
+            this._content, this._active );
+
+        for ( var i in this._documents ) {
+            tmp.addDocument( this._documents[ i ].clone() );
+        }
+
+        for ( var i in this._reminders ) {
+            tmp.addReminder( this._reminders[ i ].clone() );
+        }
+
+        return tmp;
+    },
+
 	/**
 	 * Returns a string representation of the note.
 	 * @return {string} String representation of the note.

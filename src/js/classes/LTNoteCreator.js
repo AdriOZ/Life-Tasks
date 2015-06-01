@@ -122,7 +122,7 @@ LT.NoteCreator.prototype = {
                         tmpDocument._name = data.name;
                         tmpDocument._url = data.url;
 
-                        // Next document
+                        // Add document
                         self._tmpNote.addDocument( tmpDocument );
                     }
                     // Next document

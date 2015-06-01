@@ -185,7 +185,7 @@
     $( '#createNote input' )[ 0 ].value = '';
     $( '#createNote textarea' ).val( '' );
     $( '#remindersContainer' )
-      .html( '<div class="form-group"><div class="input-group date" id="datetimepicker1"><input type="text" class="form-control"/><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span></div></div>' );
+      .html( '<div class="form-group"><div class="input-group date"><input type="text" class="form-control"/><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span></div></div>' );
     $( '#remindersContainer .date' ).datetimepicker(
       {
         locale: 'en',
@@ -196,7 +196,7 @@
 
     $( '#addReminder' ).unbind( 'click' );
     $( '#addReminder' ).click(function () {
-      document.getElementById( 'remindersContainer' ).innerHTML += '<div class="form-group"><div class="input-group date" id="datetimepicker1"><input type="text" class="form-control"/><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span></div></div>';
+      document.getElementById( 'remindersContainer' ).innerHTML += '<div class="form-group"><div class="input-group date"><input type="text" class="form-control"/><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span></div></div>';
 
       $( '#remindersContainer .date' ).datetimepicker(
       {
@@ -207,4 +207,57 @@
     );
     });
   });
+</script>
+
+<!-- Modal to update notes -->
+<div id="updateNote" class="modal fade" role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"></h4>
+            </div>
+            <form onsubmit="return false;" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="text" maxlength="100" placeholder="Title..." class="form-control input-lg"/>
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control input-lg" placeholder="Content..."></textarea>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <h4>Documents</h4>
+                            <div id="updateDocuments">
+
+                            </div>
+                            <input type="file" multiple="multiple" />
+                        </div>
+                        <div class="col-xs-6">
+                            <h4>Reminders</h4>
+                            <div id="updateReminders">
+
+                            </div>
+                            <button type="button" id="addUpdateReminder"class="btn btn-default">Add</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Modify</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script type="application/javascript">
+    $( '#addUpdateReminder').click(function () {
+        $( '#updateReminders').append( '<div class="form-group"><div class="input-group date"><input type="text" class="form-control"/><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span></div></div>' );
+        $( '#updateReminders .date' ).datetimepicker(
+                {
+                    locale: 'en',
+                    format: 'YYYY-MM-DD HH:mm:ss',
+                    minDate: new Date()
+                }
+        );
+    });
 </script>

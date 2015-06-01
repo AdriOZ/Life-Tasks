@@ -126,20 +126,15 @@ class LTDocument extends LTResponse {
 	# Deletes a document
 	private function _delete () {
 		if ( !isset( $this->_where[ 'id_document' ] )
+			|| !isset( $this->_where[ 'id_note' ] )
 			|| !$this->_belongsToUser( $this->_where[ 'id_document' ] ) ) {
 			$this->_setError();
 		} else {
-			# Deleting the document from the folder->get the url
-			$path = Database::query( "SELECT url FROM documents WHERE
-				id_document=".$this->_where[ 'id_document' ] );
-			$name = explode( '/' , $path[ 0 ][ 'url' ] );
-
-			# initial url = php/docs/id_user/document
-			# $name[ 0 ] = php
-			# $name[ 1 ] = docs
-			# $name[ 2 ] = id_user
-			# $name[ 3 ] = document
-			if ( unlink( Consts::FOLDER.$this->_uid.'/'.$name[ 3 ] ) ) {
+			$path = glob(
+				Consts::FOLDER.$this->_uid.'/*_'.$this->_where[ 'id_note' ].'_'.
+				$this->_where[ 'id_document' ].'.*'
+			);
+			if ( @unlink( $path[ 0 ] ) ) {
 				# Deleting from the database
 				Database::where( 'id_document', $this->_where[ 'id_document' ] );
 				Database::delete( 'documents' );

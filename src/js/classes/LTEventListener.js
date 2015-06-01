@@ -202,6 +202,11 @@ LT.EventListener = {
 					LT.Storage.unsetNotebookById( id_notebook );
 					$( '#ltnotescontainer' ).html( '' );
 					LT.HTML.loadNotebooks();
+
+					// Reload the number of notes in the trash
+					$( '#lttrash span' ).text(
+						LT.Storage.numberOfDeletedNotes()
+					);
 				}
 			);
 		});
@@ -256,6 +261,7 @@ LT.EventListener = {
 
 							// Re-load notebooks
 							LT.HTML.loadNotebooks();
+                            LT.HTML.loadNotesContainer( tmpNotebook );
 
 							// Close the modal and change properties
 							$( '#modifyNotebook' ).modal( 'hide' );
@@ -495,6 +501,129 @@ LT.EventListener = {
                 LT.HTML.loadDeletedNotes();
             }
         );
+    },
+
+    modifyNote: function ( id_note ) {
+        var notebookAndNote = LT.Storage.getNotebookAndNote( id_note );
+
+        // First position: notebook
+        // Second position: note
+        var updater = new LT.NoteUpdater();
+
+        // Set params
+        updater.setNotebook( notebookAndNote[ 0]._id );
+        updater.setNote( notebookAndNote[ 1 ] );
+
+        // Fill the modal with the data
+        $( '#updateNote input' )[ 0 ].value = notebookAndNote[ 1 ]._title;
+        $( '#updateNote textarea' )[ 0 ].value = notebookAndNote[ 1 ]._content;
+
+        // Set the reminders
+        $( '#updateReminders').html( '' );
+        notebookAndNote[ 1 ].forEachReminder(
+            function ( reminder ) {
+                $( '#updateReminders').append( '<div class="form-group"><div class="input-group date"><input type="text" class="form-control"/><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span></div></div>' );
+                $( '#updateReminders .date' ).datetimepicker(
+                    {
+                        locale: 'en',
+                        format: 'YYYY-MM-DD HH:mm:ss',
+                        minDate: new Date(),
+                        defaultDate: new Date(
+                            reminder.getYear(),
+                            reminder.getMonth(),
+                            reminder.getDay(),
+                            reminder.getHours(),
+                            reminder.getMinutes(),
+                            reminder.getSeconds()
+                        )
+                    }
+                );
+            }
+        );
+
+        // Set the documents
+        $( '#updateDocuments').html( '' );
+        notebookAndNote[ 1 ].forEachDocument(
+            function ( doc ) {
+                $( '#updateDocuments').append( '<div id="d_'+doc._id+'"><span>'+doc._name+'</span><button class="btn btn-danger btn-xs" onclick="$(this).parent().remove()">x</button></div>' );
+            }
+        );
+
+        // Click the modify button
+        $( '#updateNote button.btn-success').click(function () {
+            // Add reminders
+            $( '#updateReminders input').each(
+                function ( index, value ) {
+                    if ( value.value ) {
+                        updater.createReminders( value.value );
+                    }
+                }
+            );
+
+            // Add documents
+            var documents = $( '#updateNote input' )[ 1 ].files;
+
+            if ( documents.length ) {
+                for ( var i in documents ) {
+                    updater.createDocument( documents[ i ] );
+                }
+            }
+
+            // Deleted documents
+            var notDeletedDocuments = [];
+
+            $( '#updateDocuments span').each(
+                function ( index, el ) {
+                    notDeletedDocuments.push( $( el ).text() );
+                }
+            );
+
+            if ( notDeletedDocuments.length ) {
+                notebookAndNote[ 1 ].forEachDocument(
+                    function ( doc ) {
+                        if ( notDeletedDocuments
+                                .indexOf( doc._name ) === -1 ) {
+                            updater.deleteDocument( doc._id );
+                        }
+                    }
+                );
+            } else {
+                notebookAndNote[ 1].forEachDocument(
+                    function ( doc ) {
+                        updater.deleteDocument( doc._id );
+                    }
+                );
+            }
+            // Title and content
+            var ntitle = $( '#updateNote input')[ 0 ].value;
+            var ncontent = $( '#updateNote textarea')[ 0 ].value;
+
+            if ( ntitle !== '' ) {
+                notebookAndNote[ 1 ]._title = ntitle;
+            }
+
+            if ( ncontent !== '' ) {
+                notebookAndNote[ 1 ]._content = ncontent;
+            }
+
+            // Update data
+            updater.execute(
+                function () {
+                    // Delete the event listener
+                    $( '#updateNote button.btn-success').unbind( 'click' );
+
+                    // Re-load notes
+                    $( '#ltnotes').html( '' );
+                    LT.HTML.loadNotes( notebookAndNote[ 0 ] );
+
+                    // Hide modal
+                    $( '#updateNote').modal( 'hide' );
+                }
+            );
+        });
+
+        // Show the modal
+        $( '#updateNote').modal( 'show' );
     }
 };
 })( window, $ );

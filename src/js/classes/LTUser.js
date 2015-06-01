@@ -136,6 +136,24 @@ LT.User.prototype = {
 		return false;
 	},
 
+    /**
+     * Search a note and the notebook that contains the note.
+     * @param id_note Identifier of the note.
+     * @returns {*[]} Notebook in the first position and note in the second
+     *                position.
+     */
+    getNotebookAndNote: function ( id_note ) {
+        var tmpNote = null;
+
+        // Search
+        for ( var i in this._notebooks ) {
+            if ( tmpNote = this._notebooks[ i ]
+                    .getNoteById( id_note ) ) {
+                return [ this._notebooks[ i ], tmpNote ];
+            }
+        }
+    },
+
 	/**
 	 * Returns a string representation of the user.
 	 * @return {string} String representation of the user.

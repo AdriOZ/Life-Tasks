@@ -545,7 +545,7 @@ LT.EventListener = {
         $( '#updateDocuments').html( '' );
         notebookAndNote[ 1 ].forEachDocument(
             function ( doc ) {
-                $( '#updateDocuments').append( '<div id="d_'+doc._id+'"><span>'+doc._name+'</span><button class="btn btn-danger btn-xs" onclick="$(this).parent().remove()">x</button></div>' );
+                $( '#updateDocuments').append( '<div id="d_'+doc._id+'"><button class="btn btn-danger btn-xs" onclick="$(this).parent().remove()">x</button> <span>'+doc._name+'</span></div>' );
             }
         );
 

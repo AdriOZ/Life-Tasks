@@ -3,10 +3,10 @@ require 'PHPMailer-master/class.phpmailer.php';		# To send emails
 require '../classes/bbdd.php';						# Connect to the database
 
 # Constants
-define( 'HOST', 'TOOD' );		# Host of the SMPT service.
-define( 'USERNAME', 'TODO' );	# Username for the SMPT
-define( 'PASSWORD', 'TODO' );	# Password of the user.
-define( 'FROM', 'TODO' );		# Email
+define( 'HOST', 'smtp.gmail.com' );			    # Host of the SMPT service.
+define( 'USERNAME', 'TODO' );					# Username for the SMPT
+define( 'PASSWORD', 'TODO' );					# Password of the user.
+define( 'FROM', 'reminder@lifeandtasks.com' );  # Email
 
 ############################# Functions #############################
 /**
@@ -91,9 +91,10 @@ function sendEmail ( $dataToSend ) {
 	$mail->isSMTP();
 	$mail->Host = HOST;
 	$mail->SMTPAuth = true;
+	$mail->SMTPSecure = "tls";
 	$mail->Username = USERNAME;
 	$mail->Password = PASSWORD;
-	$mail->SMTPSecure = 'tls';
+	$mail->Port = 587;
 
 	# Data
 	$mail->From = FROM;
@@ -104,7 +105,7 @@ function sendEmail ( $dataToSend ) {
 
 	# Add documents
 	foreach ( $dataToSend[ 'documents' ] as $document ) {
-		$mail->$mail->addAttachment( $document[ 'path' ], $document[ 'name' ] );
+		$mail->addAttachment( $document[ 'path' ], $document[ 'name' ] );
 	}
 
 	return $mail->send();

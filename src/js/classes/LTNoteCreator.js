@@ -12,30 +12,59 @@ LT.NoteCreator = function () {
 
 // Methods
 LT.NoteCreator.prototype = {
+    /**
+     * Adds the identifier of the notebook that will contain the new note.
+     * @param {number} id_notebook Identifier of the notebook that will contain
+     *                             the new note.
+     */
     addNotebook: function ( id_notebook ) {
         this._tmpNotebook = id_notebook;
     },
 
+    /**
+     * Adds the title of the new note.
+     * @param {string} title Title of the new note.
+     */
     addTitle: function ( title ) {
         this._tmpNote._title = title;
     },
 
+    /**
+     * Adds the content of thte new note.
+     * @param {string} content Content of the new note.
+     */
     addContent: function ( content ) {
         this._tmpNote._content = content;
     },
 
+    /**
+     * Adds a new reminder that will be created.
+     * @param {string} datetimeString Datetime string.
+     */
     addReminder: function ( datetimeString ) {
         this._tmpReminders.push( datetimeString );
     },
 
+    /**
+     * Adds a new document that will be created.
+     * @param {File} document New document of the note.
+     */
     addDocument: function ( document ) {
         this._tmpDocuments.push( document );
     },
 
+    /**
+     * Executes the process and calls the callback when finished.
+     * @param  {Function} callback Function that will be excuted at the end of
+     *                             the process.
+     */
     execute: function ( callback ) {
         this._insertNote( callback );
     },
 
+    /*
+    Creates the note and calls the function that creates the reminders.
+     */
     _insertNote: function ( callback ) {
         var formData = new FormData();  // Object to send
         var self = this;                // Avoid scope errors
@@ -55,6 +84,10 @@ LT.NoteCreator.prototype = {
         );
     },
 
+    /*
+    Creates reminders recursively calling itself using the index + 1 till the
+    index gets out of bounds, then, calls the function that creates the documents.
+     */
     _insertReminder: function ( index, callback ) {
         /*
         If the index is higher than the length of the array of reminders
@@ -95,6 +128,10 @@ LT.NoteCreator.prototype = {
         }
     },
 
+    /*
+    Creates documents recursively calling itself using the index + 1 till the
+    index gets out of bounds, then, calls the original callback.
+     */
     _insertDocument: function ( index, callback ) {
         /*
          If the index is higher than the length of the array of documents
@@ -131,18 +168,6 @@ LT.NoteCreator.prototype = {
             );
         } else {
             callback( this._tmpNote );
-        }
-    },
-
-    _extractFileName: function ( path ) {
-        var fullPath = path
-        if ( fullPath ) {
-            var startIndex = (fullPath.indexOf('\\') >= 0 ? fullPath.lastIndexOf('\\') : fullPath.lastIndexOf('/'));
-            var filename = fullPath.substring(startIndex);
-            if (filename.indexOf('\\') === 0 || filename.indexOf('/') === 0) {
-                filename = filename.substring(1);
-            }
-            return filename;
         }
     }
 };

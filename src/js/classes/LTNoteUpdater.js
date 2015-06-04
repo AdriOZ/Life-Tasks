@@ -12,26 +12,53 @@ LT.NoteUpdater = function () {
 
 // Methods
 LT.NoteUpdater.prototype = {
+    /**
+     * Sets the identifier of the notebok that contains the note.
+     * @param {number} id_notebook Identifier of the notebook that contains
+     *                             the note.
+     */
     setNotebook: function ( id_notebook ) {
         this._notebook = id_notebook;
     },
 
+    /**
+     * Sets the note that will be updated.
+     * @param {LT.Note} note Note that will be updated.
+     */
     setNote: function ( note ) {
         this._note = note;
     },
 
+    /**
+     * Adds a new document that willl be deleted.
+     * @param  {number} id_document Identifier of the document that will be
+     *                              deleted.
+     */
     deleteDocument: function ( id_document ) {
         this._deleteDocuments.push( id_document );
     },
 
+    /**
+     * Adds a new document that will be created for the note.
+     * @param  {File} document File that will be updated.
+     */
     createDocument: function ( document ) {
         this._createDocuments.push( document );
     },
 
+    /**
+     * Adds the reminder that will be created.
+     * @param  {string} reminder Datetime string.
+     */
     createReminders: function ( reminder ) {
         this._createReminders.push( reminder );
     },
 
+    /**
+     * Executes the process.
+     * @param  {Function} callback Function that will be executed when everything
+     *                             is done.
+     */
     execute: function ( callback ) {
         // 1- Change title and content
         // 2- Delete reminders
@@ -42,6 +69,10 @@ LT.NoteUpdater.prototype = {
         this._updateNote( callback );
     },
 
+    /*
+    Updates the title and the content of the note and calls the function that
+    removes the reminders of the note when finished.
+     */
     _updateNote: function ( callback ) {
         var formData = new FormData();  // Data to send
         var self = this;                // Avoid scope errors
@@ -60,6 +91,10 @@ LT.NoteUpdater.prototype = {
         );
     },
 
+    /*
+    Deletes the reminders of the note recursively calling itself with the
+    index + 1 till the index gets out of bounds; then, calls the next function.
+     */
     _deleteReminder: function ( index, callback ) {
         if ( index < this._note._reminders.length ) {
             var formData = new FormData();  // Data to send
@@ -82,6 +117,10 @@ LT.NoteUpdater.prototype = {
         }
     },
 
+    /*
+    Creates the reminders of the note recursively calling itself with the
+    index + 1 till the index gets out of bounds; then, calls the next function.
+     */
     _insertReminder: function ( index, callback ) {
         if ( index < this._createReminders.length ) {
             var reminder = new LT.Reminder(
@@ -116,6 +155,10 @@ LT.NoteUpdater.prototype = {
         }
     },
 
+    /*
+    Deletes the documents of the note recursively calling itself with the
+    index + 1 till the index gets out of bounds; then, calls the next function.
+     */
     _removeDocument: function ( index, callback ) {
         if ( index < this._deleteDocuments.length ) {
             var formData = new FormData();  // Data to send
@@ -141,6 +184,11 @@ LT.NoteUpdater.prototype = {
         }
     },
 
+    /*
+    Creates the reminders of the note recursively calling itself with the
+    index + 1 till the index gets out of bounds; then, calls the original
+    callback.
+     */
     _insertDocument: function ( index, callback ) {
         if ( index < this._createDocuments.length ) {
             var tmpDocument = new LT.Document(
